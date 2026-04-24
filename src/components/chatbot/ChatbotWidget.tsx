@@ -33,9 +33,23 @@ export default function ChatbotWidget() {
 
   useEffect(() => {
     if (isOpen) {
-      setHasNotification(false);
       setTimeout(() => inputRef.current?.focus(), 100);
     }
+  }, [isOpen]);
+
+  const handleOpen = () => {
+    setIsOpen((v) => {
+      if (!v) setHasNotification(false);
+      return !v;
+    });
+  };
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) setIsOpen(false);
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
   }, [isOpen]);
 
   const loadingMessages = [
@@ -50,7 +64,7 @@ export default function ChatbotWidget() {
       setLoadingMsgIdx((i) => (i + 1) % loadingMessages.length);
     }, 1600);
     return () => clearInterval(interval);
-  }, [isLoading]);
+  }, [isLoading, loadingMessages.length]);
 
   const sendMessage = async () => {
     const text = input.trim();
@@ -113,7 +127,7 @@ export default function ChatbotWidget() {
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="rounded-lg p-1.5 text-neutral-500 transition-colors hover:bg-neutral-800 hover:text-white"
+            className="rounded-lg p-1.5 text-neutral-500 transition-colors hover:bg-neutral-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
             aria-label="Tutup chat"
           >
             <X size={15} />
@@ -203,7 +217,7 @@ export default function ChatbotWidget() {
             <button
               onClick={sendMessage}
               disabled={!input.trim() || isLoading}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-white transition-all hover:bg-orange-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-white transition-all hover:bg-orange-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
               aria-label="Kirim pesan"
             >
               <Send size={15} aria-hidden="true" />
@@ -214,8 +228,8 @@ export default function ChatbotWidget() {
 
       {/* Toggle button */}
       <button
-        onClick={() => setIsOpen((v) => !v)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 shadow-lg shadow-orange-500/30 transition-[background-color,transform] duration-150 ease-out hover:bg-orange-400 hover:scale-110 active:scale-[0.93] relative"
+        onClick={handleOpen}
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 shadow-lg shadow-orange-500/30 transition-[background-color,transform] duration-150 ease-out hover:bg-orange-400 hover:scale-110 active:scale-[0.93] relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
         aria-label={isOpen ? "Tutup chat" : "Buka chat asisten"}
         aria-expanded={isOpen}
       >

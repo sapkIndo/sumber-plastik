@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     description:
       "Distributor dan supplier produk plastik berkualitas tinggi untuk kebutuhan industri dan rumah tangga.",
     siteName: "Sumber Plastik",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Sumber Plastik" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Sumber Plastik — Distributor Plastik Terpercaya" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Sumber Plastik | Distributor Plastik Terpercaya",
     description: "Distributor dan supplier produk plastik berkualitas tinggi.",
-    images: ["/og-image.jpg"],
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,

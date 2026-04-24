@@ -71,7 +71,7 @@ export default function Clients() {
 
       {/* Marquee rows */}
       <div className="space-y-4" aria-hidden="true">
-        <div className="flex overflow-hidden">
+        <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
           <ul className="animate-marquee flex min-w-full shrink-0 items-center gap-4" role="list">
             {[...clientsRow1, ...clientsRow1].map((name, i) => (
               <li
@@ -84,7 +84,7 @@ export default function Clients() {
           </ul>
         </div>
 
-        <div className="flex overflow-hidden">
+        <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
           <ul className="animate-marquee-reverse flex min-w-full shrink-0 items-center gap-4" role="list">
             {[...clientsRow2, ...clientsRow2].map((name, i) => (
               <li

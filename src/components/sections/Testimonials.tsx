@@ -1,10 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Star } from "lucide-react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -15,7 +14,6 @@ const testimonials = [
     company: "PT Maju Jaya",
     quote:
       "Sumber Plastik menjadi mitra terpercaya kami selama 5 tahun. Kualitas produk konsisten, tidak pernah mengecewakan, dan pengiriman selalu tepat waktu meski volume besar.",
-    rating: 5,
   },
   {
     name: "Sari Dewi",
@@ -23,7 +21,6 @@ const testimonials = [
     company: "CV Berkah Industri",
     quote:
       "Harga kompetitif dengan kualitas premium — kombinasi yang jarang ditemukan. Tim sales sangat responsif dan membantu kami menemukan solusi plastik yang paling efisien.",
-    rating: 5,
   },
   {
     name: "Ahmad Fauzi",
@@ -31,26 +28,47 @@ const testimonials = [
     company: "PT Nusantara Manufacturing",
     quote:
       "Sudah mencoba banyak supplier, tapi Sumber Plastik yang paling konsisten. Produk sesuai spesifikasi, dokumen lengkap, dan after-sales support mereka benar-benar terasa.",
-    rating: 5,
   },
 ];
 
 export default function Testimonials() {
   const ref = useRef<HTMLElement>(null);
+  const quoteRef = useRef<HTMLElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
 
+  // Entrance animation
   useGSAP(
     () => {
-      gsap.from(".testi-card", {
-        opacity: 0,
-        y: 40,
-        duration: 0.7,
-        stagger: 0.07,
-        ease: "expo.out",
+      const tl = gsap.timeline({
         scrollTrigger: { trigger: ref.current, start: "top 75%" },
+        defaults: { ease: "expo.out" },
       });
+      tl.from(".testi-header", { opacity: 0, y: 25, duration: 0.7 })
+        .from(".testi-authors", { opacity: 0, x: -20, duration: 0.7 }, "-=0.4")
+        .from(".testi-quote-panel", { opacity: 0, x: 20, duration: 0.7 }, "-=0.6");
     },
     { scope: ref }
   );
+
+  // Animate quote on switch
+  useEffect(() => {
+    if (!quoteRef.current) return;
+    gsap.fromTo(
+      quoteRef.current,
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }
+    );
+  }, [activeIdx]);
+
+  // Auto-cycle — resets on manual switch
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIdx((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [activeIdx]);
+
+  const active = testimonials[activeIdx];
 
   return (
     <section
@@ -59,56 +77,90 @@ export default function Testimonials() {
       className="bg-neutral-900/30 px-5 py-16 md:px-6 md:py-28"
     >
       <div className="mx-auto max-w-7xl">
-        <div className="mb-16 text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-orange-500">
-            Testimoni
-          </p>
+
+        {/* Header — asymmetric */}
+        <div className="testi-header mb-16 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <h2
             id="testi-heading"
-            className="mb-4 text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl"
+            className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl"
           >
-            Kata Mereka tentang{" "}
-            <span className="text-neutral-400">Sumber Plastik</span>
+            Kata Mereka{" "}
+            <span className="text-neutral-500">tentang Kami</span>
           </h2>
+          <p className="max-w-sm text-sm leading-relaxed text-neutral-400 lg:text-right">
+            Kepercayaan 500+ perusahaan adalah bukti komitmen kami terhadap kualitas dan layanan.
+          </p>
         </div>
 
-        <ul className="grid grid-cols-1 gap-6 md:grid-cols-3" role="list">
-          {testimonials.map((t) => (
-            <li key={t.name} className="testi-card">
-              <figure className="flex h-full flex-col rounded-2xl border border-neutral-800 bg-neutral-950/80 p-7">
-                <div className="mb-5 flex gap-0.5" aria-label={`Rating ${t.rating} dari 5 bintang`}>
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star
-                      key={i}
-                      size={14}
-                      className="fill-orange-500 text-orange-500"
-                      aria-hidden="true"
-                    />
-                  ))}
-                </div>
-                <blockquote className="flex-1">
-                  <p className="text-sm leading-relaxed text-neutral-300">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                </blockquote>
-                <figcaption className="mt-6 flex items-center gap-3 border-t border-neutral-800 pt-5">
-                  <div
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-sm font-bold text-orange-500"
-                    aria-hidden="true"
-                  >
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-white">{t.name}</p>
-                    <p className="text-xs text-neutral-500">
-                      {t.role} · {t.company}
-                    </p>
-                  </div>
-                </figcaption>
-              </figure>
-            </li>
-          ))}
-        </ul>
+        {/* Content — split layout */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[2fr_3fr] lg:gap-16">
+
+          {/* Left — author switcher */}
+          <nav aria-label="Pilih testimoni" className="testi-authors">
+            {testimonials.map((t, i) => (
+              <button
+                key={t.name}
+                onClick={() => setActiveIdx(i)}
+                aria-pressed={activeIdx === i}
+                className={`group flex w-full flex-col gap-0.5 border-l-2 px-5 py-4 text-left transition-all duration-200 ${
+                  activeIdx === i
+                    ? "border-orange-500"
+                    : "border-neutral-800 hover:border-neutral-600"
+                }`}
+              >
+                <span
+                  className={`mb-1 font-mono text-[10px] tabular-nums tracking-widest transition-colors duration-200 ${
+                    activeIdx === i ? "text-orange-500" : "text-neutral-700"
+                  }`}
+                >
+                  0{i + 1}
+                </span>
+                <span
+                  className={`text-sm font-semibold transition-colors duration-200 ${
+                    activeIdx === i
+                      ? "text-white"
+                      : "text-neutral-400 group-hover:text-neutral-200"
+                  }`}
+                >
+                  {t.name}
+                </span>
+                <span
+                  className={`text-xs transition-colors duration-200 ${
+                    activeIdx === i ? "text-neutral-400" : "text-neutral-600"
+                  }`}
+                >
+                  {t.role} · {t.company}
+                </span>
+              </button>
+            ))}
+          </nav>
+
+          {/* Right — featured quote */}
+          <div className="testi-quote-panel">
+            <figure ref={quoteRef}>
+              {/* Decorative mark */}
+              <div
+                className="mb-6 font-serif text-8xl leading-none text-orange-500/20 select-none"
+                aria-hidden="true"
+              >
+                &ldquo;
+              </div>
+
+              <blockquote>
+                <p className="text-xl leading-relaxed text-neutral-200 md:text-2xl">
+                  {active.quote}
+                </p>
+              </blockquote>
+
+              <figcaption className="mt-8 border-t border-neutral-800 pt-6">
+                <p className="text-sm font-semibold text-white">{active.name}</p>
+                <p className="text-xs text-neutral-500">
+                  {active.role} · {active.company}
+                </p>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
       </div>
     </section>
   );

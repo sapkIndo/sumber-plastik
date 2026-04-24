@@ -48,7 +48,7 @@ export default function Stats() {
               className="stat-item flex flex-col items-center bg-neutral-950 px-4 py-8 text-center sm:px-8 sm:py-10"
             >
               <dt className="sr-only">{s.label}</dt>
-              <dd className="mb-1 text-3xl font-bold text-orange-500 sm:text-4xl md:text-5xl">{s.value}</dd>
+              <dd className="mb-1 text-3xl font-black text-orange-500 sm:text-4xl md:text-5xl">{s.value}</dd>
               <p className="mb-1 text-sm font-semibold text-white">{s.label}</p>
               <p className="text-xs leading-relaxed text-neutral-500">{s.desc}</p>
             </div>

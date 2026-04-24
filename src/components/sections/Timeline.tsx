@@ -40,11 +40,11 @@ export default function Timeline() {
 
   useGSAP(
     () => {
-      gsap.from(".timeline-item", {
+      gsap.from(".tl-item", {
         opacity: 0,
-        x: -30,
-        duration: 0.7,
-        stagger: 0.07,
+        y: 20,
+        duration: 0.65,
+        stagger: 0.1,
         ease: "expo.out",
         scrollTrigger: { trigger: ref.current, start: "top 75%" },
       });
@@ -56,46 +56,58 @@ export default function Timeline() {
     <section
       ref={ref}
       aria-labelledby="timeline-heading"
-      className="px-5 py-16 md:px-6 md:py-28"
+      className="bg-neutral-900/30 px-5 py-16 md:px-6 md:py-28"
     >
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-16 text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-orange-500">
-            Perjalanan Kami
-          </p>
+      <div className="mx-auto max-w-7xl">
+
+        {/* Header — asymmetric */}
+        <div className="mb-16 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <h2
             id="timeline-heading"
             className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl"
           >
-            14 Tahun Membangun{" "}
-            <span className="text-neutral-400">Kepercayaan</span>
+            Perjalanan <span className="text-neutral-500">Kami</span>
           </h2>
+          <p className="max-w-sm text-sm leading-relaxed text-neutral-400 lg:text-right">
+            14 tahun membangun kepercayaan, satu langkah pada satu waktu.
+          </p>
         </div>
 
-        <ol className="relative ml-4 border-l border-neutral-800" role="list">
-          {milestones.map((m, i) => (
-            <li key={m.year} className="timeline-item mb-0">
-              <div
-                className={`relative pl-8 ${i !== milestones.length - 1 ? "pb-12" : ""}`}
-              >
-                {/* Dot */}
-                <div
-                  className="absolute -left-[9px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full border-2 border-orange-500 bg-neutral-950"
-                  aria-hidden="true"
-                />
+        {/* Milestones */}
+        <ol role="list">
+          {milestones.map((m, i) => {
+            const isLatest = i === milestones.length - 1;
+            return (
+              <li key={m.year} className="tl-item group border-t border-neutral-800 last:border-b">
+                <div className="grid grid-cols-1 gap-3 py-8 md:grid-cols-[180px_1fr] md:items-center md:gap-16 md:py-10">
 
-                <time
-                  dateTime={m.year}
-                  className="mb-1 block text-xs font-semibold uppercase tracking-widest text-orange-500"
-                >
-                  {m.year}
-                </time>
-                <h3 className="mb-2 text-lg font-semibold text-white">{m.title}</h3>
-                <p className="text-sm leading-relaxed text-neutral-400">{m.desc}</p>
-              </div>
-            </li>
-          ))}
+                  {/* Year — large, muted */}
+                  <time
+                    dateTime={m.year}
+                    className={`font-black tracking-tighter transition-colors duration-300 text-6xl md:text-7xl lg:text-8xl ${
+                      isLatest
+                        ? "text-orange-500/25 group-hover:text-orange-500/40"
+                        : "text-neutral-800 group-hover:text-neutral-700"
+                    }`}
+                  >
+                    {m.year}
+                  </time>
+
+                  {/* Content */}
+                  <div>
+                    <h3 className="mb-2 text-base font-semibold text-white transition-colors duration-200 group-hover:text-white md:text-lg">
+                      {m.title}
+                    </h3>
+                    <p className="max-w-xl text-sm leading-relaxed text-neutral-400">
+                      {m.desc}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
         </ol>
+
       </div>
     </section>
   );

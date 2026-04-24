@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import Hero from "@/components/sections/Hero";
+import Hero from "@/components/sections/HeroB"; // switch: HeroA | HeroB | Hero
 import Stats from "@/components/sections/Stats";
 import Products from "@/components/sections/Products";
 import WhyUs from "@/components/sections/WhyUs";
@@ -31,8 +31,8 @@ const jsonLd = {
   address: {
     "@type": "PostalAddress",
     streetAddress: "Jl. Contoh No. 123",
-    addressLocality: "Jakarta",
-    addressRegion: "DKI Jakarta",
+    addressLocality: "Sleman",
+    addressRegion: "Yogyakarta",
     addressCountry: "ID",
   },
   openingHoursSpecification: [

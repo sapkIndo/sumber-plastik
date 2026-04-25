@@ -32,11 +32,23 @@ export default function ChatbotWidget() {
   }, [messages]);
 
   useEffect(() => {
-    if (isOpen) {
-      setHasNotification(false);
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
+    if (isOpen) setTimeout(() => inputRef.current?.focus(), 100);
   }, [isOpen]);
+
+  const handleOpen = () => {
+    setIsOpen((v) => {
+      if (!v) setHasNotification(false);
+      return !v;
+    });
+  };
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
 
   const loadingMessages = [
     "Mencari informasi produk kami...",
@@ -50,7 +62,7 @@ export default function ChatbotWidget() {
       setLoadingMsgIdx((i) => (i + 1) % loadingMessages.length);
     }, 1600);
     return () => clearInterval(interval);
-  }, [isLoading]);
+  }, [isLoading, loadingMessages.length]);
 
   const sendMessage = async () => {
     const text = input.trim();
@@ -91,7 +103,7 @@ export default function ChatbotWidget() {
     <>
       {/* Chat window */}
       <div
-        className={`fixed bottom-24 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950 shadow-2xl shadow-black/50 transition-all duration-300 ${
+        className={`fixed bottom-24 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10 transition-all duration-300 ${
           isOpen
             ? "translate-y-0 opacity-100 scale-100"
             : "pointer-events-none translate-y-4 opacity-0 scale-95"
@@ -101,19 +113,19 @@ export default function ChatbotWidget() {
         aria-modal="true"
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-neutral-800 bg-neutral-900 px-4 py-3">
+        <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-500/15">
-              <Bot size={15} className="text-orange-500" aria-hidden="true" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600/10">
+              <Bot size={15} className="text-blue-600" aria-hidden="true" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-white">Asisten Sumber Plastik</p>
-              <p className="text-xs text-neutral-500">Powered by Gemini AI</p>
+              <p className="text-sm font-semibold text-slate-900">Asisten Sumber Plastik</p>
+              <p className="text-xs text-slate-400">Powered by Gemini AI</p>
             </div>
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="rounded-lg p-1.5 text-neutral-500 transition-colors hover:bg-neutral-800 hover:text-white"
+            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50"
             aria-label="Tutup chat"
           >
             <X size={15} />
@@ -135,8 +147,8 @@ export default function ChatbotWidget() {
               <div
                 className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                   msg.role === "user"
-                    ? "rounded-br-sm bg-orange-500 text-white"
-                    : "rounded-bl-sm bg-neutral-800 text-neutral-200"
+                    ? "rounded-br-sm bg-blue-600 text-white"
+                    : "rounded-bl-sm bg-slate-100 text-slate-700"
                 }`}
               >
                 <ReactMarkdown
@@ -144,7 +156,7 @@ export default function ChatbotWidget() {
                   components={{
                     p: ({ children }) => <p className="mb-0">{children}</p>,
                     strong: ({ children }) => (
-                      <strong className="font-semibold text-white">{children}</strong>
+                      <strong className="font-semibold text-slate-900">{children}</strong>
                     ),
                   }}
                 >
@@ -156,13 +168,13 @@ export default function ChatbotWidget() {
 
           {isLoading && (
             <div className="flex justify-start" aria-label="Asisten sedang mengetik">
-              <div className="rounded-2xl rounded-bl-sm bg-neutral-800 px-4 py-3">
-                <p className="mb-1.5 text-xs text-neutral-500">{loadingMessages[loadingMsgIdx]}</p>
+              <div className="rounded-2xl rounded-bl-sm bg-slate-100 px-4 py-3">
+                <p className="mb-1.5 text-xs text-slate-400">{loadingMessages[loadingMsgIdx]}</p>
                 <div className="flex items-center gap-1" aria-hidden="true">
                   {[0, 150, 300].map((delay) => (
                     <span
                       key={delay}
-                      className="h-1.5 w-1.5 animate-bounce rounded-full bg-neutral-500"
+                      className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-400"
                       style={{ animationDelay: `${delay}ms` }}
                     />
                   ))}
@@ -174,7 +186,7 @@ export default function ChatbotWidget() {
         </div>
 
         {/* Input */}
-        <div className="border-t border-neutral-800 bg-neutral-900 p-3">
+        <div className="border-t border-slate-200 bg-slate-50 p-3">
           <div className="flex gap-2">
             <div className="relative flex-1">
               <input
@@ -184,7 +196,7 @@ export default function ChatbotWidget() {
                 onChange={(e) => setInput(e.target.value.slice(0, 500))}
                 onKeyDown={handleKeyDown}
                 placeholder="Tanya seputar produk kami..."
-                className="w-full rounded-xl bg-neutral-800 px-4 py-2.5 text-sm text-white placeholder:text-neutral-500 outline-none transition-all focus:ring-1 focus:ring-orange-500 disabled:cursor-not-allowed disabled:opacity-50"
+                className="w-full rounded-xl bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none border border-slate-200 transition-all focus:border-blue-400 focus:ring-1 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-50"
                 disabled={isLoading}
                 aria-label="Ketik pesan"
                 maxLength={500}
@@ -192,7 +204,7 @@ export default function ChatbotWidget() {
               {input.length > 400 && (
                 <span
                   className={`pointer-events-none absolute bottom-1 right-2 text-[10px] tabular-nums ${
-                    input.length >= 500 ? "text-red-400" : "text-neutral-500"
+                    input.length >= 500 ? "text-red-400" : "text-slate-400"
                   }`}
                   aria-live="polite"
                 >
@@ -203,7 +215,7 @@ export default function ChatbotWidget() {
             <button
               onClick={sendMessage}
               disabled={!input.trim() || isLoading}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-white transition-all hover:bg-orange-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white transition-all hover:bg-blue-500 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50"
               aria-label="Kirim pesan"
             >
               <Send size={15} aria-hidden="true" />
@@ -214,15 +226,15 @@ export default function ChatbotWidget() {
 
       {/* Toggle button */}
       <button
-        onClick={() => setIsOpen((v) => !v)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 shadow-lg shadow-orange-500/30 transition-[background-color,transform] duration-150 ease-out hover:bg-orange-400 hover:scale-110 active:scale-[0.93] relative"
+        onClick={handleOpen}
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 shadow-lg shadow-blue-600/25 transition-[background-color,transform] duration-150 ease-out hover:bg-blue-500 hover:scale-110 active:scale-[0.93] relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
         aria-label={isOpen ? "Tutup chat" : "Buka chat asisten"}
         aria-expanded={isOpen}
       >
         {hasNotification && !isOpen && (
           <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5" aria-hidden="true">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-300 opacity-75" />
-            <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-orange-400 ring-2 ring-neutral-950" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
+            <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-blue-500 ring-2 ring-white" />
           </span>
         )}
         <span

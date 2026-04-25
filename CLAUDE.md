@@ -56,27 +56,29 @@ next-sitemap
 Terpercaya dan berpengalaman, tapi tetap mudah didekati. Percaya diri tanpa arogan, hangat tanpa murahan.
 
 ### Aesthetic Direction
-- **Theme:** Dark & Premium — background `#0a0a0a`
-- **Accent:** Bold Orange `#f97316` — untuk CTA, angka kunci, aksen tipografi. **Sparingly, max 15% visual.**
-- **Reference:** Apple.com — whitespace besar, tipografi dominan, animasi halus dan purposeful
+- **Theme:** Light & Bright — background `#f0f6ff` (biru muda terang) + interactive gradient blobs
+- **Accent:** Blue `#2563eb` — untuk CTA, angka kunci, aksen tipografi. **Sparingly, max 15% visual.**
+- **Reference:** Stripe.com / Linear.app light mode — clean, spacious, tipografi dominan, animasi halus
 - **Anti-reference:** Jangan ramai, jangan gradient pelangi, jangan shadow box berlebihan
+- **Interactive background:** 4 gradient blobs (blue/sky/indigo) dengan CSS drift animation + GSAP mouse parallax
 
 ### Color Tokens Wajib
 | Token | Value | Penggunaan |
 |---|---|---|
-| Background utama | `#0a0a0a` | bg-neutral-950 |
-| Surface / Card | `#111111` | bg-neutral-900 |
-| Elevated | `#1a1a1a` | bg-neutral-800 |
-| Text primary | `#fafafa` | text-neutral-50 |
-| Text secondary | `#a3a3a3` | text-neutral-400 |
-| Text muted | `#525252` | text-neutral-600 |
-| **Accent** | `#f97316` | **text/bg-orange-500** |
-| Accent hover | `#fb923c` | text/bg-orange-400 |
-| Border | `#262626` | border-neutral-800 |
+| Background utama | `#f0f6ff` | var(--background) di html, body transparent |
+| Surface / Card | `#ffffff` | bg-white |
+| Alt section | `#f8faff` | bg-slate-50/60 |
+| Text primary | `#0f172a` | text-slate-900 |
+| Text secondary | `#475569` | text-slate-600 |
+| Text muted | `#94a3b8` | text-slate-400 |
+| **Accent** | `#2563eb` | **text/bg-blue-600** |
+| Accent hover | `#3b82f6` | text/bg-blue-500 |
+| Border | `#e2e8f0` | border-slate-200 |
+| Border strong | `#cbd5e1` | border-slate-300 |
 
 ### Design Principles
 1. **Whitespace adalah kemewahan** — section padding minimal `py-24`, jangan pernah cramped
-2. **Orange sebagai tanda baca, bukan cat dinding** — hanya CTA utama, angka kunci, aksen judul
+2. **Blue sebagai tanda baca, bukan cat dinding** — hanya CTA utama, angka kunci, aksen judul
 3. **Tipografi memimpin** — heading besar dan bold adalah hero di setiap section
 4. **Animasi melayani** — GSAP entrance smooth dan purposeful, tidak ada bounce/flash/loop
-5. **Kehangatan dalam kegelapan** — dark theme tapi approachable berkat orange + rounded corners
+5. **Cerah namun elegan** — light theme dengan interactive bg blobs, shadow tipis, rounded corners

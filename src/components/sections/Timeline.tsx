@@ -4,110 +4,325 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger, DrawSVGPlugin);
 
 const milestones = [
   {
     year: "2010",
+    tag: "Fondasi",
     title: "Pendirian Sumber Plastik",
     desc: "Berdiri di Jakarta sebagai distributor plastik lokal dengan visi sederhana: pelayanan terbaik, kualitas tidak pernah kompromi.",
+    stat: { value: "1", label: "Gudang pertama kami" },
   },
   {
     year: "2013",
+    tag: "Pertumbuhan",
     title: "Ekspansi Lini Produk",
     desc: "Memperluas portofolio dengan 30+ jenis plastik baru untuk menjawab kebutuhan industri manufaktur yang terus berkembang.",
+    stat: { value: "30+", label: "Jenis produk baru" },
   },
   {
     year: "2016",
+    tag: "Kepercayaan",
     title: "100+ Client Aktif",
     desc: "Tonggak kepercayaan tercapai — lebih dari 100 perusahaan dari berbagai sektor industri di Pulau Jawa menjadi mitra setia.",
+    stat: { value: "100+", label: "Client aktif kala itu" },
   },
   {
     year: "2019",
+    tag: "Infrastruktur",
     title: "Fasilitas Gudang Baru",
     desc: "Membangun gudang modern seluas 5.000m² untuk meningkatkan kapasitas stok dan mempercepat proses distribusi nasional.",
+    stat: { value: "5.000m²", label: "Kapasitas gudang baru" },
   },
   {
     year: "2024",
+    tag: "Inovasi",
     title: "500+ Client & Transformasi Digital",
     desc: "Meluncurkan platform digital lengkap dengan AI assistant untuk menghadirkan pengalaman terbaik bagi 500+ client setia kami.",
+    stat: { value: "500+", label: "Client setia hari ini" },
   },
 ];
 
+const VB_W = 280;
+const VB_H = 600;
+
+const NODES: [number, number][] = [
+  [72,  75],
+  [208, 195],
+  [72,  315],
+  [208, 435],
+  [72,  555],
+];
+
+const PATH_D = NODES.map(([x, y], i) => `${i === 0 ? "M" : "L"} ${x},${y}`).join(" ");
+
+// Teardrop/map-pin: tip at (0,0), circle centre at (0,−27)
+const PIN_PATH = "M 0,0 C 12,-4 14,-15 14,-27 A 14,14 0 1,0 -14,-27 C -14,-15 -12,-4 0,0 Z";
+
 export default function Timeline() {
-  const ref = useRef<HTMLElement>(null);
+  const ref         = useRef<HTMLElement>(null);
+  const stickyRef   = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const pathRef     = useRef<SVGPathElement>(null);
+  // Refs for the INNER visual group only (no SVG transform attr → no conflict)
+  const pinVisualRefs = useRef<(SVGGElement | null)[]>([]);
 
   useGSAP(
     () => {
-      gsap.from(".tl-item", {
-        opacity: 0,
-        y: 20,
-        duration: 0.65,
-        stagger: 0.1,
-        ease: "expo.out",
-        scrollTrigger: { trigger: ref.current, start: "top 75%" },
+      const total  = milestones.length;
+      const root   = ref.current!;
+      const panels = gsap.utils.toArray<HTMLElement>(".tl-panel", root);
+
+      // Initial state — panels
+      gsap.set(panels.slice(1), { opacity: 0, y: 40 });
+
+      // Initial state — pins 1-4 hidden (autoAlpha avoids any transform conflict)
+      pinVisualRefs.current.slice(1).forEach(g => {
+        if (g) gsap.set(g, { autoAlpha: 0 });
       });
+
+      // Track which pins have bounced in
+      const pinDone = Array(total).fill(false);
+      pinDone[0] = true;
+
+      // Main scrubbed timeline (path + panels only — no pin tweens here)
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: stickyRef.current,
+          start: "top top",
+          end: () => `+=${(total - 1) * window.innerHeight}`,
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+          // onUpdate fires freely — used for non-scrubbed pin bounce
+          onUpdate(self) {
+            const p = self.progress;
+            for (let i = 1; i < total; i++) {
+              // Each pin appears at ~80 % through each milestone segment
+              const threshold = (i - 0.2) / (total - 1);
+              const g = pinVisualRefs.current[i];
+              if (!g) continue;
+
+              if (p >= threshold && !pinDone[i]) {
+                pinDone[i] = true;
+                gsap.fromTo(g,
+                  { autoAlpha: 0, y: -28 },
+                  { autoAlpha: 1, y: 0, duration: 0.9, ease: "bounce.out", overwrite: true }
+                );
+              } else if (p < threshold && pinDone[i]) {
+                pinDone[i] = false;
+                gsap.to(g, { autoAlpha: 0, y: -28, duration: 0.2, ease: "power2.in", overwrite: true });
+              }
+            }
+          },
+        },
+      });
+
+      tl.from(pathRef.current, { drawSVG: "0%", ease: "none", duration: total - 1 }, 0);
+      tl.to(progressRef.current, { scaleX: 1, ease: "none", duration: total - 1 }, 0);
+
+      for (let i = 1; i < total; i++) {
+        const pos = i - 1;
+        tl
+          .to(panels[i - 1], { opacity: 0, y: -40, ease: "none", duration: 0.4 }, pos)
+          .to(panels[i],     { opacity: 1, y: 0,   ease: "none", duration: 0.4 }, pos + 0.55);
+      }
     },
     { scope: ref }
   );
 
   return (
-    <section
-      ref={ref}
-      aria-labelledby="timeline-heading"
-      className="bg-neutral-900/30 px-5 py-16 md:px-6 md:py-28"
-    >
-      <div className="mx-auto max-w-7xl">
+    <section ref={ref} aria-labelledby="timeline-heading">
+      <h2 id="timeline-heading" className="sr-only">Perjalanan Kami</h2>
 
-        {/* Header — asymmetric */}
-        <div className="mb-16 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <h2
-            id="timeline-heading"
-            className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl"
-          >
-            Perjalanan <span className="text-neutral-500">Kami</span>
-          </h2>
-          <p className="max-w-sm text-sm leading-relaxed text-neutral-400 lg:text-right">
-            14 tahun membangun kepercayaan, satu langkah pada satu waktu.
-          </p>
+      <div
+        ref={stickyRef}
+        className="relative flex h-screen w-full flex-col overflow-hidden bg-white"
+      >
+
+        {/* ── Top bar ── */}
+        <div className="flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-5 md:px-12">
+          <div className="flex items-center gap-3">
+            <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">
+              Perjalanan Kami
+            </span>
+          </div>
+          <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-300">
+            {milestones[0].year} — {milestones[milestones.length - 1].year}
+          </span>
         </div>
 
-        {/* Milestones */}
-        <ol role="list">
-          {milestones.map((m, i) => {
-            const isLatest = i === milestones.length - 1;
-            return (
-              <li key={m.year} className="tl-item group border-t border-neutral-800 last:border-b">
-                <div className="grid grid-cols-1 gap-3 py-8 md:grid-cols-[180px_1fr] md:items-center md:gap-16 md:py-10">
+        {/* ── Main ── */}
+        <div className="relative flex flex-1 flex-col overflow-hidden md:flex-row">
 
-                  {/* Year — large, muted */}
-                  <time
-                    dateTime={m.year}
-                    className={`font-black tracking-tighter transition-colors duration-300 text-6xl md:text-7xl lg:text-8xl ${
-                      isLatest
-                        ? "text-orange-500/25 group-hover:text-orange-500/40"
-                        : "text-neutral-800 group-hover:text-neutral-700"
-                    }`}
-                  >
-                    {m.year}
-                  </time>
+          {/* Left — SVG zigzag (desktop only) */}
+          <div className="relative hidden shrink-0 items-center justify-center border-r border-slate-100 md:flex md:w-[44%]">
+            <svg
+              viewBox={`0 0 ${VB_W} ${VB_H}`}
+              preserveAspectRatio="xMidYMid meet"
+              className="h-full w-full p-10"
+              aria-hidden="true"
+            >
+              <defs>
+                <filter id="tl-path-glow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <filter id="tl-pin-glow" x="-60%" y="-60%" width="220%" height="220%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
 
-                  {/* Content */}
-                  <div>
-                    <h3 className="mb-2 text-base font-semibold text-white transition-colors duration-200 group-hover:text-white md:text-lg">
-                      {m.title}
-                    </h3>
-                    <p className="max-w-xl text-sm leading-relaxed text-neutral-400">
-                      {m.desc}
-                    </p>
+              {/* Background dot grid */}
+              {Array.from({ length: 9 }, (_, row) =>
+                Array.from({ length: 5 }, (_, col) => (
+                  <circle key={`dot-${row}-${col}`} cx={col * 70} cy={row * 75} r="1.5" fill="#f1f5f9" />
+                ))
+              )}
+
+              {/* Dashed horizontal guides at each node level */}
+              {NODES.map(([x, y], i) => {
+                const isLeft = i % 2 === 0;
+                return (
+                  <line
+                    key={`guide-${i}`}
+                    x1={isLeft ? x + 22 : 0}
+                    y1={y}
+                    x2={isLeft ? VB_W : x - 22}
+                    y2={y}
+                    stroke="#f1f5f9"
+                    strokeWidth="1"
+                    strokeDasharray="4 5"
+                  />
+                );
+              })}
+
+              {/* Ghost path */}
+              <path
+                d={PATH_D}
+                stroke="#e2e8f0"
+                strokeWidth="1.5"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+
+              {/* Animated DrawSVG path */}
+              <path
+                ref={pathRef}
+                d={PATH_D}
+                stroke="#2563eb"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+                filter="url(#tl-path-glow)"
+              />
+
+              {/* Pins — outer <g> handles SVG positioning (never touched by GSAP).
+                  Inner <g> is the ref that GSAP animates (autoAlpha + y). */}
+              {milestones.map((m, i) => {
+                const [x, y] = NODES[i];
+                const isLeft  = i % 2 === 0;
+                return (
+                  <g key={m.year} transform={`translate(${x},${y})`}>
+
+                    {/* Year + tag labels — always visible once outer group renders */}
+                    <text
+                      x={isLeft ? -22 : 22}
+                      y="-22"
+                      textAnchor={isLeft ? "end" : "start"}
+                      fill="#475569"
+                      fontSize="10"
+                      fontFamily="monospace"
+                      letterSpacing="0.06em"
+                      fontWeight="700"
+                    >
+                      {m.year}
+                    </text>
+                    <text
+                      x={isLeft ? -22 : 22}
+                      y="-10"
+                      textAnchor={isLeft ? "end" : "start"}
+                      fill="#94a3b8"
+                      fontSize="7"
+                      fontFamily="monospace"
+                      letterSpacing="0.1em"
+                    >
+                      {m.tag.toUpperCase()}
+                    </text>
+
+                    {/* Visual pin — GSAP animates this (bounce drop + autoAlpha) */}
+                    <g ref={el => { pinVisualRefs.current[i] = el; }}>
+                      {/* Ground shadow */}
+                      <ellipse cx="1" cy="4" rx="7" ry="2.5" fill="rgba(37,99,235,0.15)" />
+                      {/* Teardrop body */}
+                      <path d={PIN_PATH} fill="#2563eb" filter="url(#tl-pin-glow)" />
+                      {/* Inner white dot */}
+                      <circle cx="0" cy="-27" r="4.5" fill="white" />
+                    </g>
+
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+
+          {/* Right — content panels */}
+          <div className="relative flex-1 overflow-hidden">
+
+            {/* Mobile dot indicator */}
+            <div className="absolute left-4 top-1/2 z-20 -translate-y-1/2 flex flex-col gap-2 md:hidden" aria-hidden="true">
+              {milestones.map((_, i) => (
+                <div key={i} className="tl-dot h-1 w-1 rounded-full bg-blue-600 opacity-20" />
+              ))}
+            </div>
+
+            {milestones.map((m, i) => (
+              <div
+                key={m.year}
+                className={`tl-panel absolute inset-0 flex items-center px-8 md:px-14 lg:px-20 ${i > 0 ? "opacity-0" : ""}`}
+              >
+                <div className="max-w-lg">
+                  <div className="mb-5 flex items-center gap-3">
+                    <span className="h-px w-6 shrink-0 bg-blue-600" aria-hidden="true" />
+                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">{m.tag}</span>
+                  </div>
+                  <h3 className="mb-5 text-3xl font-black leading-[1.0] tracking-tight text-slate-900 md:text-4xl lg:text-5xl xl:text-6xl">
+                    {m.title}
+                  </h3>
+                  <p className="text-sm leading-[1.8] text-slate-500 md:text-[15px]">{m.desc}</p>
+                  <div className="mt-8 border-t border-slate-100 pt-6">
+                    <div className="flex items-baseline gap-4">
+                      <span className="text-4xl font-black tracking-tight text-blue-600 md:text-5xl">{m.stat.value}</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-400">{m.stat.label}</span>
+                    </div>
                   </div>
                 </div>
-              </li>
-            );
-          })}
-        </ol>
+              </div>
+            ))}
+          </div>
+        </div>
 
+        {/* ── Progress bar ── */}
+        <div className="relative h-[2px] w-full shrink-0 bg-slate-100">
+          <div
+            ref={progressRef}
+            className="absolute inset-0 origin-left bg-blue-600"
+            style={{ transform: "scaleX(0)" }}
+          />
+        </div>
       </div>
     </section>
   );

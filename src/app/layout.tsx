@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "sonner";
 import ConsoleEasterEgg from "@/components/ConsoleEasterEgg";
+import InteractiveBg from "@/components/InteractiveBg";
+import CustomCursor from "@/components/CustomCursor";
+import GSAPSmoothScroll from "@/components/GSAPSmoothScroll";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -58,9 +61,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="id" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-neutral-950 text-neutral-50 antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} text-slate-900 antialiased`}
+        suppressHydrationWarning
       >
-        {children}
+        <CustomCursor />
+        <InteractiveBg />
+        <GSAPSmoothScroll />
+        <div id="smooth-wrapper">
+          <div id="smooth-content">
+            {children}
+          </div>
+        </div>
         <Toaster
           position="top-right"
           richColors

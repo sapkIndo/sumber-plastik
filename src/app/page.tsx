@@ -8,6 +8,7 @@ import WhyUs from "@/components/sections/WhyUs";
 import Clients from "@/components/sections/Clients";
 import Testimonials from "@/components/sections/Testimonials";
 import Timeline from "@/components/sections/Timeline";
+import ProductSpotlight from "@/components/sections/ProductSpotlight";
 import VisiMisi from "@/components/sections/VisiMisi";
 import FAQ from "@/components/sections/FAQ";
 import CTA from "@/components/sections/CTA";
@@ -60,6 +61,7 @@ export default function HomePage() {
         <Hero />
         <Stats />
         <Products />
+        <ProductSpotlight />
         <WhyUs />
         <Clients />
         <Testimonials />

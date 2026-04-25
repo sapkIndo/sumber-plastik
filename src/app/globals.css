@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
+  --background: #f8f8f6;
+  --foreground: #0f172a;
 }
 
 @theme inline {
@@ -12,71 +12,112 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* ── Base ────────────────────────────────────────────────────────────── */
+
+html {
+  /* Clean warm-white canvas with embedded paper-grain texture.
+     feTurbulence fractalNoise at 0.65 freq = fine uncoated-paper grain.
+     opacity 0.04 → barely visible at arm's length, tactile close-up. */
+  background-color: var(--background);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
 body {
-  background: var(--background);
+  /* Transparent so the html grain canvas shows through everywhere */
+  background: transparent;
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   font-kerning: normal;
   text-rendering: optimizeLegibility;
 }
 
+/* Keep light theme when OS dark mode is active */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #f8f8f6;
+    --foreground: #0f172a;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after { cursor: none !important; }
 }
 
 ::selection {
-  background-color: #f97316;
+  background-color: #2563eb;
   color: #fff;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-}
+/* ── Scrollbar ───────────────────────────────────────────────────────── */
 
-::-webkit-scrollbar-track {
-  background: #0a0a0a;
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #e8f1ff; }
+::-webkit-scrollbar-thumb { background: #bfdbfe; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #2563eb; }
 
-::-webkit-scrollbar-thumb {
-  background: #262626;
-  border-radius: 99px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #f97316;
-}
+/* ── Marquee ─────────────────────────────────────────────────────────── */
 
 @keyframes marquee {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to   { transform: translateX(-50%); }
 }
 
-.animate-marquee {
-  animation: marquee 28s linear infinite;
-}
+.animate-marquee         { animation: marquee 28s linear infinite; }
+.animate-marquee-reverse { animation: marquee 28s linear infinite reverse; }
 
-.animate-marquee-reverse {
-  animation: marquee 28s linear infinite reverse;
-}
+/* ── CTA glow pulse ──────────────────────────────────────────────────── */
 
 @keyframes glowPulse {
-  0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
+  0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1);   }
+  50%       { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
 }
 
-.animate-glow-pulse {
-  animation: glowPulse 5s ease-in-out infinite;
+.animate-glow-pulse { animation: glowPulse 5s ease-in-out infinite; }
+
+/* ── Interactive background blob drift ───────────────────────────────── */
+
+.blob-drift-1 { animation: blobDrift1 22s ease-in-out infinite; }
+.blob-drift-2 { animation: blobDrift2 28s ease-in-out infinite; }
+.blob-drift-3 { animation: blobDrift3 25s ease-in-out infinite; }
+.blob-drift-4 { animation: blobDrift4 19s ease-in-out infinite; }
+
+@keyframes blobDrift1 {
+  0%, 100% { transform: translate(0, 0); }
+  25%  { transform: translate(70px,  -50px); }
+  50%  { transform: translate(40px,   90px); }
+  75%  { transform: translate(-50px,  30px); }
 }
+
+@keyframes blobDrift2 {
+  0%, 100% { transform: translate(0, 0); }
+  30%  { transform: translate(-80px,  60px); }
+  60%  { transform: translate( 50px, 110px); }
+  80%  { transform: translate(-30px, -50px); }
+}
+
+@keyframes blobDrift3 {
+  0%, 100% { transform: translate(0, 0); }
+  35%  { transform: translate(110px, -70px); }
+  70%  { transform: translate(-70px, -90px); }
+}
+
+@keyframes blobDrift4 {
+  0%, 100% { transform: translate(0, 0); }
+  30%  { transform: translate(-100px,  60px); }
+  65%  { transform: translate(  80px, -90px); }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
-  .animate-marquee-reverse {
-    animation: none;
-  }
+  .animate-marquee-reverse { animation: none; }
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

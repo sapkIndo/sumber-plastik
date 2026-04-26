@@ -68,7 +68,7 @@ export default function FAQ() {
                   onClick={() => toggle(i)}
                   aria-expanded={openIndex === i}
                   aria-controls={`faq-content-${i}`}
-                  className="flex w-full items-center justify-between px-6 py-5 text-left focus-visible:outline-none focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500 rounded-t-2xl"
+                  className="flex w-full items-center justify-between px-6 py-5 text-left focus-visible:outline-none focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-600 rounded-t-2xl"
                 >
                   <span className="pr-4 text-sm font-semibold text-slate-900 md:text-base">{f.q}</span>
                   <span

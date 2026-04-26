@@ -64,9 +64,11 @@ export default function FAQ() {
             >
               <dt>
                 <button
+                  id={`faq-btn-${i}`}
                   onClick={() => toggle(i)}
                   aria-expanded={openIndex === i}
-                  className="flex w-full items-center justify-between px-6 py-5 text-left"
+                  aria-controls={`faq-content-${i}`}
+                  className="flex w-full items-center justify-between px-6 py-5 text-left focus-visible:outline-none focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-600 rounded-t-2xl"
                 >
                   <span className="pr-4 text-sm font-semibold text-slate-900 md:text-base">{f.q}</span>
                   <span
@@ -78,6 +80,9 @@ export default function FAQ() {
                 </button>
               </dt>
               <dd
+                id={`faq-content-${i}`}
+                role="region"
+                aria-labelledby={`faq-btn-${i}`}
                 className="grid transition-[grid-template-rows] duration-300 ease-out"
                 style={{ gridTemplateRows: openIndex === i ? "1fr" : "0fr" }}
               >

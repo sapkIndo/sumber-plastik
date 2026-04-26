@@ -4,20 +4,84 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const clientsRow1 = [
-  "PT Maju Bersama", "CV Berkah Plastik", "PT Nusantara Industries",
-  "PT Karya Mandiri", "CV Sumber Rezeki", "PT Global Packaging",
-  "PT Cipta Karya", "CV Aneka Industri",
+type Client = {
+  name: string;
+  logo?: string;
+};
+
+const clientsRow1: Client[] = [
+  { name: "Universitas Gadjah Mada" },
+  { name: "Starsteak" },
+  { name: "Sender" },
+  { name: "Cosan", logo: "/clients/Cosan.webp" },
+  { name: "Evita" },
+  { name: "Lactona" },
+  { name: "Cubic Cup" },
+  { name: "Kopian" },
+  { name: "Sambal MamaNi" },
+  { name: "Cavinton Hotel Yogyakarta", logo: "/clients/Cavinton.webp" },
+  { name: "Lamora Sagan" },
+  { name: "Bawana Kopi" },
+  { name: "Royal Coffee" },
+  { name: "Star Up" },
+  { name: "Norde" },
+  { name: "Koyo Slow Bar" },
+  { name: "Bubur & Yamie HK" },
+  { name: "Citranet", logo: "/clients/Citranet.webp" },
+  { name: "Green Roots" },
+  { name: "Khaira" },
+  { name: "Alfamart" },
 ];
 
-const clientsRow2 = [
-  "PT Solusi Prima", "PT Bintang Industri", "CV Mitra Sejati",
-  "PT Cahaya Plastik", "PT Usaha Maju", "CV Delta Industri",
-  "PT Omega Packaging", "PT Sentosa Mandiri",
+const clientsRow2: Client[] = [
+  { name: "Urban Perfume Point" },
+  { name: "Bura Bura", logo: "/clients/Bura Bura.webp" },
+  { name: "CV Mitra Sejati" },
+  { name: "PT Cahaya Plastik" },
+  { name: "Gembira Loka Zoo", logo: "/clients/gembira loka zoo.webp" },
+  { name: "Impresso Coffee" },
+  { name: "Jovin Petshop" },
+  { name: "Kopi Jo", logo: "/clients/KOPI JO 3 pdf_001.webp" },
+  { name: "Fyns Kopi" },
+  { name: "Spesial Sambal" },
+  { name: "Kopinggirjalan" },
+  { name: "RS Soerojo" },
+  { name: "Triwara" },
+  { name: "Lab Art Aromatique" },
+  { name: "Aicare" },
+  { name: "Badan Gizi Nasional" },
+  { name: "Side to Side" },
+  { name: "Bunny House" },
+  { name: "Kenz Catering", logo: "/clients/kenz Catering.webp" },
+  { name: "SD Muhammadiyah Pakel" },
+  { name: "Putra Farma Yogyakarta" },
 ];
+
+function ClientCard({ client }: { client: Client }) {
+  return (
+    <li className="flex shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm">
+      {client.logo ? (
+        <div className="relative h-12 w-36 p-2">
+          <Image
+            src={client.logo}
+            alt={`Logo ${client.name}`}
+            fill
+            className="object-contain"
+            sizes="144px"
+          />
+        </div>
+      ) : (
+        <span className="px-6 py-3 text-sm font-medium text-slate-600 whitespace-nowrap">
+          {client.name}
+        </span>
+      )}
+    </li>
+  );
+}
 
 export default function Clients() {
   const ref = useRef<HTMLElement>(null);
@@ -50,26 +114,16 @@ export default function Clients() {
       <div className="space-y-4" aria-hidden="true">
         <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
           <ul className="animate-marquee flex min-w-full shrink-0 items-center gap-4" role="list">
-            {[...clientsRow1, ...clientsRow1].map((name, i) => (
-              <li
-                key={`r1-${i}`}
-                className="flex shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-600 whitespace-nowrap shadow-sm"
-              >
-                {name}
-              </li>
+            {[...clientsRow1, ...clientsRow1].map((client, i) => (
+              <ClientCard key={`r1-${i}`} client={client} />
             ))}
           </ul>
         </div>
 
         <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
           <ul className="animate-marquee-reverse flex min-w-full shrink-0 items-center gap-4" role="list">
-            {[...clientsRow2, ...clientsRow2].map((name, i) => (
-              <li
-                key={`r2-${i}`}
-                className="flex shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-600 whitespace-nowrap shadow-sm"
-              >
-                {name}
-              </li>
+            {[...clientsRow2, ...clientsRow2].map((client, i) => (
+              <ClientCard key={`r2-${i}`} client={client} />
             ))}
           </ul>
         </div>

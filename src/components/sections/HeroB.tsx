@@ -11,8 +11,8 @@ import { CONTACT } from "@/constants";
 gsap.registerPlugin(useGSAP, SplitText);
 
 const categories = [
-  "Plastik PP", "Plastik PE", "Plastik PVC",
-  "Plastik ABS", "Plastik Nylon", "Polycarbonate",
+  "Plastik PP", "Plastik PET", "Plastik HDPE",
+  "Plastik PVC", "LLDPE", "PS / Styrofoam", "Paper Packaging",
 ];
 
 const marqueeItems = [...categories, ...categories, ...categories, ...categories];
@@ -44,7 +44,6 @@ export default function HeroB() {
     { scope: heroRef }
   );
 
-  // Magnetic cursor on headline — useGSAP karena gsap.quickTo buat GSAP animation
   useGSAP(
     () => {
       const el = titleRef.current;
@@ -67,7 +66,6 @@ export default function HeroB() {
     { scope: heroRef }
   );
 
-  // Spotlight reveal — lerped radius grows on enter, shrinks on leave
   useEffect(() => {
     const hero = heroRef.current;
     const textReveal = textRevealRef.current;
@@ -100,6 +98,11 @@ export default function HeroB() {
     const onMouseMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
+      if (targetRadius.current === 0) {
+        lerped.current.x = e.clientX;
+        lerped.current.y = e.clientY;
+        targetRadius.current = 260;
+      }
     };
 
     const onMouseEnter = (e: MouseEvent) => {
@@ -133,118 +136,112 @@ export default function HeroB() {
   return (
     <section
       ref={heroRef}
-      aria-label="Hero — Pengenalan Sumber Plastik"
+      aria-label="Hero — Pengenalan Sumber Aneka Plastik dan Kemasan"
       className="relative flex min-h-svh flex-col overflow-hidden px-6 pt-24 md:pt-28 md:px-12 lg:px-16"
     >
-        {/* ── Content ── */}
-        <div className="relative z-10 flex flex-col gap-8">
+      <div className="relative z-10 flex flex-col gap-8">
 
-          {/* Overline + year */}
-          <div className="flex items-center justify-between">
-            <div className="hero-overline flex items-center gap-3">
-              <span className="h-px w-8 bg-blue-600" aria-hidden="true" />
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
-                Distributor Resmi &amp; Terpercaya
-              </span>
-            </div>
-            <span className="hero-year text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-              Est. 2010
+        {/* Overline + year */}
+        <div className="flex items-center justify-between">
+          <div className="hero-overline flex items-center gap-3">
+            <span className="h-px w-8 bg-blue-600" aria-hidden="true" />
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
+              Distributor Resmi &amp; Terpercaya
             </span>
           </div>
-
-          {/* Headline */}
-          <h1
-            ref={titleRef}
-            className="hero-title will-change-transform text-4xl font-black leading-[0.9] tracking-tighter text-slate-900 sm:text-5xl md:text-6xl lg:text-8xl"
-          >
-            Solusi Plastik
-            <br className="hidden sm:block" />
-            <span className="text-blue-600">Berkualitas Tinggi</span>
-            <br className="hidden sm:block" />
-            <span className="font-bold text-slate-400">untuk Industri Anda.</span>
-          </h1>
-
-          {/* Rule + Subtitle + CTAs */}
-          <div>
-            <div className="hero-rule mb-8 h-px w-full bg-slate-200" />
-            <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-              <p className="hero-sub max-w-sm text-base leading-relaxed text-slate-600">
-                Sumber Plastik menyediakan produk plastik premium untuk kebutuhan industri dan
-                rumah tangga. Pengiriman cepat ke seluruh Indonesia dengan jaminan kualitas terbaik.
-              </p>
-              <div className="hero-cta flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center">
-                <button
-                  onClick={handleWhatsApp}
-                  className="group relative overflow-hidden rounded-xl bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-xl shadow-blue-600/20 transition-[background-color,box-shadow,transform] duration-150 ease-out hover:bg-blue-500 hover:shadow-blue-500/25 active:scale-[0.97]"
-                >
-                  <span
-                    className="absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
-                    aria-hidden="true"
-                  />
-                  <span className="relative flex items-center gap-2">
-                    Hubungi Kami Sekarang
-                    <ArrowRight size={15} className="transition-transform duration-150 ease-out group-hover:translate-x-1" aria-hidden="true" />
-                  </span>
-                </button>
-                <a
-                  href="#produk"
-                  className="rounded-xl border border-slate-300 px-7 py-3.5 text-center text-sm font-semibold text-slate-600 transition-[border-color,color,transform] duration-150 ease-out hover:border-slate-400 hover:text-slate-900 active:scale-[0.97]"
-                >
-                  Lihat Produk
-                </a>
-              </div>
-            </div>
-          </div>
-
+          <span className="hero-year text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+            Est. 2010
+          </span>
         </div>
 
-        {/* Mobile spacer */}
-        <div className="flex-1 md:hidden" aria-hidden="true" />
-
-        {/* Ghost text with spotlight reveal */}
-        <div
-          aria-hidden="true"
-          className="relative hidden flex-1 select-none items-center justify-center overflow-hidden md:flex"
+        {/* Headline */}
+        <h1
+          ref={titleRef}
+          className="hero-title will-change-transform text-4xl font-black leading-[0.9] tracking-tighter text-slate-900 dark:text-slate-50 sm:text-5xl md:text-6xl lg:text-8xl"
         >
-          {/* Light base — barely visible */}
+          Solusi Plastik
+          <br className="hidden sm:block" />
+          <span className="text-blue-600">Berkualitas Tinggi</span>
+          <br className="hidden sm:block" />
+          <span className="font-bold text-slate-400 dark:text-slate-500">untuk Industri Anda.</span>
+        </h1>
+
+        {/* Rule + Subtitle + CTAs */}
+        <div>
+          <div className="hero-rule mb-8 h-px w-full bg-slate-200 dark:bg-slate-700" />
+          <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <p className="hero-sub max-w-sm text-base leading-relaxed text-slate-600 dark:text-slate-400">
+              Sumber Aneka Plastik dan Kemasan menyediakan 1.000+ produk plastik dan kemasan untuk kebutuhan usaha dari skala kecil hingga besar. Pengiriman cepat ke seluruh Indonesia.
+            </p>
+            <div className="hero-cta flex shrink-0 flex-col gap-4 sm:flex-row sm:items-center sm:gap-3">
+              <button
+                onClick={handleWhatsApp}
+                className="group relative w-full overflow-hidden rounded-xl bg-blue-600 px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-[background-color,box-shadow,transform] duration-150 ease-out hover:bg-blue-500 hover:shadow-blue-500/25 active:scale-[0.97] sm:w-auto sm:py-3.5"
+              >
+                <span
+                  className="absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+                  aria-hidden="true"
+                />
+                <span className="relative flex items-center justify-center gap-2">
+                  Hubungi Kami Sekarang
+                  <ArrowRight size={15} className="transition-transform duration-150 ease-out group-hover:translate-x-1" aria-hidden="true" />
+                </span>
+              </button>
+              <a
+                href="#produk"
+                className="flex items-center justify-center gap-1.5 text-sm font-semibold text-slate-500 transition-colors duration-150 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50 sm:rounded-xl sm:border sm:border-slate-300 sm:px-7 sm:py-3.5 sm:hover:border-slate-400 dark:sm:border-slate-700 dark:sm:hover:border-slate-500"
+              >
+                Lihat Produk
+                <ArrowRight size={13} className="text-slate-400 sm:hidden" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Ghost text with spotlight reveal */}
+      <div
+        aria-hidden="true"
+        className="relative flex flex-1 select-none items-center justify-center overflow-hidden"
+      >
+        <p
+          className="text-center font-black leading-none tracking-tighter text-slate-200 dark:text-slate-800"
+          style={{ fontSize: "clamp(3rem, 16vw, 18rem)" }}
+        >
+          Q U A L I T Y .
+        </p>
+        <div
+          ref={textRevealRef}
+          className="pointer-events-none absolute inset-0 hidden items-center justify-center md:flex"
+        >
           <p
-            className="text-center font-black leading-none tracking-tighter text-slate-200"
-            style={{ fontSize: "clamp(4rem, 15vw, 18rem)" }}
+            className="text-center font-black leading-none tracking-tighter text-slate-900 dark:text-slate-100"
+            style={{ fontSize: "clamp(3rem, 16vw, 18rem)" }}
           >
             Q U A L I T Y .
           </p>
-          {/* Dark reveal — masked to cursor */}
-          <div
-            ref={textRevealRef}
-            className="pointer-events-none absolute inset-0 flex items-center justify-center"
-          >
-            <p
-              className="text-center font-black leading-none tracking-tighter text-slate-900"
-              style={{ fontSize: "clamp(4rem, 15vw, 18rem)" }}
-            >
-              Q U A L I T Y .
-            </p>
-          </div>
         </div>
+      </div>
 
-        {/* Marquee strip */}
-        <div className="hero-strip pb-12 pt-8">
-          <div className="h-px w-full bg-slate-200" />
-          <div className="overflow-hidden py-3.5">
-            <div className="flex animate-marquee gap-10 whitespace-nowrap" aria-hidden="true">
-              {marqueeItems.map((item, i) => (
-                <span
-                  key={i}
-                  className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400"
-                >
-                  {item}
-                  <span className="h-1 w-1 rounded-full bg-blue-600/40" />
-                </span>
-              ))}
-            </div>
+      {/* Marquee strip */}
+      <div className="hero-strip pb-12 pt-8">
+        <div className="h-px w-full bg-slate-200 dark:bg-slate-700" />
+        <div className="overflow-hidden py-3.5">
+          <div className="flex animate-marquee gap-10 whitespace-nowrap" aria-hidden="true">
+            {marqueeItems.map((item, i) => (
+              <span
+                key={i}
+                className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500"
+              >
+                {item}
+                <span className="h-1 w-1 rounded-full bg-blue-600/40" />
+              </span>
+            ))}
           </div>
-          <div className="h-px w-full bg-slate-200" />
         </div>
+        <div className="h-px w-full bg-slate-200 dark:bg-slate-700" />
+      </div>
 
     </section>
   );

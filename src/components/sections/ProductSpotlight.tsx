@@ -1,175 +1,382 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger, DrawSVGPlugin);
+
+const CX = 130;
+const CY = 130;
+const RADII   = [50, 68, 86, 104];
+const COLORS  = ["#2563eb", "#3b82f6", "#60a5fa", "#93c5fd"];
+const N_RINGS = 4;
 
 const products = [
   {
     abbr: "PP",
     name: "Polypropylene",
-    desc: "Solusi serbaguna untuk ribuan aplikasi industri, dari kemasan makanan hingga komponen otomotif presisi tinggi.",
-    specs: ["Food grade", "Ringan & kuat", "Tahan kimia"],
+    tagline: "Serbaguna & tersertifikasi food-grade",
+    desc: "Pilihan utama kemasan makanan dan minuman. Ringan, tahan panas hingga 130 °C, dan tersertifikasi BPOM — cocok untuk cup, toples, tray, hingga kemasan industri skala besar.",
+    specs: ["Food Grade BPOM", "Tahan 130 °C", "Recyclable"],
+    industries: "Makanan  ·  Minuman  ·  Farmasi  ·  Kosmetik",
+    props: [
+      { label: "Kekuatan",      value: 72 },
+      { label: "Fleksibilitas", value: 55 },
+      { label: "Tahan Panas",   value: 78 },
+      { label: "Food Safety",   value: 95 },
+    ],
   },
   {
-    abbr: "PE",
-    name: "Polyethylene",
-    desc: "Fleksibilitas tinggi dengan kualitas konsisten — pilihan utama industri packaging dan distribusi nasional.",
-    specs: ["HDPE & LDPE", "Tahan benturan", "Tahan suhu rendah"],
+    abbr: "PET",
+    name: "PET",
+    tagline: "Kemasan transparan premium untuk produk F&B",
+    desc: "Botol minuman, kemasan makanan jernih kristal, dan tray premium. Ringan namun kuat, 100% recyclable, dan tersertifikasi food-grade — standar industri F&B global.",
+    specs: ["Crystal Clear", "Food Grade", "Recyclable"],
+    industries: "Minuman  ·  Makanan  ·  Farmasi  ·  Kosmetik",
+    props: [
+      { label: "Kekuatan",      value: 70 },
+      { label: "Fleksibilitas", value: 50 },
+      { label: "Tahan Panas",   value: 40 },
+      { label: "Food Safety",   value: 93 },
+    ],
+  },
+  {
+    abbr: "HDPE",
+    name: "HDPE",
+    tagline: "Kemasan rigid & distribusi produk skala besar",
+    desc: "Jeriken, drum plastik, kantong belanja tebal, dan botol detergen. Kekuatan struktural tinggi, tahan bahan kimia, dan food-safe — pilihan utama distribusi FMCG.",
+    specs: ["Food Grade", "Chemical Resistant", "Waterproof"],
+    industries: "Distribusi  ·  FMCG  ·  Kimia  ·  Konstruksi",
+    props: [
+      { label: "Kekuatan",      value: 82 },
+      { label: "Fleksibilitas", value: 42 },
+      { label: "Tahan Panas",   value: 55 },
+      { label: "Food Safety",   value: 80 },
+    ],
   },
   {
     abbr: "PVC",
     name: "Polyvinyl Chloride",
-    desc: "Ketahanan superior untuk konstruksi, infrastruktur, dan aplikasi teknik yang menuntut presisi tinggi.",
-    specs: ["Rigid & Flexible", "Tahan cuaca", "Isolasi listrik"],
+    tagline: "Rigid atau fleksibel — satu material, dua karakter",
+    desc: "Hadir dalam varian rigid untuk pipa dan kemasan blister farmasi, serta flexible untuk selang dan film pembungkus. Tahan korosi dan cuaca ekstrem tanpa degradasi.",
+    specs: ["Rigid & Flexible", "Tahan Korosi", "Isolasi Listrik"],
+    industries: "Farmasi  ·  Konstruksi  ·  Retail  ·  Medis",
+    props: [
+      { label: "Kekuatan",      value: 85 },
+      { label: "Fleksibilitas", value: 65 },
+      { label: "Tahan Panas",   value: 60 },
+      { label: "Food Safety",   value: 40 },
+    ],
   },
   {
-    abbr: "ABS",
-    name: "ABS Plastic",
-    desc: "Impact resistance kelas dunia yang dipercaya industri otomotif, elektronik, dan manufaktur global.",
-    specs: ["High impact", "Mudah diproses", "Permukaan halus"],
+    abbr: "LLDPE",
+    name: "LLDPE",
+    tagline: "Film & wrapping serba guna untuk kemasan modern",
+    desc: "Stretch film, kantong plastik, food wrap, dan kemasan fleksibel. Kekuatan sobek tinggi dengan ketebalan lebih tipis. Ideal untuk packaging otomatis skala besar.",
+    specs: ["Stretch Film", "Tear Resistant", "Food Safe"],
+    industries: "Logistik  ·  FMCG  ·  Retail  ·  Cold Chain",
+    props: [
+      { label: "Kekuatan",      value: 55 },
+      { label: "Fleksibilitas", value: 95 },
+      { label: "Tahan Panas",   value: 38 },
+      { label: "Food Safety",   value: 85 },
+    ],
   },
   {
-    abbr: "PA",
-    name: "Nylon",
-    desc: "Performa engineering-grade untuk kondisi paling demanding — panas ekstrem, gesekan berat, dan tekanan tinggi.",
-    specs: ["Tahan panas", "Self-lubricating", "Kekuatan tinggi"],
+    abbr: "PS",
+    name: "Polystyrene",
+    tagline: "Insulasi termal terbaik untuk kemasan produk segar",
+    desc: "Wadah makanan styrofoam, baki buah & sayur, cup minuman, dan kemasan produk segar. Insulasi panas dan dingin yang sangat baik, ringan, dan mudah dibentuk.",
+    specs: ["Insulasi Termal", "Food Grade", "Ringan"],
+    industries: "F&B  ·  Supermarket  ·  Ekspedisi  ·  Hortikultura",
+    props: [
+      { label: "Kekuatan",      value: 40 },
+      { label: "Fleksibilitas", value: 25 },
+      { label: "Tahan Panas",   value: 35 },
+      { label: "Food Safety",   value: 75 },
+    ],
   },
-];
-
-// Clockwise: atas → kanan → bawah → kiri
-const transitions = [
-  { exitX:    0, exitY:  -90, enterX:    0, enterY:   90 },
-  { exitX:  120, exitY:    0, enterX: -120, enterY:    0 },
-  { exitX:    0, exitY:   90, enterX:    0, enterY:  -90 },
-  { exitX: -120, exitY:    0, enterX:  120, enterY:    0 },
+  {
+    abbr: "Paper",
+    name: "Paper Packaging",
+    tagline: "Kemasan ramah lingkungan berbasis kertas",
+    desc: "Kardus, paper bag, kraft paper, dan kemasan eco-friendly. Solusi sustainable yang semakin diminati pasar modern. Tersedia dalam berbagai ketebalan, gramasi, dan finishing.",
+    specs: ["Eco Friendly", "Biodegradable", "Custom Print"],
+    industries: "Retail  ·  F&B  ·  E-commerce  ·  Gift",
+    props: [
+      { label: "Kekuatan",      value: 50 },
+      { label: "Fleksibilitas", value: 60 },
+      { label: "Tahan Panas",   value: 30 },
+      { label: "Food Safety",   value: 88 },
+    ],
+  },
 ];
 
 export default function ProductSpotlight() {
-  const ref         = useRef<HTMLElement>(null);
-  const stickyRef   = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
+  const ref        = useRef<HTMLElement>(null);
+  const stickyRef  = useRef<HTMLDivElement>(null);
+  const progRef    = useRef<SVGLineElement>(null);
+  const counterRef = useRef<HTMLSpanElement>(null);
 
-  useGSAP(
-    () => {
-      const total  = products.length;
-      const root   = ref.current!;
-      const slides = gsap.utils.toArray<HTMLElement>(".ps-slide", root);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const ringRefs  = useRef<(SVGCircleElement | null)[]>([]);
 
-      // Set initial position per slide based on its entry direction
-      slides.forEach((slide, i) => {
-        if (i === 0) return;
-        const { enterX, enterY } = transitions[i - 1];
-        gsap.set(slide, { x: enterX, y: enterY, opacity: 0 });
-      });
+  useGSAP(() => {
+    const total = products.length;
+    let current = 0;
+    let pendingIn: gsap.core.Tween | null = null;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: stickyRef.current,
-          start: "top top",
-          end: () => `+=${(total - 1) * window.innerHeight}`,
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-        },
-      });
+    function q<T extends Element>(el: HTMLDivElement, sel: string) {
+      return el.querySelector<T>(sel);
+    }
+    function qa<T extends Element>(el: HTMLDivElement, sel: string) {
+      return el.querySelectorAll<T>(sel);
+    }
 
-      tl.to(progressRef.current, { scaleX: 1, ease: "none", duration: total - 1 }, 0);
-
-      for (let i = 1; i < total; i++) {
-        const pos = i - 1;
-        const { exitX, exitY } = transitions[i - 1];
-        tl
-          .to(slides[i - 1], { x: exitX, y: exitY, opacity: 0, ease: "none", duration: 0.4 }, pos)
-          .to(slides[i],     { x: 0, y: 0, opacity: 1, ease: "none", duration: 0.4 }, pos + 0.55);
+    function initSlide(i: number) {
+      const s = slideRefs.current[i];
+      if (!s) return;
+      gsap.set(s, { opacity: i === 0 ? 1 : 0, scale: i === 0 ? 1 : 1.03 });
+      gsap.set(q(s, ".ps-overline"),  { opacity: 0, y: 12 });
+      gsap.set(q(s, ".ps-tagline"),   { opacity: 0, y: 8  });
+      gsap.set(q(s, ".ps-name"),      { opacity: 0, y: 32 });
+      gsap.set(q(s, ".ps-desc"),      { opacity: 0, y: 20 });
+      gsap.set(q(s, ".ps-industries"),{ opacity: 0        });
+      gsap.set(qa(s, ".ps-spec"),     { opacity: 0, y: 14, scale: 0.8 });
+      gsap.set(qa(s, ".ps-legend"),   { opacity: 0, x: -8 });
+      for (let j = 0; j < N_RINGS; j++) {
+        const ring = ringRefs.current[i * N_RINGS + j];
+        if (ring) gsap.set(ring, { drawSVG: "0%" });
       }
-    },
-    { scope: ref }
-  );
+    }
+
+    for (let i = 0; i < total; i++) initSlide(i);
+
+    function slideIn(i: number) {
+      const s = slideRefs.current[i];
+      if (!s) return;
+      const tl = gsap.timeline();
+
+      tl.to(s, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 0);
+
+      for (let j = 0; j < N_RINGS; j++) {
+        const ring = ringRefs.current[i * N_RINGS + j];
+        const pct  = products[i].props[j].value;
+        if (ring)
+          tl.to(ring, { drawSVG: `0% ${pct}%`, duration: 1.1, ease: "circ.out" }, 0.1 + j * 0.07);
+      }
+
+      tl.to(qa(s, ".ps-legend"),   { opacity: 1, x: 0,  duration: 0.45, stagger: 0.07, ease: "power2.out" }, 0.35);
+      tl.to(q(s, ".ps-overline"),  { opacity: 1, y: 0,  duration: 0.4,  ease: "power2.out" }, 0.14);
+      tl.to(q(s, ".ps-name"),      { opacity: 1, y: 0,  duration: 0.65, ease: "power3.out" }, 0.22);
+      tl.to(q(s, ".ps-tagline"),   { opacity: 1, y: 0,  duration: 0.4,  ease: "power2.out" }, 0.32);
+      tl.to(q(s, ".ps-desc"),      { opacity: 1, y: 0,  duration: 0.5,  ease: "power2.out" }, 0.38);
+      tl.to(q(s, ".ps-industries"),{ opacity: 1,         duration: 0.4,  ease: "power1.out" }, 0.5);
+      tl.to(qa(s, ".ps-spec"), {
+        opacity: 1, y: 0, scale: 1,
+        duration: 0.7, stagger: 0.09,
+        ease: "elastic.out(1, 0.62)",
+      }, 0.54);
+    }
+
+    function slideOut(i: number) {
+      const s = slideRefs.current[i];
+      if (!s) return;
+      for (let j = 0; j < N_RINGS; j++) {
+        const ring = ringRefs.current[i * N_RINGS + j];
+        if (ring) gsap.to(ring, { drawSVG: "0%", duration: 0.28, ease: "power2.in" });
+      }
+      gsap.to(s, { opacity: 0, scale: 0.97, duration: 0.32, ease: "power2.in" });
+    }
+
+    function goTo(next: number) {
+      if (next === current) return;
+      if (pendingIn) pendingIn.kill();
+      slideOut(current);
+      current = next;
+      if (counterRef.current)
+        counterRef.current.textContent =
+          `${String(next + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+      initSlide(next);
+      pendingIn = gsap.delayedCall(0.22, () => slideIn(next));
+    }
+
+    slideIn(0);
+    if (counterRef.current)
+      counterRef.current.textContent = `01 / ${String(total).padStart(2, "0")}`;
+
+    gsap.set(progRef.current, { drawSVG: "0%" });
+    gsap.to(progRef.current, {
+      drawSVG: "100%",
+      ease: "none",
+      scrollTrigger: {
+        trigger: stickyRef.current,
+        start: "top top",
+        end: `+=${(total - 1) * window.innerHeight}`,
+        scrub: 0.4,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    ScrollTrigger.create({
+      trigger: stickyRef.current,
+      start: "top top",
+      end: `+=${(total - 1) * window.innerHeight}`,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      snap: {
+        snapTo: 1 / (total - 1),
+        duration: { min: 0.3, max: 0.7 },
+        delay: 0.05,
+        ease: "power1.inOut",
+      },
+      onUpdate(self) {
+        const idx = Math.round(self.progress * (total - 1));
+        if (idx !== current) goTo(idx);
+      },
+    });
+  }, { scope: ref });
+
+  useEffect(() => {
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 250);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <section ref={ref} aria-label="Material unggulan Sumber Plastik">
+    <section ref={ref} aria-labelledby="spotlight-heading">
       <div
         ref={stickyRef}
-        className="relative flex h-screen w-full flex-col overflow-hidden"
-        style={{
-          background:
-            "radial-gradient(ellipse 90% 70% at 60% 50%, #0f172a 0%, #020617 100%)",
-        }}
+        className="relative flex h-screen w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
       >
-        {/* ── Top bar ── */}
-        <div className="flex shrink-0 items-center justify-between border-b border-white/[0.05] px-6 py-5 md:px-12">
+        <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-4 dark:border-slate-800 md:px-12">
           <div className="flex items-center gap-3">
-            <span className="h-px w-6 bg-blue-400" aria-hidden="true" />
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-white/30">
+            <span className="h-px w-5 bg-blue-600" aria-hidden="true" />
+            <h2 id="spotlight-heading" className="text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
               Material Unggulan
-            </span>
+            </h2>
           </div>
-          <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/20">
-            {products.length} Kategori Produk
-          </span>
+          <span ref={counterRef} className="font-mono text-[11px] tabular-nums text-slate-400 dark:text-slate-500" />
         </div>
 
-        {/* ── Slides ── */}
         <div className="relative flex flex-1 overflow-hidden">
           {products.map((p, i) => (
             <div
               key={p.abbr}
-              className={`ps-slide absolute inset-0 flex flex-col justify-center overflow-hidden px-8 md:pl-20 lg:pl-28 ${i > 0 ? "opacity-0" : ""}`}
+              ref={(el) => { slideRefs.current[i] = el; }}
+              className="absolute inset-0 flex flex-col justify-center gap-5 px-6 py-4 md:flex-row md:items-center md:gap-10 md:px-12 lg:px-16"
             >
-              {/* Watermark abbr */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 select-none font-black leading-none tracking-tighter text-white"
-                style={{ fontSize: "clamp(12rem, 38vw, 52rem)", opacity: 0.045 }}
-              >
-                {p.abbr}
-              </div>
-
-              {/* Content */}
-              <div className="relative z-10 max-w-xl">
-
-                {/* Overline */}
-                <div className="mb-7 flex items-center gap-3">
-                  <span className="h-px w-6 shrink-0 bg-blue-400" aria-hidden="true" />
-                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-blue-400">
+              <div className="flex flex-col md:w-[55%]">
+                <div className="ps-overline mb-4 flex items-center gap-3">
+                  <span className="h-px w-5 shrink-0 bg-blue-600" aria-hidden="true" />
+                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-blue-600">
                     {p.abbr}
                   </span>
                 </div>
 
-                {/* Name */}
                 <h3
-                  className="mb-6 font-black leading-[1.0] tracking-tight text-white"
-                  style={{ fontSize: "clamp(2.8rem, 7vw, 8rem)" }}
+                  className="ps-name mb-2 font-black leading-[1.0] tracking-tight text-slate-900 dark:text-slate-50"
+                  style={{ fontSize: "clamp(2rem, 4.5vw, 5.5rem)" }}
                 >
                   {p.name}
                 </h3>
 
-                {/* Description */}
-                <p className="mb-10 max-w-md text-sm leading-[1.85] text-white/40 md:text-[15px]">
+                <p className="ps-tagline mb-4 text-sm font-medium text-blue-600 md:text-base">
+                  {p.tagline}
+                </p>
+
+                <p className="ps-desc mb-4 text-sm leading-[1.8] text-slate-500 dark:text-slate-400 md:text-[15px]">
                   {p.desc}
                 </p>
 
-                {/* Specs */}
-                <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/25">
-                  {p.specs.join("  ·  ")}
+                <p className="ps-industries mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">
+                  {p.industries}
                 </p>
 
+                <ul className="flex flex-wrap gap-2" role="list">
+                  {p.specs.map((spec) => (
+                    <li
+                      key={spec}
+                      className="ps-spec rounded-full border border-blue-200 bg-blue-50 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-blue-600 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-400"
+                    >
+                      {spec}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="flex shrink-0 items-center gap-5 md:w-[45%] md:flex-col md:items-center md:gap-4">
+                <svg
+                  className="h-36 w-36 shrink-0 md:h-64 md:w-64 lg:h-72 lg:w-72"
+                  viewBox="0 0 260 260"
+                  aria-hidden="true"
+                  role="img"
+                >
+                  <g transform={`rotate(-90, ${CX}, ${CY})`}>
+                    {p.props.map((prop, j) => (
+                      <g key={prop.label}>
+                        <circle
+                          cx={CX} cy={CY} r={RADII[j]}
+                          fill="none" stroke={COLORS[j]} strokeWidth="3" opacity="0.1"
+                        />
+                        <circle
+                          ref={(el) => { ringRefs.current[i * N_RINGS + j] = el; }}
+                          cx={CX} cy={CY} r={RADII[j]}
+                          fill="none" stroke={COLORS[j]} strokeWidth="3" strokeLinecap="round"
+                        />
+                      </g>
+                    ))}
+                  </g>
+
+                  <text
+                    x={CX} y={CY - 6}
+                    textAnchor="middle" fontSize="22" fontWeight="900"
+                    fill="rgba(37,99,235,0.12)"
+                    style={{ fontFamily: "inherit", letterSpacing: "-0.02em" }}
+                  >
+                    {p.abbr}
+                  </text>
+                  <text
+                    x={CX} y={CY + 14}
+                    textAnchor="middle" fontSize="9" fill="rgba(37,99,235,0.2)"
+                    style={{ fontFamily: "inherit", letterSpacing: "0.12em", textTransform: "uppercase" }}
+                  >
+                    properties
+                  </text>
+                </svg>
+
+                <ul className="grid flex-1 grid-cols-2 gap-x-4 gap-y-2 md:w-full md:max-w-[200px] md:grid-cols-1 md:space-y-0" role="list">
+                  {p.props.map((prop, j) => (
+                    <li key={prop.label} className="ps-legend flex items-center gap-2">
+                      <span
+                        className="h-2 w-2 shrink-0 rounded-full"
+                        style={{ backgroundColor: COLORS[j] }}
+                        aria-hidden="true"
+                      />
+                      <span className="flex-1 text-xs text-slate-500 dark:text-slate-400">{prop.label}</span>
+                      <span className="font-mono text-xs font-semibold tabular-nums text-slate-700 dark:text-slate-300">
+                        {prop.value}%
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           ))}
         </div>
 
-        {/* ── Progress bar ── */}
-        <div className="relative h-px w-full shrink-0 bg-white/[0.05]">
-          <div
-            ref={progressRef}
-            className="absolute inset-0 origin-left bg-blue-500"
-            style={{ transform: "scaleX(0)" }}
-          />
+        <div className="relative z-10 shrink-0 px-6 pb-5 md:px-12">
+          <svg width="100%" height="2" aria-hidden="true" style={{ overflow: "visible" }}>
+            <line x1="0" y1="1" x2="100%" y2="1" className="stroke-slate-300 dark:stroke-slate-700" strokeWidth="1.5" />
+            <line
+              ref={progRef}
+              x1="0" y1="1" x2="100%" y2="1"
+              stroke="rgb(37,99,235)" strokeWidth="1.5" strokeLinecap="round"
+            />
+          </svg>
         </div>
       </div>
     </section>

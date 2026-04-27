@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import ConsoleEasterEgg from "@/components/ConsoleEasterEgg";
 import InteractiveBg from "@/components/InteractiveBg";
 import CustomCursor from "@/components/CustomCursor";
@@ -21,27 +22,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://sumberplastik.com"),
   title: {
-    default: "Sumber Plastik | Distributor Plastik Terpercaya",
-    template: "%s | Sumber Plastik",
+    default: "Sumber Aneka Plastik dan Kemasan | Toko Plastik & Kemasan Terpercaya",
+    template: "%s | Sumber Aneka Plastik dan Kemasan",
   },
   description:
-    "Sumber Plastik adalah distributor dan supplier produk plastik berkualitas tinggi untuk kebutuhan industri dan rumah tangga di seluruh Indonesia.",
-  keywords: ["plastik", "distributor plastik", "supplier plastik", "sumber plastik", "plastik industri"],
-  authors: [{ name: "Sumber Plastik" }],
+    "Sumber Aneka Plastik dan Kemasan adalah toko plastik dan kemasan terpercaya dengan 1.000+ produk berkualitas untuk kebutuhan usaha dari skala kecil hingga besar di seluruh Indonesia.",
+  keywords: ["plastik", "kemasan", "toko plastik", "sumber aneka plastik", "SAPK", "plastik kemasan", "plastik pp", "plastik pet", "hdpe", "lldpe"],
+  authors: [{ name: "Sumber Aneka Plastik dan Kemasan" }],
   openGraph: {
     type: "website",
     locale: "id_ID",
     url: "https://sumberplastik.com",
-    title: "Sumber Plastik | Distributor Plastik Terpercaya",
+    title: "Sumber Aneka Plastik dan Kemasan | Toko Plastik & Kemasan Terpercaya",
     description:
-      "Distributor dan supplier produk plastik berkualitas tinggi untuk kebutuhan industri dan rumah tangga.",
-    siteName: "Sumber Plastik",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Sumber Plastik — Distributor Plastik Terpercaya" }],
+      "Toko plastik dan kemasan terpercaya dengan 1.000+ produk berkualitas untuk kebutuhan usaha di seluruh Indonesia.",
+    siteName: "Sumber Aneka Plastik dan Kemasan",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Sumber Aneka Plastik dan Kemasan — Toko Plastik & Kemasan Terpercaya" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sumber Plastik | Distributor Plastik Terpercaya",
-    description: "Distributor dan supplier produk plastik berkualitas tinggi.",
+    title: "Sumber Aneka Plastik dan Kemasan | Toko Plastik & Kemasan Terpercaya",
+    description: "Toko plastik dan kemasan terpercaya dengan 1.000+ produk berkualitas.",
     images: ["/opengraph-image"],
   },
   robots: {
@@ -61,27 +62,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="id" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} text-slate-900 antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <CustomCursor />
-        <InteractiveBg />
-        <GSAPSmoothScroll />
-        <div id="smooth-wrapper">
-          <div id="smooth-content">
-            {children}
-          </div>
-        </div>
-        <Toaster
-          position="top-right"
-          richColors
-          closeButton
-          toastOptions={{
-            style: { fontFamily: "var(--font-geist-sans)" },
+        {/* Prevent flash of unstyled content — runs sync before paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem('sp-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}`,
           }}
         />
-        <Analytics />
-        <ConsoleEasterEgg />
+        <ThemeProvider>
+          <CustomCursor />
+          <InteractiveBg />
+          <GSAPSmoothScroll />
+          <div id="smooth-wrapper">
+            <div id="smooth-content">
+              {children}
+            </div>
+          </div>
+          <Toaster
+            position="top-right"
+            richColors
+            closeButton
+            toastOptions={{
+              style: { fontFamily: "var(--font-geist-sans)" },
+            }}
+          />
+          <Analytics />
+          <ConsoleEasterEgg />
+        </ThemeProvider>
       </body>
     </html>
   );

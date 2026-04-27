@@ -6,6 +6,7 @@ import Stats from "@/components/sections/Stats";
 import Products from "@/components/sections/Products";
 import WhyUs from "@/components/sections/WhyUs";
 import Clients from "@/components/sections/Clients";
+import StoreBranch from "@/components/sections/StoreBranch";
 import Testimonials from "@/components/sections/Testimonials";
 import Timeline from "@/components/sections/Timeline";
 import ProductSpotlight from "@/components/sections/ProductSpotlight";
@@ -23,27 +24,28 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  name: "Sumber Plastik",
+  name: "Sumber Aneka Plastik dan Kemasan",
   description:
-    "Distributor dan supplier produk plastik berkualitas tinggi untuk kebutuhan industri dan rumah tangga di seluruh Indonesia.",
+    "Toko plastik dan kemasan terpercaya dengan 1.000+ produk berkualitas untuk kebutuhan usaha dari skala kecil hingga besar di seluruh Indonesia.",
   url: "https://sumberplastik.com",
-  telephone: "+62-xxx-xxxx-xxxx",
-  email: "info@sumberplastik.com",
+  telephone: "+62-895-0988-0988",
+  email: "sapkindonesia@gmail.com",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Jl. Contoh No. 123",
-    addressLocality: "Sleman",
-    addressRegion: "Yogyakarta",
+    streetAddress: "Jl. Gondosuli No.1",
+    addressLocality: "Yogyakarta",
+    addressRegion: "Daerah Istimewa Yogyakarta",
     addressCountry: "ID",
   },
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
       opens: "08:00",
-      closes: "17:00",
+      closes: "18:00",
     },
   ],
+  hasMap: "https://maps.google.com/?q=Jl.+Gondosuli+No.1+Baciro+Yogyakarta",
   sameAs: [],
 };
 
@@ -64,6 +66,7 @@ export default function HomePage() {
         <ProductSpotlight />
         <WhyUs />
         <Clients />
+        <StoreBranch />
         <Testimonials />
         <Timeline />
         <VisiMisi />

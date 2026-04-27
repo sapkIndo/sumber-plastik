@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Sumber Plastik — Distributor Plastik Terpercaya";
+export const alt = "Sumber Aneka Plastik dan Kemasan — Toko Plastik & Kemasan Terpercaya";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -32,8 +32,8 @@ export default function OgImage() {
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           {/* Logo */}
           <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-            <span style={{ color: "#737373", fontSize: "52px", fontWeight: 500 }}>Sumber</span>
-            <span style={{ color: "#ffffff", fontSize: "52px", fontWeight: 800 }}>Plastik</span>
+            <span style={{ color: "#737373", fontSize: "40px", fontWeight: 500 }}>Sumber Aneka</span>
+            <span style={{ color: "#ffffff", fontSize: "40px", fontWeight: 800 }}>Plastik &amp; Kemasan</span>
           </div>
 
           {/* Headline */}
@@ -53,7 +53,7 @@ export default function OgImage() {
         {/* Bottom: description + stats */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
           <span style={{ color: "#737373", fontSize: "16px", lineHeight: 1.6, maxWidth: "480px" }}>
-            Pengiriman cepat ke seluruh Indonesia · Sejak 2010 · 500+ Klien Aktif
+            Pengiriman cepat ke seluruh Indonesia · Sejak 2010 · 5.000+ Klien Aktif
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#f97316" }} />

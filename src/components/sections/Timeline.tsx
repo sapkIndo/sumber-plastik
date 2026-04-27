@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,8 +12,8 @@ const milestones = [
   {
     year: "2010",
     tag: "Fondasi",
-    title: "Pendirian Sumber Plastik",
-    desc: "Berdiri di Jakarta sebagai distributor plastik lokal dengan visi sederhana: pelayanan terbaik, kualitas tidak pernah kompromi.",
+    title: "Pendirian Sumber Aneka Plastik dan Kemasan",
+    desc: "Berdiri di Yogyakarta sebagai toko plastik dan kemasan lokal dengan visi sederhana: pelayanan terbaik, kualitas tidak pernah kompromi.",
     stat: { value: "1", label: "Gudang pertama kami" },
   },
   {
@@ -67,8 +67,12 @@ export default function Timeline() {
   const stickyRef   = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const pathRef     = useRef<SVGPathElement>(null);
-  // Refs for the INNER visual group only (no SVG transform attr → no conflict)
   const pinVisualRefs = useRef<(SVGGElement | null)[]>([]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 200);
+    return () => clearTimeout(timer);
+  }, []);
 
   useGSAP(
     () => {
@@ -97,7 +101,7 @@ export default function Timeline() {
           pin: true,
           scrub: 1,
           anticipatePin: 1,
-          // onUpdate fires freely — used for non-scrubbed pin bounce
+          invalidateOnRefresh: true,
           onUpdate(self) {
             const p = self.progress;
             for (let i = 1; i < total; i++) {
@@ -140,18 +144,18 @@ export default function Timeline() {
 
       <div
         ref={stickyRef}
-        className="relative flex h-screen w-full flex-col overflow-hidden bg-white"
+        className="relative flex h-screen w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
       >
 
         {/* ── Top bar ── */}
-        <div className="flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-5 md:px-12">
+        <div className="flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-5 dark:border-slate-800 md:px-12">
           <div className="flex items-center gap-3">
             <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
               Perjalanan Kami
             </span>
           </div>
-          <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-300">
+          <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-300 dark:text-slate-600">
             {milestones[0].year} — {milestones[milestones.length - 1].year}
           </span>
         </div>
@@ -160,7 +164,7 @@ export default function Timeline() {
         <div className="relative flex flex-1 flex-col overflow-hidden md:flex-row">
 
           {/* Left — SVG zigzag (desktop only) */}
-          <div className="relative hidden shrink-0 items-center justify-center border-r border-slate-100 md:flex md:w-[44%]">
+          <div className="relative hidden shrink-0 items-center justify-center border-r border-slate-100 dark:border-slate-800 md:flex md:w-[44%]">
             <svg
               viewBox={`0 0 ${VB_W} ${VB_H}`}
               preserveAspectRatio="xMidYMid meet"
@@ -187,7 +191,7 @@ export default function Timeline() {
               {/* Background dot grid */}
               {Array.from({ length: 9 }, (_, row) =>
                 Array.from({ length: 5 }, (_, col) => (
-                  <circle key={`dot-${row}-${col}`} cx={col * 70} cy={row * 75} r="1.5" fill="#f1f5f9" />
+                  <circle key={`dot-${row}-${col}`} cx={col * 70} cy={row * 75} r="1.5" className="fill-slate-100 dark:fill-slate-800" />
                 ))
               )}
 
@@ -201,7 +205,7 @@ export default function Timeline() {
                     y1={y}
                     x2={isLeft ? VB_W : x - 22}
                     y2={y}
-                    stroke="#f1f5f9"
+                    className="stroke-slate-100 dark:stroke-slate-800"
                     strokeWidth="1"
                     strokeDasharray="4 5"
                   />
@@ -211,7 +215,7 @@ export default function Timeline() {
               {/* Ghost path */}
               <path
                 d={PATH_D}
-                stroke="#e2e8f0"
+                className="stroke-slate-200 dark:stroke-slate-700"
                 strokeWidth="1.5"
                 fill="none"
                 strokeLinecap="round"
@@ -243,7 +247,7 @@ export default function Timeline() {
                       x={isLeft ? -22 : 22}
                       y="-22"
                       textAnchor={isLeft ? "end" : "start"}
-                      fill="#475569"
+                      className="fill-slate-600 dark:fill-slate-400"
                       fontSize="10"
                       fontFamily="monospace"
                       letterSpacing="0.06em"
@@ -255,7 +259,7 @@ export default function Timeline() {
                       x={isLeft ? -22 : 22}
                       y="-10"
                       textAnchor={isLeft ? "end" : "start"}
-                      fill="#94a3b8"
+                      className="fill-slate-400 dark:fill-slate-500"
                       fontSize="7"
                       fontFamily="monospace"
                       letterSpacing="0.1em"
@@ -297,16 +301,16 @@ export default function Timeline() {
                 <div className="max-w-lg">
                   <div className="mb-5 flex items-center gap-3">
                     <span className="h-px w-6 shrink-0 bg-blue-600" aria-hidden="true" />
-                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">{m.tag}</span>
+                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">{m.tag}</span>
                   </div>
-                  <h3 className="mb-5 text-3xl font-black leading-[1.0] tracking-tight text-slate-900 md:text-4xl lg:text-5xl xl:text-6xl">
+                  <h3 className="mb-5 text-3xl font-black leading-[1.0] tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl lg:text-5xl xl:text-6xl">
                     {m.title}
                   </h3>
-                  <p className="text-sm leading-[1.8] text-slate-500 md:text-[15px]">{m.desc}</p>
-                  <div className="mt-8 border-t border-slate-100 pt-6">
+                  <p className="text-sm leading-[1.8] text-slate-500 dark:text-slate-400 md:text-[15px]">{m.desc}</p>
+                  <div className="mt-8 border-t border-slate-100 pt-6 dark:border-slate-700">
                     <div className="flex items-baseline gap-4">
                       <span className="text-4xl font-black tracking-tight text-blue-600 md:text-5xl">{m.stat.value}</span>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-400">{m.stat.label}</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500">{m.stat.label}</span>
                     </div>
                   </div>
                 </div>
@@ -316,7 +320,7 @@ export default function Timeline() {
         </div>
 
         {/* ── Progress bar ── */}
-        <div className="relative h-[2px] w-full shrink-0 bg-slate-100">
+        <div className="relative h-[2px] w-full shrink-0 bg-slate-100 dark:bg-slate-800">
           <div
             ref={progressRef}
             className="absolute inset-0 origin-left bg-blue-600"

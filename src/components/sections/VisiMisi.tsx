@@ -9,11 +9,11 @@ import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 gsap.registerPlugin(useGSAP, ScrollTrigger, DrawSVGPlugin);
 
 const misi = [
-  "Menyediakan produk plastik berkualitas tinggi dengan harga yang kompetitif",
-  "Membangun kemitraan jangka panjang yang saling menguntungkan dengan setiap client",
-  "Menghadirkan layanan pengiriman yang cepat dan andal ke seluruh wilayah Indonesia",
-  "Menerapkan standar quality control tertinggi di setiap produk yang kami distribusikan",
-  "Berinovasi secara berkelanjutan untuk mengikuti perkembangan kebutuhan industri",
+  "Menyediakan produk plastik dan kemasan lengkap untuk segala kebutuhan usaha, dari skala kecil hingga besar, dengan kualitas unggul dan harga bersaing.",
+  "Menjadi one-stop solution yang memudahkan pelanggan dengan layanan cepat, aman, dan efisien di seluruh Indonesia.",
+  "Membangun kepercayaan melalui transparansi, profesionalisme, dan konsistensi dalam setiap transaksi.",
+  "Terus berinovasi dalam produk dan layanan untuk mendukung pertumbuhan bisnis pelanggan kami.",
+  "Menjadi rekan yang selalu diingat karena solusi lengkap, pelayanan prima, dan kepedulian terhadap kesuksesan setiap pelanggan.",
 ];
 
 export default function VisiMisi() {
@@ -68,25 +68,24 @@ export default function VisiMisi() {
       <div className="mx-auto max-w-7xl">
 
         <div className="vm-header mb-0 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <h2 id="vm-heading" className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
-            Visi <span className="text-slate-400">&amp; Misi</span>
+          <h2 id="vm-heading" className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl lg:text-5xl">
+            Visi <span className="text-slate-400 dark:text-slate-500">&amp; Misi</span>
           </h2>
-          <p className="max-w-sm text-sm leading-relaxed text-slate-600 lg:text-right">
+          <p className="max-w-sm text-sm leading-relaxed text-slate-600 dark:text-slate-400 lg:text-right">
             Fondasi yang mengarahkan setiap keputusan bisnis dan standar layanan kami.
           </p>
         </div>
 
         {/* Visi */}
-        <div className="vm-visi relative mt-14 overflow-hidden border-b border-t border-slate-200 pb-12 pt-12">
+        <div className="vm-visi relative mt-14 overflow-hidden border-b border-t border-slate-200 pb-12 pt-12 dark:border-slate-700">
           <p className="mb-6 flex items-center gap-3">
             <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-600">Visi</span>
           </p>
-          <p className="relative z-10 max-w-4xl text-2xl font-bold leading-snug tracking-tight text-slate-900 sm:text-3xl md:text-4xl">
-            Menjadi distributor plastik{" "}
-            <span className="text-blue-600">terdepan di Indonesia</span>{" "}
-            yang memberikan solusi inovatif, berkualitas, dan berkelanjutan
-            untuk industri nasional.
+          <p className="relative z-10 max-w-4xl text-2xl font-bold leading-snug tracking-tight text-slate-900 dark:text-slate-50 sm:text-3xl md:text-4xl">
+            Menjadi toko plastik dan kemasan{" "}
+            <span className="text-blue-600">nomor satu di Indonesia</span>{" "}
+            yang dikenal karena kualitas, inovasi, dan layanan lengkap, sehingga setiap pelaku usaha merasa aman, praktis, dan puas ketika memilih kami sebagai mitra terpercaya.
           </p>
 
           {/* Decorative concentric rings */}
@@ -120,10 +119,10 @@ export default function VisiMisi() {
 
           <ul role="list">
             {misi.map((m, i) => (
-              <li key={i} className="vm-misi-row group border-t border-slate-100 py-5 first:border-t-0">
+              <li key={i} className="vm-misi-row group border-t border-slate-100 py-5 first:border-t-0 dark:border-slate-800">
                 <div className="flex items-start gap-6 md:items-center">
                   <div className="flex w-8 shrink-0 flex-col items-start gap-1 md:w-10">
-                    <span className="font-mono text-xs tabular-nums text-slate-400 transition-colors duration-200 group-hover:text-blue-600">
+                    <span className="font-mono text-xs tabular-nums text-slate-400 transition-colors duration-200 group-hover:text-blue-600 dark:text-slate-500">
                       0{i + 1}
                     </span>
                     <svg
@@ -139,13 +138,13 @@ export default function VisiMisi() {
                       <polyline points="1,6 6,11 17,1" />
                     </svg>
                   </div>
-                  <p className="text-sm leading-relaxed text-slate-700 transition-colors duration-200 group-hover:text-slate-900 md:text-base">
+                  <p className="text-sm leading-relaxed text-slate-700 transition-colors duration-200 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-slate-50 md:text-base">
                     {m}
                   </p>
                 </div>
               </li>
             ))}
-            <li className="border-t border-slate-100" role="presentation" />
+            <li className="border-t border-slate-100 dark:border-slate-800" role="presentation" />
           </ul>
         </div>
       </div>

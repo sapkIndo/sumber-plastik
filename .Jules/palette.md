@@ -1,0 +1,3 @@
+## 2024-04-27 - Added Focus States to Icon Buttons
+**Learning:** Icon-only buttons (like theme toggles and mobile menu toggles) are critical for navigation but often miss focus styles compared to standard text buttons, making keyboard navigation difficult. Consistent use of `focus-visible:ring-*` utility classes ensures keyboard users can track their position without adding distracting outlines for mouse users.
+**Action:** Added `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2` (along with dark mode offset variants) to the `ThemeToggle` and `Navbar` mobile menu buttons.

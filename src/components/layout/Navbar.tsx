@@ -172,7 +172,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2 md:hidden">
             <ThemeToggle />
             <button
-              className="p-1.5 text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              className="rounded-lg p-1.5 text-slate-500 transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:text-slate-400 dark:hover:text-slate-50 dark:focus-visible:ring-offset-slate-950"
               onClick={() => setOpen(true)}
               aria-expanded={open}
               aria-controls="mobile-menu"
@@ -208,7 +208,7 @@ export default function Navbar() {
           </Link>
           <button
             onClick={() => setOpen(false)}
-            className="p-1.5 text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+            className="rounded-lg p-1.5 text-slate-500 transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:text-slate-400 dark:hover:text-slate-50 dark:focus-visible:ring-offset-slate-950"
             aria-label="Tutup menu"
           >
             <X size={18} />

@@ -47,10 +47,9 @@ function hasPromptInjection(text: string): boolean {
 const MAX_MESSAGE_LENGTH = 500;
 const MAX_HISTORY_MESSAGES = 20;
 
-if (!process.env.GEMINI_API_KEY) {
-  throw new Error("GEMINI_API_KEY is not configured");
-}
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = process.env.GEMINI_API_KEY
+  ? new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+  : null;
 
 const SYSTEM_INSTRUCTION = `
 Kamu adalah asisten virtual dari Sumber Aneka Plastik dan Kemasan, toko plastik dan kemasan terpercaya di Indonesia.
@@ -102,6 +101,10 @@ export async function POST(request: NextRequest) {
       { error: "Terlalu banyak permintaan. Silakan tunggu sebentar." },
       { status: 429 }
     );
+  }
+
+  if (!genAI) {
+    return Response.json({ error: "Service tidak tersedia." }, { status: 503 });
   }
 
   try {

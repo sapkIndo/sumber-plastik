@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -19,7 +19,72 @@ const trustStats: { value: number; suffix: string; label: string; icon: LucideIc
 
 export default function CTA() {
   const ref = useRef<HTMLElement>(null);
+  const textRevealRef = useRef<HTMLDivElement>(null);
   const numberRefs = useRef<(HTMLSpanElement | null)[]>([]);
+
+  const mouse = useRef({ x: 0, y: 0 });
+  const lerped = useRef({ x: 0, y: 0 });
+  const targetRadius = useRef(0);
+  const currentRadius = useRef(0);
+  const rafId = useRef<number>(0);
+
+  useEffect(() => {
+    const section = ref.current;
+    const textReveal = textRevealRef.current;
+    if (!section || !textReveal) return;
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+    const initMask = "radial-gradient(circle 0px at 50% 50%, black, transparent)";
+    textReveal.style.maskImage = initMask;
+    textReveal.style.setProperty("-webkit-mask-image", initMask);
+
+    const tick = () => {
+      lerped.current.x = lerp(lerped.current.x, mouse.current.x, 0.4);
+      lerped.current.y = lerp(lerped.current.y, mouse.current.y, 0.4);
+      currentRadius.current = lerp(currentRadius.current, targetRadius.current, 0.09);
+
+      const r = Math.max(0, currentRadius.current);
+      const textRect = textReveal.getBoundingClientRect();
+      const tx = lerped.current.x - textRect.left;
+      const ty = lerped.current.y - textRect.top;
+      const mask = `radial-gradient(circle ${r}px at ${tx}px ${ty}px, black 0%, transparent 60%)`;
+      textReveal.style.maskImage = mask;
+      textReveal.style.setProperty("-webkit-mask-image", mask);
+
+      rafId.current = requestAnimationFrame(tick);
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
+      if (targetRadius.current === 0) {
+        lerped.current.x = e.clientX;
+        lerped.current.y = e.clientY;
+        targetRadius.current = 280;
+      }
+    };
+    const onMouseEnter = (e: MouseEvent) => {
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
+      lerped.current.x = e.clientX;
+      lerped.current.y = e.clientY;
+      targetRadius.current = 280;
+    };
+    const onMouseLeave = () => { targetRadius.current = 0; };
+
+    rafId.current = requestAnimationFrame(tick);
+    section.addEventListener("mousemove", onMouseMove);
+    section.addEventListener("mouseenter", onMouseEnter);
+    section.addEventListener("mouseleave", onMouseLeave);
+
+    return () => {
+      cancelAnimationFrame(rafId.current);
+      section.removeEventListener("mousemove", onMouseMove);
+      section.removeEventListener("mouseenter", onMouseEnter);
+      section.removeEventListener("mouseleave", onMouseLeave);
+    };
+  }, []);
 
   useGSAP(
     () => {
@@ -79,7 +144,34 @@ export default function CTA() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl">
+      {/* Ghost text — always faint */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 flex select-none items-center justify-center overflow-hidden"
+      >
+        <p
+          className="font-black leading-none tracking-tighter text-white/[0.06]"
+          style={{ fontSize: "clamp(4rem, 20vw, 22rem)" }}
+        >
+          M I T R A .
+        </p>
+      </div>
+
+      {/* Ghost text revealed by cursor spotlight */}
+      <div
+        ref={textRevealRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden select-none items-center justify-center overflow-hidden md:flex"
+      >
+        <p
+          className="font-black leading-none tracking-tighter text-white/40"
+          style={{ fontSize: "clamp(4rem, 20vw, 22rem)" }}
+        >
+          M I T R A .
+        </p>
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[3fr_2fr] lg:gap-20">
 
           {/* Left: copy + CTA */}

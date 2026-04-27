@@ -68,7 +68,7 @@ export default function VisiMisi() {
       <div className="mx-auto max-w-7xl">
 
         <div className="vm-header mb-0 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <h2 id="vm-heading" className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl lg:text-5xl">
+          <h2 id="vm-heading" className="font-bold tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}>
             Visi <span className="text-slate-400 dark:text-slate-500">&amp; Misi</span>
           </h2>
           <p className="max-w-sm text-sm leading-relaxed text-slate-600 dark:text-slate-400 lg:text-right">

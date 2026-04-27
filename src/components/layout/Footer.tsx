@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { SITE_NAME, NAV_LINKS, CONTACT, STORES } from "@/constants";
 
@@ -18,9 +19,14 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Link href="/" className="mb-4 flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-blue-600" />
-              <span className="font-bold text-slate-900 dark:text-slate-50">{SITE_NAME}</span>
+            <Link href="/" className="mb-4 inline-block">
+              <Image
+                src="/logo/logo-square.png"
+                alt={SITE_NAME}
+                width={72}
+                height={72}
+                className="object-contain dark:brightness-0 dark:invert"
+              />
             </Link>
             <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
               Distributor plastik terpercaya dengan pengalaman lebih dari 14 tahun

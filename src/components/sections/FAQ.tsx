@@ -4,10 +4,9 @@ import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { Plus } from "lucide-react";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger, DrawSVGPlugin);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type FaqCategory = "Pemesanan" | "Produk" | "Pengiriman";
 const CATEGORIES: ("Semua" | FaqCategory)[] = ["Semua", "Pemesanan", "Produk", "Pengiriman"];
@@ -16,37 +15,37 @@ const faqs: { category: FaqCategory; q: string; a: string }[] = [
   {
     category: "Pemesanan",
     q: "Berapa minimum order untuk pembelian?",
-    a: "Kami melayani pembelian dengan minimum order 50 kg untuk produk reguler. Untuk kebutuhan dalam jumlah kecil, silakan hubungi tim kami untuk solusi yang sesuai.",
+    a: "Tidak ada batasan minimum. Kami melayani dari 1 pcs (ecer) hingga partai besar ribuan pcs atau berton-ton — semua kalangan dari skala kecil, menengah, hingga perusahaan besar dan pabrik, semua kami layani.",
   },
   {
     category: "Pemesanan",
     q: "Bagaimana cara melakukan pemesanan?",
-    a: "Pemesanan bisa dilakukan via WhatsApp, email, atau langsung ke kantor kami. Tim sales kami akan memproses pesanan dalam 1×24 jam kerja dan memberikan konfirmasi beserta invoice.",
+    a: "Pemesanan dapat dilakukan langsung ke toko kami atau melalui hotline order. Tim kami siap membantu, memproses pesanan, dan memberikan konfirmasi beserta invoice dengan cepat.",
+  },
+  {
+    category: "Produk",
+    q: "Bagaimana struktur harga produk?",
+    a: "Kami memiliki dua tier harga: harga ecer untuk pembelian satuan (cocok untuk retail dan perorangan), dan harga grosir untuk pembelian partai besar (untuk perusahaan dan pabrik). Semua kalangan — kecil, menengah, maupun besar — mendapatkan harga yang sesuai skala kebutuhan mereka.",
   },
   {
     category: "Produk",
     q: "Apakah bisa request custom ukuran atau spesifikasi?",
-    a: "Ya, kami menerima custom order sesuai spesifikasi Anda — termasuk ukuran, ketebalan, warna, dan grade material. Konsultasikan kebutuhan Anda dengan tim teknis kami.",
+    a: "Ya, kami menerima custom order sesuai ukuran dan spesifikasi khusus Anda. Untuk produk dengan spesifikasi non-standar, umumnya berlaku minimum order quantity (MOQ) tertentu. Konsultasikan kebutuhan Anda dengan tim kami untuk detail lebih lanjut.",
   },
   {
     category: "Produk",
-    q: "Apakah produk Sumber Aneka Plastik dan Kemasan tersertifikasi?",
-    a: "Ya, seluruh produk kami memiliki sertifikat SNI. Produk food-grade juga telah mendapatkan sertifikasi BPOM dan memenuhi standar food contact material.",
-  },
-  {
-    category: "Produk",
-    q: "Apakah tersedia plastik food-grade untuk industri makanan?",
-    a: "Ya, kami menyediakan plastik PP dan PE food-grade yang telah bersertifikat BPOM. Aman untuk kontak langsung dengan makanan dan minuman, sesuai regulasi BPOM terbaru.",
+    q: "Apakah produk tersedia dalam standar food grade, halal, dan ISO?",
+    a: "Ya. Kami menyediakan produk food grade, bersertifikat halal, dan memenuhi standar ISO. Seluruh dokumen sertifikasi lengkap dapat dimintakan sesuai kebutuhan Anda.",
   },
   {
     category: "Pengiriman",
     q: "Berapa lama estimasi pengiriman ke seluruh Indonesia?",
-    a: "Jabodetabek 1–2 hari kerja, Pulau Jawa 2–3 hari kerja, luar Jawa 3–7 hari kerja. Pengiriman ekspres tersedia untuk kebutuhan mendesak.",
+    a: "Pengiriman kami cepat dan menjangkau seluruh Indonesia. Jabodetabek 1–2 hari kerja, Pulau Jawa 2–3 hari kerja, luar Jawa 3–7 hari kerja. Pengiriman ekspres tersedia untuk kebutuhan mendesak.",
   },
   {
     category: "Pengiriman",
-    q: "Apakah bisa ambil barang langsung ke gudang?",
-    a: "Ya, layanan pick-up tersedia di seluruh cabang kami. Gudang buka Senin–Sabtu pukul 08.00–17.00 WIB. Mohon konfirmasi terlebih dahulu agar stok sudah disiapkan saat Anda tiba.",
+    q: "Apakah bisa ambil barang langsung ke toko?",
+    a: "Ya, layanan pick-up langsung tersedia di toko kami. Mohon konfirmasi terlebih dahulu agar stok sudah disiapkan saat Anda tiba.",
   },
 ];
 
@@ -65,26 +64,6 @@ export default function FAQ() {
     () => {
       gsap.from(".faq-left", {
         opacity: 0, x: -24, duration: 0.8, ease: "expo.out",
-        scrollTrigger: { trigger: ref.current, start: "top 75%", once: true },
-      });
-
-      // DrawSVG — concentric rings + spokes draw in staggered
-      gsap.fromTo(
-        ".faq-deco-stroke",
-        { drawSVG: "0%" },
-        {
-          drawSVG: "100%",
-          duration: 1.6,
-          ease: "power2.inOut",
-          stagger: 0.07,
-          scrollTrigger: { trigger: ref.current, start: "top 75%", once: true },
-        }
-      );
-      // Filled dot pops in after strokes finish
-      gsap.from(".faq-deco-dot", {
-        opacity: 0, scale: 0, duration: 0.5, ease: "back.out(2)",
-        transformOrigin: "center center",
-        delay: 1.2,
         scrollTrigger: { trigger: ref.current, start: "top 75%", once: true },
       });
 
@@ -139,22 +118,8 @@ export default function FAQ() {
     });
   }, [activeCategory]);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
   return (
     <section ref={ref} aria-labelledby="faq-heading" className="px-5 py-16 md:px-6 md:py-28">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
 
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[5fr_7fr] lg:gap-20">
@@ -164,7 +129,8 @@ export default function FAQ() {
             <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-600">FAQ</p>
             <h2
               id="faq-heading"
-              className="mb-4 text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl lg:text-5xl"
+              className="mb-4 font-bold tracking-tight text-slate-900 dark:text-slate-50"
+              style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}
             >
               Pertanyaan yang{" "}
               <span className="text-slate-400 dark:text-slate-500">Sering Ditanyakan</span>
@@ -174,54 +140,6 @@ export default function FAQ() {
               Hubungi tim kami langsung.
             </p>
 
-            {/* Decorative DrawSVG — wheel with question mark */}
-            <svg
-              viewBox="0 0 200 200"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-full max-w-[200px] text-blue-600/30 dark:text-blue-500/25"
-              aria-hidden="true"
-            >
-              {/* Outer ring */}
-              <circle cx="100" cy="100" r="84" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1" />
-              {/* Inner ring */}
-              <circle cx="100" cy="100" r="54" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1" />
-
-              {/* Question mark arc */}
-              <path
-                d="M 88 74 C 88 58 113 58 113 75 C 113 87 100 90 100 103"
-                className="faq-deco-stroke"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              />
-              {/* Question mark dot — filled, pops in last */}
-              <circle cx="100" cy="118" r="3.5" className="faq-deco-dot" fill="currentColor" />
-
-              {/* Cardinal spokes */}
-              <line x1="100" y1="16" x2="100" y2="46" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1" />
-              <line x1="100" y1="154" x2="100" y2="184" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1" />
-              <line x1="16" y1="100" x2="46" y2="100" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1" />
-              <line x1="154" y1="100" x2="184" y2="100" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1" />
-
-              {/* Cardinal endpoint dots */}
-              <circle cx="100" cy="11" r="3.5" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="100" cy="189" r="3.5" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="11" cy="100" r="3.5" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="189" cy="100" r="3.5" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1.5" />
-
-              {/* Diagonal spokes */}
-              <line x1="41" y1="41" x2="62" y2="62" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1" />
-              <line x1="159" y1="41" x2="138" y2="62" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1" />
-              <line x1="41" y1="159" x2="62" y2="138" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1" />
-              <line x1="159" y1="159" x2="138" y2="138" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1" />
-
-              {/* Diagonal endpoint dots */}
-              <circle cx="37" cy="37" r="3" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="163" cy="37" r="3" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="37" cy="163" r="3" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="163" cy="163" r="3" className="faq-deco-stroke" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
           </div>
 
           {/* Right: tabs + accordion */}

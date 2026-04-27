@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/HeroB"; // switch: HeroA | HeroB | Hero
 import Stats from "@/components/sections/Stats";
@@ -13,12 +12,25 @@ import ProductSpotlight from "@/components/sections/ProductSpotlight";
 import VisiMisi from "@/components/sections/VisiMisi";
 import FAQ from "@/components/sections/FAQ";
 import CTA from "@/components/sections/CTA";
-import ChatbotLoader from "@/components/chatbot/ChatbotLoader";
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: "https://sumberplastik.com",
+    canonical: "https://sumberanekaplastikdankemasan.com",
   },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    { "@type": "Question", name: "Berapa minimum order untuk pembelian?", acceptedAnswer: { "@type": "Answer", text: "Tidak ada batasan minimum. Kami melayani dari 1 pcs (ecer) hingga partai besar ribuan pcs atau berton-ton — semua kalangan dari skala kecil, menengah, hingga perusahaan besar dan pabrik, semua kami layani." } },
+    { "@type": "Question", name: "Bagaimana cara melakukan pemesanan?", acceptedAnswer: { "@type": "Answer", text: "Pemesanan dapat dilakukan langsung ke toko kami atau melalui hotline order. Tim kami siap membantu, memproses pesanan, dan memberikan konfirmasi beserta invoice dengan cepat." } },
+    { "@type": "Question", name: "Bagaimana struktur harga produk?", acceptedAnswer: { "@type": "Answer", text: "Kami memiliki dua tier harga: harga ecer untuk pembelian satuan (cocok untuk retail dan perorangan), dan harga grosir untuk pembelian partai besar (untuk perusahaan dan pabrik). Semua kalangan mendapatkan harga yang sesuai skala kebutuhan mereka." } },
+    { "@type": "Question", name: "Apakah bisa request custom ukuran atau spesifikasi?", acceptedAnswer: { "@type": "Answer", text: "Ya, kami menerima custom order sesuai ukuran dan spesifikasi khusus Anda. Untuk produk dengan spesifikasi non-standar, umumnya berlaku minimum order quantity (MOQ) tertentu." } },
+    { "@type": "Question", name: "Apakah produk tersedia dalam standar food grade, halal, dan ISO?", acceptedAnswer: { "@type": "Answer", text: "Ya. Kami menyediakan produk food grade, bersertifikat halal, dan memenuhi standar ISO. Seluruh dokumen sertifikasi lengkap dapat dimintakan sesuai kebutuhan Anda." } },
+    { "@type": "Question", name: "Berapa lama estimasi pengiriman ke seluruh Indonesia?", acceptedAnswer: { "@type": "Answer", text: "Jabodetabek 1–2 hari kerja, Pulau Jawa 2–3 hari kerja, luar Jawa 3–7 hari kerja. Pengiriman ekspres tersedia untuk kebutuhan mendesak." } },
+    { "@type": "Question", name: "Apakah bisa ambil barang langsung ke toko?", acceptedAnswer: { "@type": "Answer", text: "Ya, layanan pick-up langsung tersedia di toko kami. Mohon konfirmasi terlebih dahulu agar stok sudah disiapkan saat Anda tiba." } },
+  ],
 };
 
 const jsonLd = {
@@ -26,8 +38,8 @@ const jsonLd = {
   "@type": "LocalBusiness",
   name: "Sumber Aneka Plastik dan Kemasan",
   description:
-    "Toko plastik dan kemasan terpercaya dengan 1.000+ produk berkualitas untuk kebutuhan usaha dari skala kecil hingga besar di seluruh Indonesia.",
-  url: "https://sumberplastik.com",
+    "Supplier kemasan plastik dan paper untuk FnB, restoran, catering, dan industri. 1.000+ produk kemasan food grade, halal, dan bersertifikat ISO. Melayani ecer hingga grosir ke seluruh Indonesia.",
+  url: "https://sumberanekaplastikdankemasan.com",
   telephone: "+62-895-0988-0988",
   email: "sapkindonesia@gmail.com",
   address: {
@@ -46,7 +58,6 @@ const jsonLd = {
     },
   ],
   hasMap: "https://maps.google.com/?q=Jl.+Gondosuli+No.1+Baciro+Yogyakarta",
-  sameAs: [],
 };
 
 export default function HomePage() {
@@ -57,7 +68,10 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <Navbar />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
 
       <main id="main-content">
         <Hero />
@@ -75,7 +89,6 @@ export default function HomePage() {
       </main>
 
       <Footer />
-      <ChatbotLoader />
     </>
   );
 }

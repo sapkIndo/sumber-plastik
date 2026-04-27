@@ -32,8 +32,8 @@ const clientsRow1: Client[] = [
   { name: "Koyo Slow Bar" },
   { name: "Bubur & Yamie HK" },
   { name: "Citranet", logo: "/clients/Citranet.webp" },
-  { name: "Green Roots" },
-  { name: "Khaira" },
+  { name: "Green Roots", logo: "/clients/Green Roots.webp" },
+  { name: "Khaira", logo: "/clients/khaira.webp" },
   { name: "Alfamart" },
 ];
 
@@ -63,19 +63,19 @@ const clientsRow2: Client[] = [
 
 function ClientCard({ client }: { client: Client }) {
   return (
-    <li className="flex shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm">
+    <li className="flex h-20 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
       {client.logo ? (
-        <div className="relative h-12 w-36 p-2">
+        <div className="relative h-14 w-44 p-2">
           <Image
             src={client.logo}
             alt={`Logo ${client.name}`}
             fill
-            className="object-contain"
-            sizes="144px"
+            className="object-contain dark:brightness-90"
+            sizes="176px"
           />
         </div>
       ) : (
-        <span className="px-6 py-3 text-sm font-medium text-slate-600 whitespace-nowrap">
+        <span className="px-7 py-4 text-sm font-medium text-slate-600 whitespace-nowrap dark:text-slate-300">
           {client.name}
         </span>
       )}
@@ -101,11 +101,11 @@ export default function Clients() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="clients-heading mb-14 text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-600">Client Kami</p>
-          <h2 id="clients-heading" className="mb-4 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
+          <h2 id="clients-heading" className="mb-4 font-bold tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}>
             Dipercaya oleh{" "}
-            <span className="text-slate-400">500+ Perusahaan</span>
+            <span className="text-slate-400 dark:text-slate-500">5.000+ Pelanggan</span>
           </h2>
-          <p className="mx-auto max-w-xl text-base text-slate-600">
+          <p className="mx-auto max-w-xl text-base text-slate-600 dark:text-slate-400">
             Dari usaha kecil hingga perusahaan multinasional, kami melayani dengan standar yang sama: terbaik.
           </p>
         </div>

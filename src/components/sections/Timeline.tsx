@@ -12,36 +12,36 @@ const milestones = [
   {
     year: "2010",
     tag: "Fondasi",
-    title: "Pendirian Sumber Aneka Plastik dan Kemasan",
-    desc: "Berdiri di Yogyakarta sebagai toko plastik dan kemasan lokal dengan visi sederhana: pelayanan terbaik, kualitas tidak pernah kompromi.",
-    stat: { value: "1", label: "Gudang pertama kami" },
+    title: "Lahirnya Aneka Botol",
+    desc: "Berawal dari sebuah toko sederhana di Yogyakarta, Aneka Botol hadir dengan satu tekad: menyediakan botol dan kemasan berkualitas yang mudah dijangkau oleh semua kalangan.",
+    stat: { value: "2010", label: "Tahun berdiri di Jogja" },
   },
   {
-    year: "2013",
+    year: "2014",
     tag: "Pertumbuhan",
-    title: "Ekspansi Lini Produk",
-    desc: "Memperluas portofolio dengan 30+ jenis plastik baru untuk menjawab kebutuhan industri manufaktur yang terus berkembang.",
+    title: "Memperluas Ragam Produk",
+    desc: "Menjawab kebutuhan pelanggan yang terus berkembang, kami mulai menghadirkan lebih banyak pilihan kemasan — dari berbagai jenis botol plastik hingga beragam wadah untuk kebutuhan industri.",
     stat: { value: "30+", label: "Jenis produk baru" },
   },
   {
-    year: "2016",
+    year: "2018",
     tag: "Kepercayaan",
-    title: "100+ Client Aktif",
-    desc: "Tonggak kepercayaan tercapai — lebih dari 100 perusahaan dari berbagai sektor industri di Pulau Jawa menjadi mitra setia.",
-    stat: { value: "100+", label: "Client aktif kala itu" },
+    title: "Fondasi yang Semakin Kokoh",
+    desc: "Dengan pelayanan konsisten dan kualitas yang terjaga, kepercayaan pelanggan terus tumbuh. Kami pun memperkuat kapasitas operasional untuk melayani lebih banyak mitra bisnis.",
+    stat: { value: "100+", label: "Pelanggan setia" },
   },
   {
-    year: "2019",
-    tag: "Infrastruktur",
-    title: "Fasilitas Gudang Baru",
-    desc: "Membangun gudang modern seluas 5.000m² untuk meningkatkan kapasitas stok dan mempercepat proses distribusi nasional.",
-    stat: { value: "5.000m²", label: "Kapasitas gudang baru" },
+    year: "2022",
+    tag: "Rebranding",
+    title: "Menjadi Sumber Aneka Botol",
+    desc: "Setelah lebih dari satu dekade melayani, kami resmi berganti nama menjadi Sumber Aneka Botol — mencerminkan identitas yang lebih kuat dan komitmen yang tak pernah goyah.",
+    stat: { value: "12+", label: "Tahun pengalaman" },
   },
   {
     year: "2024",
-    tag: "Inovasi",
-    title: "500+ Client & Transformasi Digital",
-    desc: "Meluncurkan platform digital lengkap dengan AI assistant untuk menghadirkan pengalaman terbaik bagi 500+ client setia kami.",
+    tag: "Transformasi",
+    title: "Sumber Aneka Plastik dan Kemasan",
+    desc: "Berkembang melampaui botol, kini kami hadir sebagai Sumber Aneka Plastik dan Kemasan — melayani kebutuhan kemasan menyeluruh dengan platform digital dan lebih dari 500 client setia.",
     stat: { value: "500+", label: "Client setia hari ini" },
   },
 ];
@@ -187,30 +187,6 @@ export default function Timeline() {
                   </feMerge>
                 </filter>
               </defs>
-
-              {/* Background dot grid */}
-              {Array.from({ length: 9 }, (_, row) =>
-                Array.from({ length: 5 }, (_, col) => (
-                  <circle key={`dot-${row}-${col}`} cx={col * 70} cy={row * 75} r="1.5" className="fill-slate-100 dark:fill-slate-800" />
-                ))
-              )}
-
-              {/* Dashed horizontal guides at each node level */}
-              {NODES.map(([x, y], i) => {
-                const isLeft = i % 2 === 0;
-                return (
-                  <line
-                    key={`guide-${i}`}
-                    x1={isLeft ? x + 22 : 0}
-                    y1={y}
-                    x2={isLeft ? VB_W : x - 22}
-                    y2={y}
-                    className="stroke-slate-100 dark:stroke-slate-800"
-                    strokeWidth="1"
-                    strokeDasharray="4 5"
-                  />
-                );
-              })}
 
               {/* Ghost path */}
               <path

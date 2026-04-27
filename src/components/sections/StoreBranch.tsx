@@ -220,8 +220,8 @@ export default function StoreBranch() {
             <h2
               ref={headingRef}
               id="fc-heading"
-              className="text-3xl font-black tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl lg:text-5xl"
-              style={{ perspective: "600px" }}
+              className="font-black tracking-tight text-slate-900 dark:text-slate-50"
+              style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)", perspective: "600px" }}
             >
               4 Toko, Siap Melayani
               <br className="hidden sm:block" />

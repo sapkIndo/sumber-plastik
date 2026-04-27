@@ -32,7 +32,7 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       // Next.js inline scripts (hydration, JSON-LD) require unsafe-inline
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "script-src 'self' 'unsafe-inline'",
       // Tailwind + Next.js inject inline styles
       "style-src 'self' 'unsafe-inline'",
       // Allow images from same origin, data URIs, blobs, and HTTPS
@@ -48,6 +48,15 @@ const securityHeaders = [
 ];
 
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        pathname: "/9.x/**",
+      },
+    ],
+  },
   async headers() {
     return [
       {

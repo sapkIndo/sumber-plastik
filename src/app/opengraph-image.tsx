@@ -58,7 +58,7 @@ export default function OgImage() {
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#f97316" }} />
             <span style={{ color: "#404040", fontSize: "14px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" }}>
-              sumberplastik.com
+              sumberanekaplastikdankemasan.com
             </span>
           </div>
         </div>

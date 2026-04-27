@@ -44,28 +44,28 @@ export default function InteractiveBg() {
       {/* Blob 1 — large blue, top-left */}
       <div className="absolute -left-48 -top-48 blob-drift-1">
         <div ref={r1}>
-          <div className="h-[780px] w-[780px] rounded-full bg-blue-400/[0.22] blur-[140px]" />
+          <div className="h-[780px] w-[780px] rounded-full bg-blue-400/[0.22] blur-[140px] dark:bg-blue-500/[0.18]" />
         </div>
       </div>
 
       {/* Blob 2 — sky/cyan, top-right */}
       <div className="absolute -right-72 top-12 blob-drift-2">
         <div ref={r2}>
-          <div className="h-[620px] w-[620px] rounded-full bg-sky-300/[0.18] blur-[110px]" />
+          <div className="h-[620px] w-[620px] rounded-full bg-sky-300/[0.18] blur-[110px] dark:bg-sky-400/[0.14]" />
         </div>
       </div>
 
       {/* Blob 3 — indigo, bottom-center */}
       <div className="absolute -bottom-32 left-[30%] blob-drift-3">
         <div ref={r3}>
-          <div className="h-[680px] w-[680px] rounded-full bg-indigo-300/[0.16] blur-[130px]" />
+          <div className="h-[680px] w-[680px] rounded-full bg-indigo-300/[0.16] blur-[130px] dark:bg-indigo-500/[0.13]" />
         </div>
       </div>
 
       {/* Blob 4 — small bright blue, mid-right */}
       <div className="absolute right-[22%] top-[42%] blob-drift-4">
         <div ref={r4}>
-          <div className="h-[380px] w-[380px] rounded-full bg-blue-300/[0.14] blur-[90px]" />
+          <div className="h-[380px] w-[380px] rounded-full bg-blue-300/[0.14] blur-[90px] dark:bg-blue-400/[0.12]" />
         </div>
       </div>
     </div>

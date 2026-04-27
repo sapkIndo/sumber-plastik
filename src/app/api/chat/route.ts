@@ -47,7 +47,10 @@ function hasPromptInjection(text: string): boolean {
 const MAX_MESSAGE_LENGTH = 500;
 const MAX_HISTORY_MESSAGES = 20;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+if (!process.env.GEMINI_API_KEY) {
+  throw new Error("GEMINI_API_KEY is not configured");
+}
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const SYSTEM_INSTRUCTION = `
 Kamu adalah asisten virtual dari Sumber Aneka Plastik dan Kemasan, toko plastik dan kemasan terpercaya di Indonesia.
@@ -74,8 +77,21 @@ interface ChatMessage {
   content: string;
 }
 
+// ── Allowed origins ───────────────────────────────────────────────────────────
+const ALLOWED_ORIGINS = [
+  "https://sumberanekaplastikdankemasan.com",
+  "https://www.sumberanekaplastikdankemasan.com",
+];
+
 // ── Handler ───────────────────────────────────────────────────────────────────
 export async function POST(request: NextRequest) {
+  if (process.env.NODE_ENV === "production") {
+    const origin = request.headers.get("origin") ?? "";
+    if (!ALLOWED_ORIGINS.includes(origin)) {
+      return Response.json({ error: "Forbidden" }, { status: 403 });
+    }
+  }
+
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
     request.headers.get("x-real-ip") ??

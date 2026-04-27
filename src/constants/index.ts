@@ -1,5 +1,5 @@
 export const SITE_NAME = "Sumber Aneka Plastik dan Kemasan";
-export const SITE_URL = "https://sumberplastik.com";
+export const SITE_URL = "https://sumberanekaplastikdankemasan.com";
 export const SITE_TAGLINE = "Toko Plastik & Kemasan Terpercaya";
 
 export const NAV_LINKS: { label: string; href: string }[] = [

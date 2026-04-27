@@ -7,6 +7,7 @@ import ConsoleEasterEgg from "@/components/ConsoleEasterEgg";
 import InteractiveBg from "@/components/InteractiveBg";
 import CustomCursor from "@/components/CustomCursor";
 import GSAPSmoothScroll from "@/components/GSAPSmoothScroll";
+import Navbar from "@/components/layout/Navbar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,29 +21,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sumberplastik.com"),
+  metadataBase: new URL("https://sumberanekaplastikdankemasan.com"),
   title: {
-    default: "Sumber Aneka Plastik dan Kemasan | Toko Plastik & Kemasan Terpercaya",
+    default: "Sumber Aneka Plastik dan Kemasan | Supplier Kemasan FnB & Industri Yogyakarta",
     template: "%s | Sumber Aneka Plastik dan Kemasan",
   },
   description:
-    "Sumber Aneka Plastik dan Kemasan adalah toko plastik dan kemasan terpercaya dengan 1.000+ produk berkualitas untuk kebutuhan usaha dari skala kecil hingga besar di seluruh Indonesia.",
-  keywords: ["plastik", "kemasan", "toko plastik", "sumber aneka plastik", "SAPK", "plastik kemasan", "plastik pp", "plastik pet", "hdpe", "lldpe"],
+    "Supplier kemasan plastik & paper untuk FnB, restoran, catering, dan industri di Yogyakarta. 1.000+ produk kemasan food grade, halal, bersertifikat ISO. Ecer & grosir, pengiriman seluruh Indonesia.",
+  keywords: [
+    "kemasan plastik", "kemasan makanan", "kemasan minuman", "kemasan FnB",
+    "kemasan food grade", "kemasan halal", "kemasan restoran", "kemasan catering",
+    "kemasan usaha", "supplier kemasan", "grosir kemasan", "toko kemasan",
+    "kemasan yogyakarta", "plastik kemasan yogyakarta", "cup plastik", "kantong plastik",
+    "sumber aneka plastik dan kemasan", "sumber plastik kemasan", "kemasan paper",
+    "kemasan ISO", "distributor kemasan indonesia",
+  ],
   authors: [{ name: "Sumber Aneka Plastik dan Kemasan" }],
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "https://sumberplastik.com",
-    title: "Sumber Aneka Plastik dan Kemasan | Toko Plastik & Kemasan Terpercaya",
+    url: "https://sumberanekaplastikdankemasan.com",
+    title: "Sumber Aneka Plastik dan Kemasan | Supplier Kemasan FnB & Industri Yogyakarta",
     description:
-      "Toko plastik dan kemasan terpercaya dengan 1.000+ produk berkualitas untuk kebutuhan usaha di seluruh Indonesia.",
+      "Supplier kemasan plastik & paper untuk FnB, restoran, catering, dan industri. 1.000+ produk food grade, halal, ISO. Ecer & grosir — pengiriman seluruh Indonesia.",
     siteName: "Sumber Aneka Plastik dan Kemasan",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Sumber Aneka Plastik dan Kemasan — Toko Plastik & Kemasan Terpercaya" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Sumber Aneka Plastik dan Kemasan — Supplier Kemasan FnB & Industri Terpercaya" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sumber Aneka Plastik dan Kemasan | Toko Plastik & Kemasan Terpercaya",
-    description: "Toko plastik dan kemasan terpercaya dengan 1.000+ produk berkualitas.",
+    title: "Sumber Aneka Plastik dan Kemasan | Supplier Kemasan FnB & Industri Yogyakarta",
+    description: "Supplier kemasan plastik & paper untuk FnB, restoran, dan industri. 1.000+ produk food grade & halal, ecer & grosir.",
     images: ["/opengraph-image"],
   },
   robots: {
@@ -72,9 +80,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         <ThemeProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[9999] focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:outline-none"
+          >
+            Lewati ke konten utama
+          </a>
           <CustomCursor />
           <InteractiveBg />
           <GSAPSmoothScroll />
+          <Navbar />
           <div id="smooth-wrapper">
             <div id="smooth-content">
               {children}

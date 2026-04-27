@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,34 +11,60 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const testimonials = [
   {
-    name: "Budi Santoso",
+    name: "Agus Setiawan",
     role: "Direktur",
-    company: "PT Maju Jaya",
+    company: "PT. S***** M*****",
     quote:
-      "Sumber Aneka Plastik dan Kemasan menjadi mitra terpercaya kami selama 5 tahun. Kualitas produk konsisten, tidak pernah mengecewakan, dan pengiriman selalu tepat waktu meski volume besar.",
-    initials: "BS",
-    avatarClass: "bg-blue-600",
-    tabActiveClass: "bg-blue-600 border-blue-600 shadow-blue-600/20",
+      "Sudah lebih dari 5 tahun kami percayakan kebutuhan kemasan ke sini. Kualitasnya konsisten, pengiriman tidak pernah telat meski orderan kami besar. Benar-benar partner yang bisa diandalkan.",
+    photo: "https://api.dicebear.com/9.x/notionists/png?seed=AgusSetiawan&size=128",
   },
   {
-    name: "Sari Dewi",
+    name: "Laila Rahmawati",
     role: "Procurement Manager",
-    company: "CV Berkah Industri",
+    company: "CV. B***** I*****",
     quote:
-      "Harga kompetitif dengan kualitas premium — kombinasi yang jarang ditemukan. Tim sales sangat responsif dan membantu kami menemukan solusi plastik yang paling efisien.",
-    initials: "SD",
-    avatarClass: "bg-indigo-500",
-    tabActiveClass: "bg-indigo-500 border-indigo-500 shadow-indigo-500/20",
+      "Harga bersaing, kualitas tidak pernah mengecewakan. Tim-nya juga cepat respons kalau ada pertanyaan soal spesifikasi — ini yang bikin kami terus balik ke sini.",
+    photo: "https://api.dicebear.com/9.x/notionists/png?seed=LailaRahmawati&size=128",
   },
   {
-    name: "Ahmad Fauzi",
+    name: "Ferdi Nugroho",
     role: "CEO",
-    company: "PT Nusantara Manufacturing",
+    company: "PT. N***** M*****",
     quote:
-      "Sudah mencoba banyak supplier, tapi Sumber Aneka Plastik dan Kemasan yang paling konsisten. Produk sesuai spesifikasi, dokumen lengkap, dan after-sales support mereka benar-benar terasa.",
-    initials: "AF",
-    avatarClass: "bg-sky-600",
-    tabActiveClass: "bg-sky-600 border-sky-600 shadow-sky-600/20",
+      "Pernah coba beberapa supplier lain, tapi ujung-ujungnya balik ke sini. Produknya sesuai spek, dokumen lengkap, dan after-sales-nya terasa — bukan sekadar janji.",
+    photo: "https://api.dicebear.com/9.x/notionists/png?seed=FerdiNugroho&size=128",
+  },
+  {
+    name: "Wulan Prasetyo",
+    role: "Manajer Operasional",
+    company: "CV. M***** S*****",
+    quote:
+      "Pelayanannya ramah tapi tetap profesional. Kalau ada masalah, langsung ditangani — tidak perlu follow-up berkali-kali. Itu yang penting buat kami.",
+    photo: "https://api.dicebear.com/9.x/notionists/png?seed=WulanPrasetyo&size=128",
+  },
+  {
+    name: "Eko Kurniawan",
+    role: "Purchasing Manager",
+    company: "PT. A***** F*****",
+    quote:
+      "Stok selalu ready, tidak pernah sampai kehabisan di saat kami butuh cepat. Sudah 3 tahun lebih bermitra dan belum ada kejadian yang bikin produksi kami terhambat.",
+    photo: "https://api.dicebear.com/9.x/notionists/png?seed=EkoKurniawan&size=128",
+  },
+  {
+    name: "Nisa Permata",
+    role: "Owner",
+    company: "UD. K***** B*****",
+    quote:
+      "Usaha kami masih skala menengah, tapi tidak pernah diperlakukan sebelah mata. Pesanan kecil pun dilayani dengan serius. Sangat cocok untuk bisnis yang masih berkembang.",
+    photo: "https://api.dicebear.com/9.x/notionists/png?seed=NisaPermata&size=128",
+  },
+  {
+    name: "Rendra Mahardika",
+    role: "Manajer Produksi",
+    company: "PT. T***** P*****",
+    quote:
+      "Dimensi dan bahan kemasan selalu sesuai dengan yang kami minta. Tidak ada miskomunikasi soal spesifikasi — ini kelihatan sepele tapi dampaknya besar ke lini produksi kami.",
+    photo: "https://api.dicebear.com/9.x/notionists/png?seed=RendraMahardika&size=128",
   },
 ];
 
@@ -116,7 +143,8 @@ export default function Testimonials() {
           </p>
           <h2
             id="testi-heading"
-            className="mb-4 text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl lg:text-5xl"
+            className="mb-4 font-bold tracking-tight text-slate-900 dark:text-slate-50"
+            style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}
           >
             Kata Mereka{" "}
             <span className="text-slate-400 dark:text-slate-500">tentang Kami</span>
@@ -138,17 +166,12 @@ export default function Testimonials() {
               aria-pressed={activeIdx === i}
               className={`testi-tab flex items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
                 activeIdx === i
-                  ? `${t.tabActiveClass} text-white shadow-lg`
+                  ? "border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-600/20"
                   : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600"
               }`}
             >
-              <span
-                className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white ${
-                  activeIdx === i ? "bg-white/25" : t.avatarClass
-                }`}
-                aria-hidden="true"
-              >
-                {t.initials}
+              <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full" aria-hidden="true">
+                <Image src={t.photo} alt={t.name} fill sizes="24px" className="object-cover" />
               </span>
               {t.name}
             </button>
@@ -209,11 +232,8 @@ export default function Testimonials() {
               </blockquote>
 
               <figcaption className="mt-10 flex items-center gap-4 border-t border-slate-100 pt-8 dark:border-slate-700">
-                <div
-                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white ${active.avatarClass}`}
-                  aria-hidden="true"
-                >
-                  {active.initials}
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full ring-2 ring-blue-100 dark:ring-slate-700" aria-hidden="true">
+                  <Image src={active.photo} alt={active.name} fill sizes="48px" className="object-cover" />
                 </div>
                 <div>
                   <p className="font-semibold text-slate-900 dark:text-slate-50">{active.name}</p>

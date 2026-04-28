@@ -56,6 +56,10 @@ const nextConfig = {
         hostname: "api.dicebear.com",
         pathname: "/9.x/**",
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
   async headers() {

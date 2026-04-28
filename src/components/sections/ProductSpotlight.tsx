@@ -238,7 +238,7 @@ export default function ProductSpotlight() {
           duration: { min: 0.3, max: 0.7 },
           delay: 0.05,
           ease: "power1.inOut",
-        } : false,
+        } : undefined,
         onUpdate(self) {
           const idx = Math.round(self.progress * (total - 1));
           if (idx !== current) goTo(idx);

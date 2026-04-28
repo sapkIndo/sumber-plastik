@@ -99,7 +99,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}
           />
           <Analytics />
-          <ConsoleEasterEgg />
         </ThemeProvider>
       </body>
     </html>

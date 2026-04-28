@@ -4,97 +4,45 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, ArrowUpRight } from "lucide-react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { NAV_LINKS, SITE_NAME, CONTACT } from "@/constants";
 import ThemeToggle from "@/components/ThemeToggle";
-
-gsap.registerPlugin(useGSAP);
 
 const navItems = NAV_LINKS.filter((l) => l.href !== "/");
 
 export default function Navbar() {
-  const headerRef = useRef<HTMLElement>(null);
-  const openRef   = useRef(false);
+  const openRef = useRef(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // Keep ref in sync so ticker always reads latest value without closure staleness
   openRef.current = open;
 
-  // Entrance animation — only when page starts at top
-  useGSAP(() => {
-    const initialY = ScrollSmoother.get()?.scrollTop() ?? 0;
-    if (initialY < 60) {
-      gsap.from(headerRef.current, {
-        y: -56,
-        opacity: 0,
-        duration: 0.8,
-        ease: "expo.out",
-        clearProps: "all",
-      });
-    } else {
-      setScrolled(true);
-    }
-  }, {});
-
-  // Scroll-based hide/show — GSAP animates directly, no React state in hot path
+  // Scroll-based hide/show — pure RAF, no GSAP
   useEffect(() => {
-    const el = headerRef.current;
-    if (!el) return;
-
-    let prevY   = ScrollSmoother.get()?.scrollTop() ?? 0;
-    let isHidden     = false;
-    let lastScrolled = false;
+    let prevY = window.scrollY;
+    let rafId: number;
 
     const tick = () => {
-      // Never hide while mobile menu is open
-      if (openRef.current) return;
+      if (!openRef.current) {
+        const y = window.scrollY;
+        const delta = y - prevY;
 
-      const y     = ScrollSmoother.get()?.scrollTop() ?? 0;
-      const delta = y - prevY;
-      prevY = y;
-
-      // Ignore sub-pixel drift from smooth deceleration
-      if (Math.abs(delta) < 2) return;
-
-      const nowScrolled = y >= 60;
-      if (nowScrolled !== lastScrolled) {
-        setScrolled(nowScrolled);
-        lastScrolled = nowScrolled;
-      }
-
-      // Back at top — always show
-      if (!nowScrolled) {
-        if (isHidden) {
-          isHidden = false;
-          gsap.to(el, { y: 0, duration: 0.5, ease: "power3.out", overwrite: "auto" });
+        if (Math.abs(delta) >= 2) {
+          prevY = y;
+          const nowScrolled = y >= 60;
+          setScrolled(nowScrolled);
+          setHidden(nowScrolled && delta > 0);
         }
-        return;
       }
-
-      const shouldHide = delta > 0;
-      if (shouldHide === isHidden) return;
-
-      isHidden = shouldHide;
-      gsap.to(el, {
-        y: shouldHide ? -(el.offsetHeight + 8) : 0,
-        duration: shouldHide ? 0.28 : 0.48,
-        ease: shouldHide ? "power2.in" : "power3.out",
-        overwrite: "auto",
-      });
+      rafId = requestAnimationFrame(tick);
     };
 
-    gsap.ticker.add(tick);
-    return () => gsap.ticker.remove(tick);
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
   }, []);
 
-  // Always show navbar when mobile menu opens
   useEffect(() => {
-    if (open && headerRef.current) {
-      gsap.to(headerRef.current, { y: 0, duration: 0.3, ease: "power3.out", overwrite: "auto" });
-    }
+    if (open) setHidden(false);
   }, [open]);
 
   useEffect(() => {
@@ -105,9 +53,10 @@ export default function Navbar() {
   return (
     <>
       <header
-        ref={headerRef}
         role="banner"
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,backdrop-filter,border-color] duration-300 ease-out ${
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,backdrop-filter,border-color,transform] duration-300 ease-out ${
+          hidden ? "-translate-y-full" : "translate-y-0"
+        } ${
           scrolled
             ? "border-slate-200/80 bg-white/90 backdrop-blur-md dark:border-slate-700/80 dark:bg-slate-900/90"
             : "border-slate-200/30 bg-white/50 backdrop-blur-sm dark:border-slate-700/30 dark:bg-slate-900/50"

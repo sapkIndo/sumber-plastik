@@ -37,7 +37,7 @@ export default function InteractiveBg() {
 
   return (
     <div
-      className="pointer-events-none fixed inset-0 overflow-hidden"
+      className="pointer-events-none fixed inset-0 hidden overflow-hidden md:block"
       style={{ zIndex: -1 }}
       aria-hidden="true"
     >

@@ -126,9 +126,8 @@ export default function ProductSpotlight() {
 
   useGSAP(() => {
     const total = products.length;
-    let current = 0;
-    let pendingIn: gsap.core.Tween | null = null;
 
+    // ── Shared helpers ────────────────────────────────────────────────────────
     function q<T extends Element>(el: HTMLDivElement, sel: string) {
       return el.querySelector<T>(sel);
     }
@@ -152,8 +151,6 @@ export default function ProductSpotlight() {
         if (ring) gsap.set(ring, { drawSVG: "0%" });
       }
     }
-
-    for (let i = 0; i < total; i++) initSlide(i);
 
     function slideIn(i: number) {
       const s = slideRefs.current[i];
@@ -192,53 +189,74 @@ export default function ProductSpotlight() {
       gsap.to(s, { opacity: 0, scale: 0.97, duration: 0.32, ease: "power2.in" });
     }
 
-    function goTo(next: number) {
-      if (next === current) return;
-      if (pendingIn) pendingIn.kill();
-      slideOut(current);
-      current = next;
+    // ── Shared ScrollTrigger factory (desktop vs mobile differ only by snap) ──
+    function buildScrollTrigger(withSnap: boolean) {
+      let current = 0;
+      let pendingIn: gsap.core.Tween | null = null;
+
+      for (let i = 0; i < total; i++) initSlide(i);
+      slideIn(0);
+
       if (counterRef.current)
-        counterRef.current.textContent =
-          `${String(next + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
-      initSlide(next);
-      pendingIn = gsap.delayedCall(0.22, () => slideIn(next));
-    }
+        counterRef.current.textContent = `01 / ${String(total).padStart(2, "0")}`;
 
-    slideIn(0);
-    if (counterRef.current)
-      counterRef.current.textContent = `01 / ${String(total).padStart(2, "0")}`;
+      gsap.set(progRef.current, { drawSVG: "0%" });
+      gsap.to(progRef.current, {
+        drawSVG: "100%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: stickyRef.current,
+          start: "top top",
+          end: `+=${(total - 1) * window.innerHeight}`,
+          scrub: 0.4,
+          invalidateOnRefresh: true,
+        },
+      });
 
-    gsap.set(progRef.current, { drawSVG: "0%" });
-    gsap.to(progRef.current, {
-      drawSVG: "100%",
-      ease: "none",
-      scrollTrigger: {
+      function goTo(next: number) {
+        if (next === current) return;
+        if (pendingIn) pendingIn.kill();
+        slideOut(current);
+        current = next;
+        if (counterRef.current)
+          counterRef.current.textContent =
+            `${String(next + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+        initSlide(next);
+        pendingIn = gsap.delayedCall(0.22, () => slideIn(next));
+      }
+
+      ScrollTrigger.create({
         trigger: stickyRef.current,
         start: "top top",
         end: `+=${(total - 1) * window.innerHeight}`,
-        scrub: 0.4,
+        pin: true,
+        anticipatePin: 1,
         invalidateOnRefresh: true,
-      },
-    });
+        // snap is the culprit on mobile — it fights touch momentum and causes jitter
+        snap: withSnap ? {
+          snapTo: 1 / (total - 1),
+          duration: { min: 0.3, max: 0.7 },
+          delay: 0.05,
+          ease: "power1.inOut",
+        } : false,
+        onUpdate(self) {
+          const idx = Math.round(self.progress * (total - 1));
+          if (idx !== current) goTo(idx);
+        },
+      });
 
-    ScrollTrigger.create({
-      trigger: stickyRef.current,
-      start: "top top",
-      end: `+=${(total - 1) * window.innerHeight}`,
-      pin: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-      snap: {
-        snapTo: 1 / (total - 1),
-        duration: { min: 0.3, max: 0.7 },
-        delay: 0.05,
-        ease: "power1.inOut",
-      },
-      onUpdate(self) {
-        const idx = Math.round(self.progress * (total - 1));
-        if (idx !== current) goTo(idx);
-      },
-    });
+      return () => {
+        if (pendingIn) pendingIn.kill();
+      };
+    }
+
+    const mm = gsap.matchMedia();
+
+    // Desktop: pin + snap
+    mm.add("(min-width: 768px)", () => buildScrollTrigger(true));
+
+    // Mobile: pin only, no snap — same visual, zero jitter
+    mm.add("(max-width: 767px)", () => buildScrollTrigger(false));
   }, { scope: ref });
 
   useEffect(() => {
@@ -252,6 +270,7 @@ export default function ProductSpotlight() {
         ref={stickyRef}
         className="relative flex h-screen w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
       >
+        {/* header bar */}
         <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-4 dark:border-slate-800 md:px-12">
           <div className="flex items-center gap-3">
             <span className="h-px w-5 bg-blue-600" aria-hidden="true" />
@@ -262,6 +281,7 @@ export default function ProductSpotlight() {
           <span ref={counterRef} className="font-mono text-[11px] tabular-nums text-slate-400 dark:text-slate-500" />
         </div>
 
+        {/* slides */}
         <div className="relative flex flex-1 overflow-hidden">
           {products.map((p, i) => (
             <div
@@ -269,6 +289,7 @@ export default function ProductSpotlight() {
               ref={(el) => { slideRefs.current[i] = el; }}
               className="absolute inset-0 flex flex-col justify-center gap-5 px-6 py-4 md:flex-row md:items-center md:gap-10 md:px-12 lg:px-16"
             >
+              {/* text column */}
               <div className="flex flex-col md:w-[55%]">
                 <div className="ps-overline mb-4 flex items-center gap-3">
                   <span className="h-px w-5 shrink-0 bg-blue-600" aria-hidden="true" />
@@ -308,12 +329,12 @@ export default function ProductSpotlight() {
                 </ul>
               </div>
 
+              {/* chart column */}
               <div className="flex shrink-0 items-center gap-5 md:w-[45%] md:flex-col md:items-center md:gap-4">
                 <svg
                   className="h-36 w-36 shrink-0 md:h-64 md:w-64 lg:h-72 lg:w-72"
                   viewBox="0 0 260 260"
                   aria-hidden="true"
-                  role="img"
                 >
                   <g transform={`rotate(-90, ${CX}, ${CY})`}>
                     {p.props.map((prop, j) => (
@@ -368,6 +389,7 @@ export default function ProductSpotlight() {
           ))}
         </div>
 
+        {/* progress bar */}
         <div className="relative z-10 shrink-0 px-6 pb-5 md:px-12">
           <svg width="100%" height="2" aria-hidden="true" style={{ overflow: "visible" }}>
             <line x1="0" y1="1" x2="100%" y2="1" className="stroke-slate-300 dark:stroke-slate-700" strokeWidth="1.5" />

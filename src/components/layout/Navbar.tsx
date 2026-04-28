@@ -141,7 +141,7 @@ export default function Navbar() {
                   href={link.href}
                   className="group flex items-baseline gap-1.5 text-sm text-slate-600 transition-colors duration-150 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
                 >
-                  <span className="font-mono text-[10px] tabular-nums text-slate-400 transition-colors duration-150 group-hover:text-blue-600 dark:text-slate-600 dark:group-hover:text-blue-400">
+                  <span className="font-mono text-[10px] tabular-nums text-slate-400 transition-colors duration-150 group-hover:text-blue-600 dark:text-slate-600 dark:group-hover:text-blue-400" aria-hidden="true">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {link.label}
@@ -172,7 +172,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2 md:hidden">
             <ThemeToggle />
             <button
-              className="p-1.5 text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              className="flex h-11 w-11 items-center justify-center text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
               onClick={() => setOpen(true)}
               aria-expanded={open}
               aria-controls="mobile-menu"
@@ -208,7 +208,7 @@ export default function Navbar() {
           </Link>
           <button
             onClick={() => setOpen(false)}
-            className="p-1.5 text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+            className="flex h-11 w-11 items-center justify-center text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
             aria-label="Tutup menu"
           >
             <X size={18} />
@@ -226,7 +226,7 @@ export default function Navbar() {
                 open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
               }`}
             >
-              <span className="font-mono text-xs tabular-nums text-slate-400 transition-colors duration-150 group-hover:text-blue-600 dark:text-slate-600 dark:group-hover:text-blue-400">
+              <span className="font-mono text-xs tabular-nums text-slate-400 transition-colors duration-150 group-hover:text-blue-600 dark:text-slate-600 dark:group-hover:text-blue-400" aria-hidden="true">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="text-3xl font-bold tracking-tight text-slate-900 transition-colors duration-150 group-hover:text-blue-600 dark:text-slate-50 dark:group-hover:text-blue-400">
@@ -251,7 +251,7 @@ export default function Navbar() {
             Hubungi Kami
             <ArrowUpRight size={14} aria-hidden="true" />
           </Link>
-          <p className="mt-4 text-center text-xs text-slate-400 dark:text-slate-600">Sejak 2010 · Terpercaya</p>
+          <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-500" aria-hidden="true">Sejak 2010 · Terpercaya</p>
         </div>
       </div>
     </>

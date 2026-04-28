@@ -91,8 +91,8 @@ export default function Stats() {
               >
                 0{s.suffix}
               </dd>
-              <p className="mb-1 text-sm font-semibold text-slate-900 dark:text-slate-50">{s.label}</p>
-              <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">{s.desc}</p>
+              <dd className="mb-1 text-sm font-semibold text-slate-900 dark:text-slate-50">{s.label}</dd>
+              <dd className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">{s.desc}</dd>
             </div>
           ))}
         </dl>

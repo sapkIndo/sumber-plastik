@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/HeroB"; // switch: HeroA | HeroB | Hero
-import Stats from "@/components/sections/Stats";
-import Products from "@/components/sections/Products";
-import WhyUs from "@/components/sections/WhyUs";
-import Clients from "@/components/sections/Clients";
-import StoreBranch from "@/components/sections/StoreBranch";
-import Testimonials from "@/components/sections/Testimonials";
-import Timeline from "@/components/sections/Timeline";
-import ProductSpotlight from "@/components/sections/ProductSpotlight";
-import VisiMisi from "@/components/sections/VisiMisi";
-import FAQ from "@/components/sections/FAQ";
-import CTA from "@/components/sections/CTA";
+
+const Stats = dynamic(() => import("@/components/sections/Stats"));
+const Products = dynamic(() => import("@/components/sections/Products"));
+const ProductSpotlight = dynamic(() => import("@/components/sections/ProductSpotlight"));
+const WhyUs = dynamic(() => import("@/components/sections/WhyUs"));
+const Clients = dynamic(() => import("@/components/sections/Clients"));
+const StoreBranch = dynamic(() => import("@/components/sections/StoreBranch"));
+const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
+const Timeline = dynamic(() => import("@/components/sections/Timeline"));
+const VisiMisi = dynamic(() => import("@/components/sections/VisiMisi"));
+const FAQ = dynamic(() => import("@/components/sections/FAQ"));
+const CTA = dynamic(() => import("@/components/sections/CTA"));
 
 export const metadata: Metadata = {
   alternates: {

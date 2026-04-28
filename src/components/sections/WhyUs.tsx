@@ -144,9 +144,12 @@ export default function WhyUs() {
           </p>
         </div>
 
-        <ul className="whyus-grid grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
+        <ul
+          className="whyus-grid flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3"
+          role="list"
+        >
           {features.map((f) => (
-            <li key={f.title} className="whyus-card">
+            <li key={f.title} className="whyus-card snap-start shrink-0 w-[78vw] md:w-auto md:shrink">
               <article
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();

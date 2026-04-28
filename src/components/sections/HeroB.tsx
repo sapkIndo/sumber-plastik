@@ -149,7 +149,7 @@ export default function HeroB() {
               Distributor Resmi &amp; Terpercaya
             </span>
           </div>
-          <span className="hero-year text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+          <span className="hero-year text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
             Est. 2010
           </span>
         </div>
@@ -163,7 +163,7 @@ export default function HeroB() {
           <br className="hidden sm:block" />
           <span className="text-blue-600">Berkualitas Tinggi</span>
           <br className="hidden sm:block" />
-          <span className="font-bold text-slate-400 dark:text-slate-500">untuk Industri Anda.</span>
+          <span className="font-bold text-slate-500 dark:text-slate-400">untuk Industri Anda.</span>
         </h1>
 
         {/* Rule + Subtitle + CTAs */}
@@ -232,7 +232,7 @@ export default function HeroB() {
             {marqueeItems.map((item, i) => (
               <span
                 key={i}
-                className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500"
+                className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400"
               >
                 {item}
                 <span className="h-1 w-1 rounded-full bg-blue-600/40" />

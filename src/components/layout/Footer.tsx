@@ -62,7 +62,7 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <Phone size={14} className="mt-0.5 shrink-0 text-blue-600" aria-hidden="true" />
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">Hotline Order WA</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Hotline Order WA</p>
                   <a
                     href={`https://wa.me/${CONTACT.whatsapp}`}
                     target="_blank" rel="noopener noreferrer"
@@ -93,7 +93,7 @@ export default function Footer() {
                     </a>
                     <div className="mt-1 flex items-center gap-2">
                       <Clock size={10} className="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true" />
-                      <span className="text-[11px] text-slate-400 dark:text-slate-500">{store.hours}</span>
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">{store.hours}</span>
                       <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
                       <a href={`tel:${store.phone}`} className="text-[11px] text-blue-600 hover:underline dark:text-blue-400">
                         {store.phone}
@@ -107,8 +107,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-100 pt-8 dark:border-slate-800 sm:flex-row">
-          <p className="text-xs text-slate-400 dark:text-slate-500">© {new Date().getFullYear()} {SITE_NAME}. Semua hak dilindungi.</p>
-          <p className="text-xs text-slate-400 dark:text-slate-500">Distributor Plastik Terpercaya di Indonesia</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">© {new Date().getFullYear()} {SITE_NAME}. Semua hak dilindungi.</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Distributor Plastik Terpercaya di Indonesia</p>
         </div>
       </div>
     </footer>

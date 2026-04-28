@@ -203,7 +203,6 @@ export default function FAQ() {
                     </dt>
                     <dd
                       id={`faq-content-${i}`}
-                      role="region"
                       aria-labelledby={`faq-btn-${i}`}
                       className="grid transition-[grid-template-rows] duration-300 ease-out"
                       style={{ gridTemplateRows: openIndex === i ? "1fr" : "0fr" }}

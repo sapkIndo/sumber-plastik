@@ -32,7 +32,8 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       // Next.js inline scripts (hydration, JSON-LD) require unsafe-inline
-      "script-src 'self' 'unsafe-inline'",
+      // React dev mode needs unsafe-eval for callstack reconstruction
+      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
       // Tailwind + Next.js inject inline styles
       "style-src 'self' 'unsafe-inline'",
       // Allow images from same origin, data URIs, blobs, and HTTPS

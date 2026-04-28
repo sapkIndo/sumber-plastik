@@ -49,6 +49,16 @@ export default function StoreBranch() {
         },
       });
 
+      // Mobile card entrance animation
+      gsap.from(".fc-mobile-card", {
+        opacity: 0,
+        y: 20,
+        stagger: 0.08,
+        duration: 0.6,
+        ease: "expo.out",
+        scrollTrigger: { trigger: ".fc-mobile-cards", start: "top 78%", once: true },
+      });
+
       ScrollTrigger.create({
         trigger: listRef.current,
         start: "top 78%",
@@ -233,8 +243,40 @@ export default function StoreBranch() {
           </p>
         </div>
 
-        {/* ── Directory list ── */}
-        <div ref={listRef} className="fc-list">
+        {/* ── Mobile card carousel ── */}
+        <div className="fc-mobile-cards md:hidden grid grid-cols-2 gap-3 mb-2">
+          {STORES.map((store, i) => (
+            <a
+              key={store.name}
+              href={store.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Buka lokasi ${store.name} di Google Maps`}
+              className="fc-mobile-card group flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition-[border-color] duration-200 hover:border-blue-200 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-blue-800"
+            >
+              <div className="flex items-start justify-between">
+                <span className="font-mono text-2xl font-black leading-none text-slate-200 dark:text-slate-700" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <ArrowUpRight size={13} className="mt-0.5 text-slate-300 transition-colors duration-200 group-hover:text-blue-500 dark:text-slate-600 dark:group-hover:text-blue-400" aria-hidden="true" />
+              </div>
+              <p className="text-sm font-bold leading-tight text-slate-900 dark:text-slate-50">{store.name}</p>
+              <div className="flex flex-col gap-1.5">
+                <div className="flex items-start gap-1.5">
+                  <MapPin size={11} className="mt-0.5 shrink-0 text-blue-600" aria-hidden="true" />
+                  <address className="not-italic text-[11px] leading-snug text-slate-500 dark:text-slate-400">{store.address}</address>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Clock size={11} className="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true" />
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">{store.hours}</span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        {/* ── Directory list (desktop only) ── */}
+        <div ref={listRef} className="fc-list hidden md:block">
           <div className="fc-divider h-px w-full bg-slate-200 dark:bg-slate-700" />
 
           {STORES.map((store, i) => {

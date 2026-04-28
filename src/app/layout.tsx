@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import dynamic from "next/dynamic";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import ClientAnimations from "@/components/ClientAnimations";
 import Navbar from "@/components/layout/Navbar";
 import "./globals.css";
-
-const ConsoleEasterEgg = dynamic(() => import("@/components/ConsoleEasterEgg"), { ssr: false });
-const InteractiveBg = dynamic(() => import("@/components/InteractiveBg"), { ssr: false });
-const CustomCursor = dynamic(() => import("@/components/CustomCursor"), { ssr: false });
-const GSAPSmoothScroll = dynamic(() => import("@/components/GSAPSmoothScroll"), { ssr: false });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -88,9 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             Lewati ke konten utama
           </a>
-          <CustomCursor />
-          <InteractiveBg />
-          <GSAPSmoothScroll />
+          <ClientAnimations />
           <Navbar />
           <div id="smooth-wrapper">
             <div id="smooth-content">

@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   description:
     "Katalog lengkap produk kemasan plastik dan paper dari Sumber Aneka Plastik dan Kemasan — kresek, botol PET, botol HDPE, cable tie, bubble wrap. Ecer & grosir, food grade, halal, ISO.",
   alternates: {
-    canonical: `${SITE_URL}/produk`,
+    canonical: `${SITE_URL}/product`,
   },
   openGraph: {
     title: "Katalog Produk Kemasan | Sumber Aneka Plastik dan Kemasan",
     description:
       "Katalog lengkap produk kemasan plastik dan paper. Kresek, botol PET, botol HDPE, cable tie, bubble wrap. Ecer & grosir.",
-    url: `${SITE_URL}/produk`,
+    url: `${SITE_URL}/product`,
   },
 };
 
@@ -26,12 +26,12 @@ const jsonLd = {
   name: "Katalog Produk Kemasan — Sumber Aneka Plastik dan Kemasan",
   description:
     "Katalog lengkap produk kemasan plastik dan paper untuk FnB, industri, dan retail.",
-  url: `${SITE_URL}/produk`,
+  url: `${SITE_URL}/product`,
   breadcrumb: {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Beranda", item: SITE_URL },
-      { "@type": "ListItem", position: 2, name: "Produk", item: `${SITE_URL}/produk` },
+      { "@type": "ListItem", position: 2, name: "Produk", item: `${SITE_URL}/product` },
     ],
   },
 };

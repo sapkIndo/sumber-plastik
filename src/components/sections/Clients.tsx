@@ -63,7 +63,7 @@ const clientsRow2: Client[] = [
 
 function ClientCard({ client }: { client: Client }) {
   return (
-    <li className="flex h-20 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
+    <li className="flex h-20 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm transition-[border-color,background-color] duration-200 hover:border-blue-100 hover:bg-blue-50/40 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-blue-900/40 dark:hover:bg-blue-950/20">
       {client.logo ? (
         <div className="relative h-14 w-44 p-2">
           <Image
@@ -101,7 +101,7 @@ export default function Clients() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="clients-heading mb-14 text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-600">Client Kami</p>
-          <h2 id="clients-heading" className="mb-4 font-bold tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}>
+          <h2 id="clients-heading" className="mb-4 font-black tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}>
             Dipercaya oleh{" "}
             <span className="text-slate-400 dark:text-slate-500">5.000+ Pelanggan</span>
           </h2>

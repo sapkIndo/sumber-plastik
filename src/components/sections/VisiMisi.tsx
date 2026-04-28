@@ -68,7 +68,7 @@ export default function VisiMisi() {
       <div className="mx-auto max-w-7xl">
 
         <div className="vm-header mb-0 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <h2 id="vm-heading" className="font-bold tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}>
+          <h2 id="vm-heading" className="font-black tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}>
             Visi <span className="text-slate-400 dark:text-slate-500">&amp; Misi</span>
           </h2>
           <p className="max-w-sm text-sm leading-relaxed text-slate-600 dark:text-slate-400 lg:text-right">
@@ -119,7 +119,7 @@ export default function VisiMisi() {
 
           <ul role="list">
             {misi.map((m, i) => (
-              <li key={i} className="vm-misi-row group border-t border-slate-100 py-5 first:border-t-0 dark:border-slate-800">
+              <li key={i} className="vm-misi-row group -mx-3 rounded-xl border-t border-slate-100 px-3 py-5 transition-colors duration-200 first:border-t-0 hover:bg-blue-50/40 dark:border-slate-800 dark:hover:bg-blue-950/10">
                 <div className="flex items-start gap-6 md:items-center">
                   <div className="flex w-8 shrink-0 flex-col items-start gap-1 md:w-10">
                     <span className="font-mono text-xs tabular-nums text-slate-400 transition-colors duration-200 group-hover:text-blue-600 dark:text-slate-500">
@@ -133,7 +133,7 @@ export default function VisiMisi() {
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="vm-misi-check h-2.5 w-3.5 text-blue-600 opacity-70"
+                      className="vm-misi-check h-2.5 w-3.5 text-blue-600 opacity-90"
                     >
                       <polyline points="1,6 6,11 17,1" />
                     </svg>

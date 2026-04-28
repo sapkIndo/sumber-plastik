@@ -143,7 +143,7 @@ export default function Testimonials() {
           </p>
           <h2
             id="testi-heading"
-            className="mb-4 font-bold tracking-tight text-slate-900 dark:text-slate-50"
+            className="mb-4 font-black tracking-tight text-slate-900 dark:text-slate-50"
             style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}
           >
             Kata Mereka{" "}
@@ -164,7 +164,7 @@ export default function Testimonials() {
               key={t.name}
               onClick={() => handleSelect(i)}
               aria-pressed={activeIdx === i}
-              className={`testi-tab flex items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
+              className={`testi-tab flex items-center gap-2.5 rounded-full border px-3 py-2.5 text-sm font-medium transition-all duration-300 sm:px-4 ${
                 activeIdx === i
                   ? "border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-600/20"
                   : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600"
@@ -173,7 +173,7 @@ export default function Testimonials() {
               <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full" aria-hidden="true">
                 <Image src={t.photo} alt={t.name} fill sizes="24px" className="object-cover" />
               </span>
-              {t.name}
+              <span className="hidden sm:inline">{t.name}</span>
             </button>
           ))}
         </nav>
@@ -226,7 +226,7 @@ export default function Testimonials() {
 
             <figure>
               <blockquote>
-                <p className="text-xl leading-relaxed text-slate-800 dark:text-slate-100 md:text-2xl lg:text-3xl">
+                <p className="leading-relaxed text-slate-800 dark:text-slate-100" style={{ fontSize: "clamp(1.125rem, 2vw + 0.5rem, 1.875rem)" }}>
                   &ldquo;{active.quote}&rdquo;
                 </p>
               </blockquote>

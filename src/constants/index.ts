@@ -4,9 +4,9 @@ export const SITE_TAGLINE = "Toko Plastik & Kemasan Terpercaya";
 
 export const NAV_LINKS: { label: string; href: string }[] = [
   { label: "Beranda", href: "/" },
-  { label: "Produk", href: "/produk" },
-  { label: "Tentang Kami", href: "/tentang" },
-  { label: "Kontak", href: "/kontak" },
+  { label: "Produk", href: "/product" },
+  { label: "Tentang Kami", href: "/about" },
+  { label: "Kontak", href: "/contact" },
 ];
 
 /** Hotline order WhatsApp — gunakan di tombol WA seluruh website */

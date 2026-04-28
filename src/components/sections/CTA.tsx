@@ -182,7 +182,8 @@ export default function CTA() {
 
             <h2
               id="cta-heading"
-              className="cta-heading mb-6 text-4xl font-black leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.5rem]"
+              className="cta-heading mb-6 font-black leading-[1.08] tracking-tight text-white"
+              style={{ fontSize: "clamp(2.25rem, 5vw + 0.75rem, 4.5rem)" }}
             >
               Siap Bermitra dengan{" "}
               <span className="text-blue-200">Sumber Aneka Plastik dan Kemasan?</span>

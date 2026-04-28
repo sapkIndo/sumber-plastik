@@ -54,7 +54,7 @@ export default function Navbar() {
     <>
       <header
         role="banner"
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,backdrop-filter,border-color,transform] duration-300 ease-out ${
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,transform] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
           hidden ? "-translate-y-full" : "translate-y-0"
         } ${
           scrolled
@@ -106,7 +106,7 @@ export default function Navbar() {
               href={`https://wa.me/${CONTACT.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-1 text-sm font-medium text-slate-600 transition-colors duration-150 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              className="group flex items-center gap-1 text-sm font-medium text-slate-600 transition-[color,transform] duration-150 hover:text-slate-900 active:scale-[0.97] dark:text-slate-400 dark:hover:text-slate-50"
             >
               Hubungi Kami
               <ArrowUpRight
@@ -121,7 +121,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2 md:hidden">
             <ThemeToggle />
             <button
-              className="flex h-11 w-11 items-center justify-center text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-500 transition-[color,transform] duration-150 hover:text-slate-900 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-slate-400 dark:hover:text-slate-50 dark:focus-visible:ring-offset-slate-950"
               onClick={() => setOpen(true)}
               aria-expanded={open}
               aria-controls="mobile-menu"
@@ -139,10 +139,10 @@ export default function Navbar() {
         role="dialog"
         aria-modal="true"
         aria-label="Menu navigasi"
-        className={`fixed inset-0 z-[60] flex flex-col bg-white px-6 pb-12 pt-5 transition-[opacity,transform] duration-300 ease-out dark:bg-slate-950 md:hidden ${
+        className={`fixed inset-0 z-[60] flex flex-col bg-white px-6 pb-12 pt-5 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] dark:bg-slate-950 md:hidden ${
           open
             ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-1 opacity-0"
+            : "pointer-events-none -translate-y-6 opacity-0"
         }`}
       >
         <div className="flex items-center justify-between border-b border-slate-200 pb-5 dark:border-slate-800">
@@ -157,7 +157,7 @@ export default function Navbar() {
           </Link>
           <button
             onClick={() => setOpen(false)}
-            className="flex h-11 w-11 items-center justify-center text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-500 transition-[color,transform] duration-150 hover:text-slate-900 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-slate-400 dark:hover:text-slate-50 dark:focus-visible:ring-offset-slate-950"
             aria-label="Tutup menu"
           >
             <X size={18} />
@@ -195,7 +195,7 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 py-4 text-sm font-semibold text-slate-700 transition-[border-color,background-color] duration-150 hover:border-blue-300 hover:bg-blue-50 dark:border-slate-700 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/40"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 py-4 text-sm font-semibold text-slate-700 transition-[border-color,background-color,transform] duration-150 hover:border-blue-300 hover:bg-blue-50 active:scale-[0.97] dark:border-slate-700 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/40"
           >
             Hubungi Kami
             <ArrowUpRight size={14} aria-hidden="true" />

@@ -113,8 +113,8 @@ export default function Timeline() {
               if (p >= threshold && !pinDone[i]) {
                 pinDone[i] = true;
                 gsap.fromTo(g,
-                  { autoAlpha: 0, y: -28 },
-                  { autoAlpha: 1, y: 0, duration: 0.9, ease: "bounce.out", overwrite: true }
+                  { autoAlpha: 0, y: -18 },
+                  { autoAlpha: 1, y: 0, duration: 0.65, ease: "back.out(1.7)", overwrite: true }
                 );
               } else if (p < threshold && pinDone[i]) {
                 pinDone[i] = false;
@@ -144,7 +144,7 @@ export default function Timeline() {
 
       <div
         ref={stickyRef}
-        className="relative flex h-screen w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
+        className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
       >
 
         {/* ── Top bar ── */}
@@ -279,7 +279,7 @@ export default function Timeline() {
                     <span className="h-px w-6 shrink-0 bg-blue-600" aria-hidden="true" />
                     <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">{m.tag}</span>
                   </div>
-                  <h3 className="mb-5 text-3xl font-black leading-[1.0] tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl lg:text-5xl xl:text-6xl">
+                  <h3 className="mb-5 font-black leading-[1.0] tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 4vw + 0.5rem, 4rem)" }}>
                     {m.title}
                   </h3>
                   <p className="text-sm leading-[1.8] text-slate-500 dark:text-slate-400 md:text-[15px]">{m.desc}</p>

@@ -16,8 +16,8 @@ export default function CustomCursor() {
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     const tick = () => {
-      lerped.current.x = lerp(lerped.current.x, target.current.x, 0.18);
-      lerped.current.y = lerp(lerped.current.y, target.current.y, 0.18);
+      lerped.current.x = lerp(lerped.current.x, target.current.x, 0.5);
+      lerped.current.y = lerp(lerped.current.y, target.current.y, 0.5);
       dot.style.transform = `translate(${lerped.current.x}px, ${lerped.current.y}px) translate(-50%, -50%)`;
       rafId.current = requestAnimationFrame(tick);
     };
@@ -54,7 +54,7 @@ export default function CustomCursor() {
       ref={dotRef}
       aria-hidden="true"
       className="pointer-events-none fixed left-0 top-0 z-[9998] hidden md:block"
-      style={{ opacity: 0, transition: "opacity 0.2s" }}
+      style={{ opacity: 0, transition: "opacity 0.2s", willChange: "transform" }}
     >
       <div className="h-3 w-3 rounded-full bg-blue-700 shadow-[0_0_12px_4px_rgba(37,99,235,0.3)]" />
     </div>

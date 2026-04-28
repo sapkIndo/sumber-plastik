@@ -30,12 +30,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description,
     keywords: category.keywords,
     alternates: {
-      canonical: `${SITE_URL}/produk/${category.slug}`,
+      canonical: `${SITE_URL}/product/${category.slug}`,
     },
     openGraph: {
       title: `${title} | ${SITE_NAME}`,
       description,
-      url: `${SITE_URL}/produk/${category.slug}`,
+      url: `${SITE_URL}/product/${category.slug}`,
     },
   };
 }
@@ -56,7 +56,7 @@ export default async function KategoriPage({ params, searchParams }: PageProps) 
     "@type": "ItemList",
     name: `Katalog ${category.name} — ${SITE_NAME}`,
     description: category.description,
-    url: `${SITE_URL}/produk/${category.slug}`,
+    url: `${SITE_URL}/product/${category.slug}`,
     numberOfItems: totalCount,
     itemListElement: products.map((p, i) => ({
       "@type": "ListItem",
@@ -90,7 +90,7 @@ export default async function KategoriPage({ params, searchParams }: PageProps) 
         <div className="mb-8">
           <Breadcrumb
             items={[
-              { label: "Produk", href: "/produk" },
+              { label: "Produk", href: "/product" },
               { label: category.name },
             ]}
           />

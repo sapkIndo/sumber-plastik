@@ -81,12 +81,13 @@ export default function Stats() {
           {stats.map((s, i) => (
             <div
               key={s.label}
-              className="stat-item flex flex-col items-center px-6 py-10 text-center sm:px-10"
+              className="stat-item flex flex-col items-center px-6 py-10 text-center transition-colors duration-300 hover:bg-blue-50/50 dark:hover:bg-blue-950/10 sm:px-10"
             >
               <dt className="sr-only">{s.label}</dt>
               <dd
                 ref={(el) => { numberRefs.current[i] = el; }}
-                className="mb-1 text-3xl font-black text-blue-600 dark:text-blue-400 sm:text-4xl md:text-5xl"
+                className="mb-1 font-black text-blue-600 dark:text-blue-400"
+                style={{ fontSize: "clamp(1.875rem, 4vw + 0.5rem, 3rem)" }}
                 aria-label={`${s.value}${s.suffix}`}
               >
                 0{s.suffix}

@@ -129,7 +129,7 @@ export default function FAQ() {
             <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-600">FAQ</p>
             <h2
               id="faq-heading"
-              className="mb-4 font-bold tracking-tight text-slate-900 dark:text-slate-50"
+              className="mb-4 font-black tracking-tight text-slate-900 dark:text-slate-50"
               style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}
             >
               Pertanyaan yang{" "}
@@ -155,7 +155,7 @@ export default function FAQ() {
                   role="tab"
                   aria-selected={activeCategory === cat}
                   onClick={() => handleCategoryChange(cat)}
-                  className={`rounded-full px-4 py-1.5 text-sm font-medium transition-[background-color,color,border-color,box-shadow] duration-200 ${
+                  className={`rounded-full px-4 py-2.5 text-sm font-medium transition-[background-color,color,border-color,box-shadow] duration-200 ${
                     activeCategory === cat
                       ? "bg-blue-600 text-white shadow-sm"
                       : "border border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:text-blue-400"
@@ -172,7 +172,11 @@ export default function FAQ() {
                 {filtered.map((f, i) => (
                   <div
                     key={f.q}
-                    className="faq-item overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-blue-200 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:hover:border-blue-800"
+                    className={`faq-item overflow-hidden rounded-2xl border shadow-sm transition-[border-color,box-shadow,background-color] duration-200 ${
+                      openIndex === i
+                        ? "border-blue-200 bg-blue-50/30 shadow-md dark:border-blue-800/60 dark:bg-blue-950/10"
+                        : "border-slate-200 bg-white hover:border-blue-200 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:hover:border-blue-800"
+                    }`}
                   >
                     <dt>
                       <button
@@ -188,7 +192,7 @@ export default function FAQ() {
                         >
                           {String(i + 1).padStart(2, "0")}
                         </span>
-                        <span className="flex-1 text-sm font-semibold text-slate-900 dark:text-slate-50 md:text-base">
+                        <span className={`flex-1 text-sm font-semibold transition-colors duration-200 md:text-base ${openIndex === i ? "text-blue-600 dark:text-blue-400" : "text-slate-900 dark:text-slate-50"}`}>
                           {f.q}
                         </span>
                         <span

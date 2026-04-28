@@ -133,7 +133,7 @@ export default function WhyUs() {
         <div className="whyus-heading mb-16 flex flex-col items-start gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-xl">
             <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-600">Mengapa Kami</p>
-            <h2 id="whyus-heading" className="font-bold leading-tight tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}>
+            <h2 id="whyus-heading" className="font-black leading-tight tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}>
               Kenapa Ribuan Bisnis{" "}
               <span className="text-slate-400 dark:text-slate-500">Mempercayai Kami</span>
             </h2>

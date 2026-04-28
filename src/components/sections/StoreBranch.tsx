@@ -260,7 +260,7 @@ export default function StoreBranch() {
                 </span>
                 <ArrowUpRight size={13} className="mt-0.5 text-slate-300 transition-colors duration-200 group-hover:text-blue-500 dark:text-slate-600 dark:group-hover:text-blue-400" aria-hidden="true" />
               </div>
-              <p className="text-sm font-bold leading-tight text-slate-900 dark:text-slate-50">{store.name}</p>
+              <p className="line-clamp-2 text-sm font-bold leading-tight text-slate-900 dark:text-slate-50">{store.name}</p>
               <div className="flex flex-col gap-1.5">
                 <div className="flex items-start gap-1.5">
                   <MapPin size={11} className="mt-0.5 shrink-0 text-blue-600" aria-hidden="true" />

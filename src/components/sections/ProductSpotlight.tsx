@@ -125,13 +125,12 @@ export default function ProductSpotlight() {
   const ringRefs  = useRef<(SVGCircleElement | null)[]>([]);
 
   useGSAP(() => {
-    // iOS/iPadOS fires scroll events async and overrides GSAP's pinned scroll
-    // position, causing the page to jump to the top. normalizeScroll intercepts
-    // native touch scroll so GSAP stays in control during the pin sequence.
-    const isTouchDevice = !window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    if (isTouchDevice) {
-      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
-    }
+    // normalizeScroll called unconditionally — iPad Pro with Smart Keyboard
+    // reports pointer:fine so touch detection fails; always normalize to be safe.
+    // ignoreMobileResize prevents iOS address-bar height changes from
+    // recalculating ScrollTrigger positions mid-scroll.
+    ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     const total = products.length;
 
@@ -215,7 +214,7 @@ export default function ProductSpotlight() {
         scrollTrigger: {
           trigger: stickyRef.current,
           start: "top top",
-          end: `+=${(total - 1) * window.innerHeight}`,
+          end: () => `+=${(total - 1) * window.innerHeight}`,
           scrub: 0.4,
           invalidateOnRefresh: true,
         },
@@ -236,10 +235,8 @@ export default function ProductSpotlight() {
       ScrollTrigger.create({
         trigger: stickyRef.current,
         start: "top top",
-        end: `+=${(total - 1) * window.innerHeight}`,
+        end: () => `+=${(total - 1) * window.innerHeight}`,
         pin: true,
-        // anticipatePin removed — on iPadOS it fights native touch momentum
-        // and causes the page to jump back to the top when pinning starts
         invalidateOnRefresh: true,
         snap: withSnap ? {
           snapTo: 1 / (total - 1),
@@ -260,10 +257,10 @@ export default function ProductSpotlight() {
 
     const mm = gsap.matchMedia();
 
-    // Desktop (lg+): pin + snap
-    // iPad (< 1024px) gets no snap — snap fights iPadOS touch momentum
-    mm.add("(min-width: 1024px)", () => buildScrollTrigger(true));
-    mm.add("(max-width: 1023px)", () => buildScrollTrigger(false));
+    // Only xl desktops get snap — all iPads (including Pro 12.9" at 1024px)
+    // are excluded because snap conflicts with iPadOS touch momentum.
+    mm.add("(min-width: 1280px)", () => buildScrollTrigger(true));
+    mm.add("(max-width: 1279px)", () => buildScrollTrigger(false));
   }, { scope: ref });
 
   useEffect(() => {

@@ -76,10 +76,8 @@ export default function Timeline() {
 
   useGSAP(
     () => {
-      const isTouchDevice = !window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-      if (isTouchDevice) {
-        ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
-      }
+      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+      ScrollTrigger.config({ ignoreMobileResize: true });
 
       const total  = milestones.length;
       const root   = ref.current!;

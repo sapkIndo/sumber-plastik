@@ -278,7 +278,7 @@ export default function ProductSpotlight() {
     <section ref={ref} aria-labelledby="spotlight-heading">
       <div
         ref={stickyRef}
-        className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900 [touch-action:pan-y] [overscroll-behavior:none]"
+        className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
       >
         {/* header bar */}
         <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-4 dark:border-slate-800 md:px-12">

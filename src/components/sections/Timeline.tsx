@@ -152,7 +152,7 @@ export default function Timeline() {
 
       <div
         ref={stickyRef}
-        className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900 [touch-action:pan-y] [overscroll-behavior:none]"
+        className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
       >
 
         {/* ── Top bar ── */}

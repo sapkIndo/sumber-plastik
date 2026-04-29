@@ -7,53 +7,29 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const stats: { value: number; suffix: string; label: string; desc: string }[] = [
-  { value: 5000, suffix: "+", label: "Client Aktif",     desc: "Dari UKM hingga korporasi nasional"          },
-  { value: 16,   suffix: "+", label: "Tahun Pengalaman", desc: "Melayani industri Indonesia sejak 2010"      },
-  { value: 1000, suffix: "+", label: "Jenis Produk",     desc: "PP, PET, HDPE, PVC, LLDPE, PS, dan lainnya" },
-  { value: 99,   suffix: "%", label: "Tingkat Kepuasan", desc: "Berdasarkan survei kepuasan tahunan kami"    },
+const stats: { value: string; label: string; desc: string }[] = [
+  { value: "5.000+", label: "Client Aktif",     desc: "Dari UKM hingga korporasi nasional"          },
+  { value: "16+",    label: "Tahun Pengalaman", desc: "Melayani industri Indonesia sejak 2010"      },
+  { value: "1.000+", label: "Jenis Produk",     desc: "PP, PET, HDPE, PVC, LLDPE, PS, dan lainnya" },
+  { value: "99%",    label: "Tingkat Kepuasan", desc: "Berdasarkan survei kepuasan tahunan kami"    },
 ];
 
 export default function Stats() {
   const ref = useRef<HTMLElement>(null);
-  const numberRefs = useRef<(HTMLElement | null)[]>([]);
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: ref.current, start: "top 78%", once: true },
-      });
-
-      tl.from(".stat-item", {
+      gsap.from(".stat-item", {
         opacity: 0,
-        y: 30,
-        duration: 0.7,
-        stagger: 0.065,
+        y: 24,
+        duration: 0.65,
+        stagger: 0.07,
         ease: "expo.out",
-      });
-
-      stats.forEach((stat, i) => {
-        const el = numberRefs.current[i];
-        if (!el) return;
-        const obj = { val: 0 };
-        tl.to(
-          obj,
-          {
-            val: stat.value,
-            duration: 2,
-            ease: "power2.out",
-            onUpdate() {
-              el.textContent = Math.round(obj.val) + stat.suffix;
-            },
-          },
-          0
-        );
+        scrollTrigger: { trigger: ref.current, start: "top 78%", once: true },
       });
     },
     { scope: ref }
   );
-
-  numberRefs.current = [];
 
   return (
     <section
@@ -63,8 +39,8 @@ export default function Stats() {
     >
       <div className="mx-auto max-w-7xl px-6">
 
-        {/* Distributor statement */}
-        <div className="stat-item mb-14 text-center">
+        {/* Statement */}
+        <div className="stat-item mb-14 max-w-2xl">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-blue-600">
             Keunggulan Utama
           </p>
@@ -77,23 +53,22 @@ export default function Stats() {
           </p>
         </div>
 
+        {/* Stats strip — compact, no giant hero numbers */}
         <dl className="grid grid-cols-2 divide-x divide-y divide-slate-200 dark:divide-slate-700/60 lg:grid-cols-4 lg:divide-y-0">
-          {stats.map((s, i) => (
+          {stats.map((s) => (
             <div
               key={s.label}
-              className="stat-item flex flex-col items-center px-6 py-10 text-center transition-colors duration-300 hover:bg-blue-50/50 dark:hover:bg-blue-950/10 sm:px-10"
+              className="stat-item flex flex-col px-6 py-8 first:pl-0 lg:last:pr-0"
             >
               <dt className="sr-only">{s.label}</dt>
               <dd
-                ref={(el) => { numberRefs.current[i] = el; }}
-                className="mb-1 font-black text-blue-600 dark:text-blue-400"
-                style={{ fontSize: "clamp(1.875rem, 4vw + 0.5rem, 3rem)" }}
-                aria-label={`${s.value}${s.suffix}`}
+                className="mb-1 text-3xl font-black text-blue-600 dark:text-blue-400"
+                aria-label={s.value}
               >
-                0{s.suffix}
+                {s.value}
               </dd>
-              <dd className="mb-1 text-sm font-semibold text-slate-900 dark:text-slate-50">{s.label}</dd>
-              <dd className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">{s.desc}</dd>
+              <dd className="text-sm font-semibold text-slate-900 dark:text-slate-50">{s.label}</dd>
+              <dd className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{s.desc}</dd>
             </div>
           ))}
         </dl>

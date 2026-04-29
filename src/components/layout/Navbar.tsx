@@ -17,28 +17,32 @@ export default function Navbar() {
 
   openRef.current = open;
 
-  // Scroll-based hide/show — pure RAF, no GSAP
+  // Scroll-based hide/show — passive event + single RAF per scroll event
   useEffect(() => {
     let prevY = window.scrollY;
     let rafId: number;
+    let ticking = false;
 
-    const tick = () => {
-      if (!openRef.current) {
+    const onScroll = () => {
+      if (ticking || openRef.current) return;
+      ticking = true;
+      rafId = requestAnimationFrame(() => {
         const y = window.scrollY;
         const delta = y - prevY;
-
         if (Math.abs(delta) >= 2) {
           prevY = y;
-          const nowScrolled = y >= 60;
-          setScrolled(nowScrolled);
-          setHidden(nowScrolled && delta > 0);
+          setScrolled(y >= 60);
+          setHidden(y >= 60 && delta > 0);
         }
-      }
-      rafId = requestAnimationFrame(tick);
+        ticking = false;
+      });
     };
 
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
   useEffect(() => {

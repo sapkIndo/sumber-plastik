@@ -90,7 +90,7 @@ export default function Clients() {
     () => {
       gsap.from(".clients-heading", {
         opacity: 0, y: 25, duration: 0.7, ease: "power3.out",
-        scrollTrigger: { trigger: ref.current, start: "top 80%" },
+        scrollTrigger: { trigger: ref.current, start: "top 80%", once: true },
       });
     },
     { scope: ref }

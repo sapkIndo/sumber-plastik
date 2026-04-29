@@ -15,7 +15,7 @@ const SVG_PROPS = {
   strokeWidth: "1.5",
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
-  className: "whyus-svg h-12 w-12 text-blue-600 dark:text-blue-400",
+  className: "whyus-svg h-7 w-7 shrink-0 text-blue-600 dark:text-blue-400",
   "aria-hidden": true,
 };
 
@@ -54,7 +54,7 @@ const features = [
       </svg>
     ),
     title: "Pengiriman Cepat",
-    desc: "Jaringan logistik handal ke seluruh Indonesia. Jabodetabek 1-2 hari, luar Jawa 3-7 hari kerja.",
+    desc: "Jaringan logistik handal ke seluruh Indonesia. Jabodetabek 1–2 hari, luar Jawa 3–7 hari kerja.",
   },
   {
     svg: (
@@ -103,23 +103,23 @@ export default function WhyUs() {
         scrollTrigger: { trigger: ref.current, start: "top 78%", once: true },
       });
 
-      gsap.from(".whyus-card", {
-        opacity: 0, y: 35, duration: 0.6, stagger: 0.08, ease: "expo.out",
-        scrollTrigger: { trigger: ".whyus-grid", start: "top 78%", once: true },
+      gsap.from(".whyus-item", {
+        opacity: 0, y: 20, duration: 0.55, stagger: 0.07, ease: "expo.out",
+        scrollTrigger: { trigger: ".whyus-list", start: "top 78%", once: true },
       });
 
-      gsap.utils.toArray<HTMLElement>(".whyus-card").forEach((card, i) => {
-        const strokes = card.querySelectorAll("path, circle, rect, line, polyline");
+      gsap.utils.toArray<HTMLElement>(".whyus-item").forEach((item, i) => {
+        const strokes = item.querySelectorAll("path, circle, rect, line, polyline");
         gsap.fromTo(
           strokes,
           { drawSVG: "0%" },
           {
             drawSVG: "100%",
-            duration: 1.4,
+            duration: 1.2,
             ease: "power2.inOut",
-            stagger: 0.12,
-            delay: i * 0.08,
-            scrollTrigger: { trigger: ".whyus-grid", start: "top 78%", once: true },
+            stagger: 0.1,
+            delay: i * 0.07,
+            scrollTrigger: { trigger: ".whyus-list", start: "top 78%", once: true },
           }
         );
       });
@@ -130,10 +130,16 @@ export default function WhyUs() {
   return (
     <section ref={ref} aria-labelledby="whyus-heading" className="px-5 py-16 md:px-6 md:py-28">
       <div className="mx-auto max-w-7xl">
-        <div className="whyus-heading mb-16 flex flex-col items-start gap-4 lg:flex-row lg:items-end lg:justify-between">
+
+        {/* Heading */}
+        <div className="whyus-heading mb-12 flex flex-col items-start gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-xl">
             <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-600">Mengapa Kami</p>
-            <h2 id="whyus-heading" className="font-black leading-tight tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}>
+            <h2
+              id="whyus-heading"
+              className="font-black leading-tight tracking-tight text-slate-900 dark:text-slate-50"
+              style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}
+            >
               Kenapa Ribuan Bisnis{" "}
               <span className="text-slate-400 dark:text-slate-500">Mempercayai Kami</span>
             </h2>
@@ -144,34 +150,37 @@ export default function WhyUs() {
           </p>
         </div>
 
+        {/* Feature list — 2-col grid with dividers, no cards */}
         <ul
-          className="whyus-grid flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3"
+          className="whyus-list grid grid-cols-1 divide-y divide-slate-100 dark:divide-slate-800/70 md:grid-cols-2 md:divide-x md:divide-y-0"
           role="list"
         >
-          {features.map((f) => (
-            <li key={f.title} className="whyus-card snap-start shrink-0 w-[78vw] md:w-auto md:shrink">
-              <article
-                onMouseMove={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  e.currentTarget.style.setProperty("--x", `${e.clientX - rect.left}px`);
-                  e.currentTarget.style.setProperty("--y", `${e.clientY - rect.top}px`);
-                }}
-                className="group relative overflow-hidden flex h-full flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-blue-200 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:hover:border-blue-800 dark:hover:shadow-slate-900/50"
-              >
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{ background: "radial-gradient(circle 180px at var(--x, 50%) var(--y, 50%), rgba(37,99,235,0.09), transparent 70%)" }}
-                  aria-hidden="true"
-                />
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-blue-600/[0.08] transition-[background-color,transform] duration-200 ease-out group-hover:scale-105 group-hover:bg-blue-600/[0.12] dark:bg-blue-600/[0.15] dark:group-hover:bg-blue-600/[0.22]">
-                  {f.svg}
-                </div>
-                <h3 className="text-base font-semibold text-slate-900 dark:text-slate-50">{f.title}</h3>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">{f.desc}</p>
-              </article>
+          {features.map((f, i) => (
+            <li
+              key={f.title}
+              className="whyus-item group flex gap-5 px-0 py-7 transition-colors duration-200 hover:bg-slate-50/70 dark:hover:bg-slate-800/20 md:px-8 md:first:pl-0 md:last:pr-0"
+            >
+              {/* Number + icon */}
+              <div className="flex shrink-0 flex-col items-center gap-2 pt-0.5">
+                <span className="font-mono text-[10px] tabular-nums text-slate-400 dark:text-slate-600">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {f.svg}
+              </div>
+
+              {/* Text */}
+              <div className="min-w-0">
+                <h3 className="mb-1.5 text-base font-semibold text-slate-900 dark:text-slate-50">
+                  {f.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  {f.desc}
+                </p>
+              </div>
             </li>
           ))}
         </ul>
+
       </div>
     </section>
   );

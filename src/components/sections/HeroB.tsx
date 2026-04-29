@@ -3,6 +3,9 @@
 import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Link from "next/link";
+import { MessageCircle, ArrowRight } from "lucide-react";
+import { CONTACT } from "@/constants";
 
 gsap.registerPlugin(useGSAP);
 
@@ -214,6 +217,27 @@ export default function HeroB() {
               <br />
               Dari Yogyakarta, kirim ke seluruh Indonesia.
             </p>
+            <div className="hero-cta flex flex-col gap-3 sm:flex-row">
+              <a
+                href={`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent("Halo, saya ingin konsultasi produk kemasan.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-blue-500 active:scale-[0.97]"
+                style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
+              >
+                <MessageCircle size={15} aria-hidden="true" />
+                Konsultasi Gratis
+                <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+              </a>
+              <Link
+                href="/product"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-700 transition-[border-color,background-color,transform] duration-200 hover:border-blue-200 hover:bg-blue-50 active:scale-[0.97] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/30"
+                style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
+              >
+                Lihat Produk
+                <ArrowRight size={14} aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

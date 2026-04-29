@@ -108,11 +108,13 @@ export default function Footer() {
             </h3>
             <ul className="space-y-1" role="list">
               {PRODUCT_LIST.map((p) => (
-                <li
-                  key={p}
-                  className="py-1 text-sm text-slate-500 dark:text-slate-400"
-                >
-                  {p}
+                <li key={p}>
+                  <Link
+                    href="/product"
+                    className="group inline-flex items-center gap-1.5 py-1 text-sm text-slate-500 transition-[color,transform] duration-150 hover:translate-x-0.5 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+                  >
+                    {p}
+                  </Link>
                 </li>
               ))}
             </ul>

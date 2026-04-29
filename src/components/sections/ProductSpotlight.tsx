@@ -125,20 +125,17 @@ export default function ProductSpotlight() {
   const ringRefs  = useRef<(SVGCircleElement | null)[]>([]);
 
   useGSAP(() => {
-    // Detect iOS/iPadOS reliably — maxTouchPoints works even when iPad Pro
-    // has a Smart Keyboard attached (which makes pointer:fine queries lie).
-    // MacIntel + maxTouchPoints > 1 catches iPadOS 13+ which reports itself
-    // as a Mac in userAgent.
+    // On iOS/iPadOS, GSAP's default pin uses position:fixed which conflicts
+    // with iOS scroll momentum and causes jump-to-top + jitter.
+    // pinType:"transform" keeps the element in document flow and uses
+    // translateY instead — no position:fixed, no iOS conflict.
+    // MacIntel + maxTouchPoints > 1 catches iPadOS 13+ (reports as Mac).
     const isIOS =
       /iPad|iPhone|iPod/.test(navigator.userAgent) ||
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-      // normalizeScroll intercepts iOS async scroll events so GSAP keeps
-      // control of scroll position during pin — prevents jump-to-top.
-      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
-      // Prevent iOS address-bar resize from triggering a full recalculation.
-      ScrollTrigger.config({ ignoreMobileResize: true });
+      ScrollTrigger.config({ pinType: "transform", ignoreMobileResize: true });
     }
 
     const total = products.length;

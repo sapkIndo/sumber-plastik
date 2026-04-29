@@ -81,8 +81,7 @@ export default function Timeline() {
         (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
       if (isIOS) {
-        ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
-        ScrollTrigger.config({ ignoreMobileResize: true });
+        ScrollTrigger.config({ pinType: "transform", ignoreMobileResize: true });
       }
 
       const total  = milestones.length;

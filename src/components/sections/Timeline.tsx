@@ -76,6 +76,11 @@ export default function Timeline() {
 
   useGSAP(
     () => {
+      const isTouchDevice = !window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      if (isTouchDevice) {
+        ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+      }
+
       const total  = milestones.length;
       const root   = ref.current!;
       const panels = gsap.utils.toArray<HTMLElement>(".tl-panel", root);

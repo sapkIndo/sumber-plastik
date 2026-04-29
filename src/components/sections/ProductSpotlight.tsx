@@ -125,6 +125,14 @@ export default function ProductSpotlight() {
   const ringRefs  = useRef<(SVGCircleElement | null)[]>([]);
 
   useGSAP(() => {
+    // iOS/iPadOS fires scroll events async and overrides GSAP's pinned scroll
+    // position, causing the page to jump to the top. normalizeScroll intercepts
+    // native touch scroll so GSAP stays in control during the pin sequence.
+    const isTouchDevice = !window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (isTouchDevice) {
+      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+    }
+
     const total = products.length;
 
     // ── Shared helpers ────────────────────────────────────────────────────────

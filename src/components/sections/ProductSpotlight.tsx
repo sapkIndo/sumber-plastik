@@ -125,12 +125,21 @@ export default function ProductSpotlight() {
   const ringRefs  = useRef<(SVGCircleElement | null)[]>([]);
 
   useGSAP(() => {
-    // normalizeScroll called unconditionally — iPad Pro with Smart Keyboard
-    // reports pointer:fine so touch detection fails; always normalize to be safe.
-    // ignoreMobileResize prevents iOS address-bar height changes from
-    // recalculating ScrollTrigger positions mid-scroll.
-    ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
-    ScrollTrigger.config({ ignoreMobileResize: true });
+    // Detect iOS/iPadOS reliably — maxTouchPoints works even when iPad Pro
+    // has a Smart Keyboard attached (which makes pointer:fine queries lie).
+    // MacIntel + maxTouchPoints > 1 catches iPadOS 13+ which reports itself
+    // as a Mac in userAgent.
+    const isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+    if (isIOS) {
+      // normalizeScroll intercepts iOS async scroll events so GSAP keeps
+      // control of scroll position during pin — prevents jump-to-top.
+      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+      // Prevent iOS address-bar resize from triggering a full recalculation.
+      ScrollTrigger.config({ ignoreMobileResize: true });
+    }
 
     const total = products.length;
 

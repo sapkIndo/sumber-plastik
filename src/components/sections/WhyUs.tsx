@@ -151,14 +151,19 @@ export default function WhyUs() {
         </div>
 
         {/* Feature list — 2-col grid with dividers, no cards */}
-        <ul
-          className="whyus-list grid grid-cols-1 divide-y divide-slate-100 dark:divide-slate-800/70 md:grid-cols-2 md:divide-x md:divide-y-0"
-          role="list"
-        >
-          {features.map((f, i) => (
+        <ul className="whyus-list grid grid-cols-1 md:grid-cols-2" role="list">
+          {features.map((f, i) => {
+            const isRight   = i % 2 !== 0;
+            const isLastRow = i >= features.length - 2;
+            return (
             <li
               key={f.title}
-              className="whyus-item group flex gap-5 px-0 py-7 transition-colors duration-200 hover:bg-slate-50/70 dark:hover:bg-slate-800/20 md:px-8 md:first:pl-0 md:last:pr-0"
+              className={[
+                "whyus-item group flex gap-5 py-7 transition-colors duration-200 hover:bg-slate-50/70 dark:hover:bg-slate-800/20",
+                "border-b border-slate-100 dark:border-slate-800/70 last:border-b-0",
+                isRight   ? "md:border-l md:border-slate-100 dark:md:border-slate-800/70 md:pl-8 md:pr-0" : "md:pl-0 md:pr-8",
+                isLastRow ? "md:border-b-0" : "",
+              ].filter(Boolean).join(" ")}
             >
               {/* Number + icon */}
               <div className="flex shrink-0 flex-col items-center gap-2 pt-0.5">
@@ -178,7 +183,8 @@ export default function WhyUs() {
                 </p>
               </div>
             </li>
-          ))}
+            );
+          })}
         </ul>
 
       </div>

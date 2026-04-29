@@ -39,7 +39,6 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   font-kerning: normal;
-  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -96,15 +95,6 @@ body {
 .animate-marquee         { animation: marquee 18s linear infinite; }
 .animate-marquee-reverse { animation: marquee 18s linear infinite reverse; }
 
-/* ── CTA glow pulse ──────────────────────────────────────────────────── */
-
-@keyframes glowPulse {
-  0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1);   }
-  50%       { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
-}
-
-.animate-glow-pulse { animation: glowPulse 5s ease-in-out infinite; }
-
 /* ── Interactive background blob drift ───────────────────────────────── */
 
 .blob-drift-1 { animation: blobDrift1 22s ease-in-out infinite; }
@@ -136,6 +126,23 @@ body {
   0%, 100% { transform: translate(0, 0); }
   30%  { transform: translate(-100px,  60px); }
   65%  { transform: translate(  80px, -90px); }
+}
+
+/* ── Fade-in up (stagger entrance) ───────────────────────────────────── */
+
+@keyframes fadeinup {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadein-up {
+  animation: fadeinup 420ms cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 /* ── Reduced motion ──────────────────────────────────────────────────── */

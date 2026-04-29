@@ -25,16 +25,18 @@
     "zod": "^4.3.6"
   },
   "browserslist": [
-    "chrome >= 89",
-    "firefox >= 89",
-    "safari >= 15",
-    "edge >= 89"
+    "chrome >= 93",
+    "firefox >= 90",
+    "safari >= 15.4",
+    "edge >= 93",
+    "not dead"
   ],
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "critters": "^0.0.23",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "tailwindcss": "^4",

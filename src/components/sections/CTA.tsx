@@ -4,23 +4,23 @@ import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, MessageCircle, Users, Award, Package, Star } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { ArrowRight, MessageCircle, Check } from "lucide-react";
+import Link from "next/link";
 import { CONTACT } from "@/constants";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const trustStats: { value: number; suffix: string; label: string; icon: LucideIcon }[] = [
-  { value: 5000, suffix: "+", label: "Client Aktif",     icon: Users   },
-  { value: 16,   suffix: "+", label: "Tahun Pengalaman", icon: Award   },
-  { value: 1000, suffix: "+", label: "Jenis Produk",     icon: Package },
-  { value: 99,  suffix: "%", label: "Tingkat Kepuasan", icon: Star    },
+const differentiators = [
+  "Berdiri sejak 2010, 4 cabang di Yogyakarta",
+  "Food grade & halal, bersertifikat ISO",
+  "Ecer dan grosir — MOQ fleksibel",
+  "Lebih dari 1.000 jenis produk kemasan",
+  "Respons penawaran dalam 1×24 jam kerja",
 ];
 
 export default function CTA() {
   const ref = useRef<HTMLElement>(null);
   const textRevealRef = useRef<HTMLDivElement>(null);
-  const numberRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   const mouse = useRef({ x: 0, y: 0 });
   const lerped = useRef({ x: 0, y: 0 });
@@ -33,11 +33,26 @@ export default function CTA() {
     const textReveal = textRevealRef.current;
     if (!section || !textReveal) return;
 
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-
     const initMask = "radial-gradient(circle 0px at 50% 50%, black, transparent)";
     textReveal.style.maskImage = initMask;
     textReveal.style.setProperty("-webkit-mask-image", initMask);
+
+    if (navigator.maxTouchPoints > 1) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+    // Cache element position — updated on scroll/resize, never inside RAF
+    let rectLeft = 0, rectTop = 0;
+    const updateRect = () => {
+      const r = textReveal.getBoundingClientRect();
+      rectLeft = r.left;
+      rectTop  = r.top;
+    };
+    updateRect();
+    window.addEventListener("scroll", updateRect, { passive: true });
+    window.addEventListener("resize", updateRect, { passive: true });
 
     const tick = () => {
       lerped.current.x = lerp(lerped.current.x, mouse.current.x, 0.4);
@@ -45,10 +60,7 @@ export default function CTA() {
       currentRadius.current = lerp(currentRadius.current, targetRadius.current, 0.09);
 
       const r = Math.max(0, currentRadius.current);
-      const textRect = textReveal.getBoundingClientRect();
-      const tx = lerped.current.x - textRect.left;
-      const ty = lerped.current.y - textRect.top;
-      const mask = `radial-gradient(circle ${r}px at ${tx}px ${ty}px, black 0%, transparent 60%)`;
+      const mask = `radial-gradient(circle ${r}px at ${lerped.current.x - rectLeft}px ${lerped.current.y - rectTop}px, black 0%, transparent 60%)`;
       textReveal.style.maskImage = mask;
       textReveal.style.setProperty("-webkit-mask-image", mask);
 
@@ -80,6 +92,8 @@ export default function CTA() {
 
     return () => {
       cancelAnimationFrame(rafId.current);
+      window.removeEventListener("scroll", updateRect);
+      window.removeEventListener("resize", updateRect);
       section.removeEventListener("mousemove", onMouseMove);
       section.removeEventListener("mouseenter", onMouseEnter);
       section.removeEventListener("mouseleave", onMouseLeave);
@@ -95,29 +109,13 @@ export default function CTA() {
         scrollTrigger: trigger,
       });
 
-      gsap.from(".cta-trust-card", {
-        opacity: 0, y: 24, duration: 0.6, stagger: 0.08, ease: "expo.out", delay: 0.3,
+      gsap.from(".cta-diff-item", {
+        opacity: 0, x: 14, duration: 0.55, stagger: 0.07, ease: "expo.out", delay: 0.25,
         scrollTrigger: trigger,
-      });
-
-      trustStats.forEach((stat, i) => {
-        const el = numberRefs.current[i];
-        if (!el) return;
-        const obj = { val: 0 };
-        gsap.to(obj, {
-          val: stat.value,
-          duration: 2,
-          ease: "power2.out",
-          delay: 0.5 + i * 0.08,
-          onUpdate() { el.textContent = Math.round(obj.val) + stat.suffix; },
-          scrollTrigger: trigger,
-        });
       });
     },
     { scope: ref }
   );
-
-  numberRefs.current = [];
 
   return (
     <section
@@ -125,7 +123,7 @@ export default function CTA() {
       aria-labelledby="cta-heading"
       className="relative overflow-hidden rounded-t-[2rem] bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 px-5 py-20 md:px-10 md:py-28"
     >
-      {/* Top separator line */}
+      {/* Top separator */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-px"
         style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent)" }}
@@ -185,12 +183,12 @@ export default function CTA() {
               className="cta-heading mb-6 font-black leading-[1.08] tracking-tight text-white"
               style={{ fontSize: "clamp(2.25rem, 5vw + 0.75rem, 4.5rem)" }}
             >
-              Siap Bermitra dengan{" "}
-              <span className="text-blue-200">Sumber Aneka Plastik dan Kemasan?</span>
+              Jadikan Kami Mitra{" "}
+              <span className="text-blue-200">Kemasan Bisnis Anda.</span>
             </h2>
 
             <p className="cta-sub mb-10 max-w-lg text-lg leading-relaxed text-blue-100">
-              Konsultasikan kebutuhan plastik bisnis Anda sekarang. Tim kami siap
+              Konsultasikan kebutuhan kemasan bisnis Anda sekarang. Tim kami siap
               memberikan penawaran terbaik dalam 1×24 jam kerja.
             </p>
 
@@ -199,57 +197,47 @@ export default function CTA() {
                 href={`https://wa.me/${CONTACT.whatsapp}?text=Halo Sumber Aneka Plastik dan Kemasan, saya ingin konsultasi kebutuhan plastik dan kemasan untuk bisnis saya.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative overflow-hidden rounded-xl bg-white px-7 py-4 text-base font-semibold text-blue-700 shadow-2xl shadow-blue-900/30 transition-[background-color,box-shadow,transform] duration-200 ease-out hover:bg-blue-50 hover:shadow-blue-900/40 active:scale-[0.97] sm:w-auto"
+                className="group rounded-xl bg-white px-7 py-4 text-base font-semibold text-blue-700 shadow-2xl shadow-blue-900/30 transition-[background-color,box-shadow,transform] duration-200 hover:bg-blue-50 hover:shadow-blue-900/40 active:scale-[0.97] sm:w-auto"
+                style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
               >
-                <span
-                  className="absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-blue-100/60 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
-                  aria-hidden="true"
-                />
-                <span className="relative flex items-center justify-center gap-2">
+                <span className="flex items-center justify-center gap-2">
                   <MessageCircle size={18} aria-hidden="true" />
                   Chat via WhatsApp
                   <ArrowRight
                     size={16}
-                    className="transition-transform duration-200 ease-out group-hover:translate-x-1"
+                    className="transition-transform duration-200 group-hover:translate-x-1"
                     aria-hidden="true"
                   />
                 </span>
               </a>
-              <a
-                href={`mailto:${CONTACT.email}`}
-                className="rounded-xl border border-white/25 bg-white/10 px-7 py-4 text-center text-base font-semibold text-white backdrop-blur-sm transition-[background-color,border-color,transform] duration-200 ease-out hover:border-white/40 hover:bg-white/20 active:scale-[0.97] sm:w-auto"
+              <Link
+                href="/product"
+                className="rounded-xl border border-white/25 bg-white/10 px-7 py-4 text-center text-base font-semibold text-white transition-[background-color,border-color,transform] duration-200 hover:border-white/40 hover:bg-white/20 active:scale-[0.97] sm:w-auto"
+                style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
               >
-                Kirim Email
-              </a>
+                Lihat Katalog Produk
+              </Link>
             </div>
           </div>
 
-          {/* Right: trust stat cards 2×2 */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            {trustStats.map((stat, i) => {
-              const Icon = stat.icon;
-              return (
-                <div
-                  key={stat.label}
-                  className="cta-trust-card rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm transition-[border-color,background-color] duration-200 hover:border-white/25 hover:bg-white/15 sm:p-5"
-                >
-                  <div
-                    className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-white/15 text-white"
+          {/* Right: editorial differentiators */}
+          <div className="border-t border-white/15 pt-10 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+            <p className="mb-7 text-xs font-semibold uppercase tracking-widest text-blue-300">
+              Mengapa Sumber Aneka Plastik
+            </p>
+            <ul className="space-y-5" role="list">
+              {differentiators.map((item) => (
+                <li key={item} className="cta-diff-item flex items-start gap-4">
+                  <span
+                    className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-white/15 text-white"
                     aria-hidden="true"
                   >
-                    <Icon size={15} />
-                  </div>
-                  <span
-                    ref={(el) => { numberRefs.current[i] = el; }}
-                    className="mb-1 block text-2xl font-black text-white sm:text-3xl"
-                    aria-label={`${stat.value}${stat.suffix}`}
-                  >
-                    0{stat.suffix}
+                    <Check size={13} strokeWidth={2.5} />
                   </span>
-                  <p className="text-xs leading-snug text-blue-200">{stat.label}</p>
-                </div>
-              );
-            })}
+                  <span className="text-base leading-relaxed text-blue-100">{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
         </div>

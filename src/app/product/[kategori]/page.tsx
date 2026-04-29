@@ -98,21 +98,29 @@ export default async function KategoriPage({ params, searchParams }: PageProps) 
 
         {/* Header */}
         <header className="mb-10">
-          <div className="mb-3 flex items-center gap-2">
+          <div className="mb-4 flex items-center gap-2">
             <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
               Kategori
             </p>
           </div>
           <h1
-            className="mb-3 font-black tracking-tighter text-slate-900 dark:text-slate-50"
+            className="mb-4 font-black tracking-tighter text-slate-900 dark:text-slate-50"
             style={{ fontSize: "clamp(1.75rem, 3vw + 1rem, 3rem)" }}
           >
             {category.name}
           </h1>
-          <p className="max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400">
+          <p className="max-w-xl text-base leading-relaxed text-slate-500 dark:text-slate-400">
             {category.description}
           </p>
+          {totalCount > 0 && (
+            <p className="mt-3 text-sm font-medium text-slate-400 dark:text-slate-500">
+              <span className="font-semibold tabular-nums text-blue-600 dark:text-blue-400">
+                {totalCount.toLocaleString("id-ID")}
+              </span>{" "}
+              produk tersedia
+            </p>
+          )}
         </header>
 
         {/* Product grid or empty state */}

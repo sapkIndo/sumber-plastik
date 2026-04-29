@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { MapPin, Phone, Clock, Award, Package, Users, Target, ArrowRight } from "lucide-react";
+import { MapPin, Phone, Clock, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import Footer from "@/components/layout/Footer";
 import { SITE_URL, SITE_NAME, CONTACT, STORES } from "@/constants";
 
@@ -60,38 +61,34 @@ const jsonLd = {
 };
 
 const stats = [
-  { value: "2010", label: "Tahun Berdiri", desc: "Memulai dari satu toko di Yogyakarta" },
-  { value: "5.000+", label: "Klien Aktif", desc: "Dari UKM hingga korporasi nasional" },
-  { value: "1.000+", label: "Jenis Produk", desc: "PP, PET, HDPE, PVC, LLDPE, PS, dan lainnya" },
-  { value: "4", label: "Cabang", desc: "Tersebar di lokasi strategis Yogyakarta" },
+  { value: "2010", label: "Tahun Berdiri" },
+  { value: "5.000+", label: "Klien Aktif" },
+  { value: "1.000+", label: "Jenis Produk" },
+  { value: "4", label: "Cabang Yogyakarta" },
 ];
 
 const milestones = [
   { year: "2010", text: "Berdiri sebagai Aneka Botol — toko kemasan pertama di Yogyakarta dengan fokus pada botol plastik berkualitas." },
   { year: "2014", text: "Ekspansi ragam produk menjawab kebutuhan pelanggan: berbagai jenis kemasan untuk industri FnB dan manufaktur." },
   { year: "2018", text: "Fondasi kepercayaan semakin kokoh dengan lebih dari 100 pelanggan setia dan kapasitas operasional yang diperkuat." },
-  { year: "2022", text: "Rebranding menjadi Sumber Aneka Botol — identitas yang lebih kuat mencerminkan komitmen dan skala bisnis yang berkembang." },
-  { year: "2024", text: "Transformasi penuh menjadi Sumber Aneka Plastik dan Kemasan — melayani kebutuhan kemasan menyeluruh dari satu atap." },
+  { year: "2022", text: "Rebranding menjadi Sumber Aneka Botol, identitas yang lebih kuat mencerminkan komitmen dan skala bisnis yang berkembang." },
+  { year: "2024", text: "Transformasi penuh menjadi Sumber Aneka Plastik dan Kemasan, melayani kebutuhan kemasan menyeluruh dari satu atap." },
 ];
 
 const values = [
   {
-    icon: Award,
     title: "Kualitas Terjamin",
-    desc: "Seluruh produk memenuhi standar food grade, bersertifikasi halal, dan sesuai ISO — tidak ada kompromi soal kualitas.",
+    desc: "Seluruh produk memenuhi standar food grade, bersertifikasi halal, dan sesuai ISO. Tidak ada kompromi soal kualitas.",
   },
   {
-    icon: Package,
     title: "Harga Kompetitif",
     desc: "Distributor tangan pertama langsung dari pabrik. Tanpa perantara, harga lebih bersaing untuk semua skala pesanan.",
   },
   {
-    icon: Users,
     title: "Pilihan Lengkap",
     desc: "Lebih dari 1.000 produk: kresek, botol PET & HDPE, cable tie, bubble wrap, dan masih banyak lagi dalam satu tempat.",
   },
   {
-    icon: Target,
     title: "Layanan Responsif",
     desc: "Konsultasi produk, pengecekan stok, dan pemesanan cepat via WhatsApp. Tim kami siap membantu setiap hari.",
   },
@@ -115,117 +112,99 @@ export default function TentangPage() {
       <main id="main-content">
 
         {/* ── Hero ── */}
-        <header className="mx-auto max-w-7xl px-5 pb-12 pt-16 md:px-6 md:pb-16 md:pt-24">
+        <header className="mx-auto max-w-7xl px-5 pb-16 pt-16 md:px-6 md:pb-20 md:pt-24">
           <div className="mb-4 flex items-center gap-2">
             <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
               Tentang Perusahaan
             </p>
           </div>
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h1
-                className="mb-4 font-black tracking-tighter text-slate-900 dark:text-slate-50"
-                style={{ fontSize: "clamp(2rem, 4vw + 1rem, 3.5rem)" }}
-              >
-                {SITE_NAME}
-              </h1>
-              <p className="max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400">
-                Distributor plastik dan kemasan terpercaya di Yogyakarta sejak 2010. Kami menyediakan lebih dari 1.000 produk berkualitas tinggi — food grade, halal, dan bersertifikat ISO — untuk kebutuhan FnB, industri, dan retail dari skala kecil hingga korporasi.
-              </p>
-            </div>
-            <div className="shrink-0">
-              <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-400">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" aria-hidden="true" />
-                Berdiri Sejak 2010
-              </span>
-            </div>
+          <h1
+            className="mb-5 font-black tracking-tighter text-slate-900 dark:text-slate-50"
+            style={{ fontSize: "clamp(2rem, 4vw + 1rem, 3.5rem)" }}
+          >
+            {SITE_NAME}
+          </h1>
+          <p className="max-w-2xl text-base leading-relaxed text-slate-500 dark:text-slate-400">
+            Distributor plastik dan kemasan terpercaya di Yogyakarta sejak 2010. Kami menyediakan lebih dari 1.000 produk berkualitas tinggi, food grade, halal, dan bersertifikat ISO, untuk kebutuhan FnB, industri, dan retail dari skala kecil hingga korporasi.
+          </p>
+
+          {/* Stats inline */}
+          <div className="mt-10 flex flex-wrap gap-8 border-t border-slate-200 pt-8 dark:border-slate-700">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <p
+                  className="font-black tabular-nums text-slate-900 dark:text-slate-50"
+                  style={{ fontSize: "clamp(1.5rem, 2vw + 0.5rem, 2rem)" }}
+                >
+                  {s.value}
+                </p>
+                <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{s.label}</p>
+              </div>
+            ))}
           </div>
         </header>
-
-        {/* ── Stats ── */}
-        <section aria-label="Statistik perusahaan" className="border-y border-slate-200 dark:border-slate-700">
-          <div className="mx-auto max-w-7xl px-5 md:px-6">
-            <dl className="grid grid-cols-2 divide-x divide-y divide-slate-200 dark:divide-slate-700/60 lg:grid-cols-4 lg:divide-y-0">
-              {stats.map((s) => (
-                <div
-                  key={s.label}
-                  className="flex flex-col items-center px-6 py-10 text-center sm:px-10"
-                >
-                  <dt className="sr-only">{s.label}</dt>
-                  <dd className="mb-1 font-black text-blue-600 dark:text-blue-400" style={{ fontSize: "clamp(1.875rem, 4vw + 0.5rem, 3rem)" }}>
-                    {s.value}
-                  </dd>
-                  <dd className="mb-1 text-sm font-semibold text-slate-900 dark:text-slate-50">
-                    {s.label}
-                  </dd>
-                  <dd className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                    {s.desc}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </section>
 
         {/* ── Story ── */}
         <section
           aria-labelledby="cerita-heading"
-          className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24"
+          className="border-t border-slate-200 dark:border-slate-700"
         >
-          <div className="grid gap-12 md:grid-cols-2 md:gap-16 lg:gap-24">
+          <div className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24">
+            <div className="grid gap-12 md:grid-cols-2 md:gap-16 lg:gap-24">
 
-            {/* Left — prose */}
-            <div>
-              <div className="mb-4 flex items-center gap-2">
-                <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
-                <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-                  Kisah Kami
-                </p>
+              {/* Left: prose */}
+              <div>
+                <div className="mb-4 flex items-center gap-2">
+                  <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
+                  <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+                    Kisah Kami
+                  </p>
+                </div>
+                <h2
+                  id="cerita-heading"
+                  className="mb-6 font-black tracking-tighter text-slate-900 dark:text-slate-50"
+                  style={{ fontSize: "clamp(1.75rem, 2.5vw + 1rem, 2.75rem)" }}
+                >
+                  Dari Satu Toko,{" "}
+                  <span className="text-blue-600">Melayani Ribuan</span>
+                </h2>
+                <div className="space-y-4 text-base leading-relaxed text-slate-500 dark:text-slate-400">
+                  <p>
+                    Sumber Aneka Plastik dan Kemasan berawal di tahun 2010, ketika sebuah toko sederhana di Yogyakarta hadir dengan satu tekad: menyediakan botol dan kemasan berkualitas yang mudah dijangkau oleh semua kalangan usaha.
+                  </p>
+                  <p>
+                    Selama lebih dari satu dekade, kepercayaan pelanggan mendorong kami terus berkembang, memperluas ragam produk, memperkuat jaringan distribusi, dan pada akhirnya bertransformasi menjadi Sumber Aneka Plastik dan Kemasan pada 2024.
+                  </p>
+                  <p>
+                    Sebagai distributor tangan pertama langsung dari pabrik, kami menghilangkan perantara sehingga pelanggan mendapatkan harga terbaik tanpa mengorbankan kualitas.
+                  </p>
+                </div>
               </div>
-              <h2
-                id="cerita-heading"
-                className="mb-6 font-black tracking-tighter text-slate-900 dark:text-slate-50"
-                style={{ fontSize: "clamp(1.75rem, 2.5vw + 1rem, 2.75rem)" }}
-              >
-                Dari Satu Toko,{" "}
-                <span className="text-blue-600">Melayani Ribuan</span>
-              </h2>
-              <div className="space-y-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">
-                <p>
-                  Sumber Aneka Plastik dan Kemasan berawal di tahun 2010, ketika sebuah toko sederhana di Yogyakarta hadir dengan satu tekad: menyediakan botol dan kemasan berkualitas yang mudah dijangkau oleh semua kalangan usaha.
-                </p>
-                <p>
-                  Selama lebih dari satu dekade, kepercayaan pelanggan mendorong kami terus berkembang — memperluas ragam produk, memperkuat jaringan distribusi, dan pada akhirnya bertransformasi menjadi Sumber Aneka Plastik dan Kemasan pada 2024.
-                </p>
-                <p>
-                  Sebagai distributor tangan pertama langsung dari pabrik, kami menghilangkan perantara sehingga pelanggan mendapatkan harga terbaik tanpa mengorbankan kualitas.
-                </p>
+
+              {/* Right: timeline */}
+              <div>
+                <ol className="space-y-0" aria-label="Perjalanan perusahaan">
+                  {milestones.map((item, i) => (
+                    <li key={item.year} className="relative flex gap-5 pb-7 last:pb-0">
+                      {i < milestones.length - 1 && (
+                        <div
+                          className="absolute left-[1.75rem] top-8 bottom-0 w-px bg-slate-200 dark:bg-slate-700"
+                          aria-hidden="true"
+                        />
+                      )}
+                      <div className="relative z-10 flex h-8 min-w-[3.5rem] shrink-0 items-center justify-center rounded-full bg-blue-50 text-[11px] font-black text-blue-700 dark:bg-blue-950/40 dark:text-blue-400">
+                        {item.year}
+                      </div>
+                      <p className="pt-1.5 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                        {item.text}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
               </div>
-            </div>
 
-            {/* Right — timeline */}
-            <div>
-              <ol className="space-y-0" aria-label="Perjalanan perusahaan">
-                {milestones.map((item, i) => (
-                  <li key={item.year} className="relative flex gap-4 pb-6 last:pb-0">
-                    {i < milestones.length - 1 && (
-                      <div
-                        className="absolute left-[1.6rem] top-7 bottom-0 w-px bg-slate-200 dark:bg-slate-700"
-                        aria-hidden="true"
-                      />
-                    )}
-                    <div className="relative z-10 flex h-7 min-w-[3.25rem] shrink-0 items-center justify-center rounded-full bg-blue-50 text-[11px] font-black text-blue-700 dark:bg-blue-950/40 dark:text-blue-400">
-                      {item.year}
-                    </div>
-                    <p className="pt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                      {item.text}
-                    </p>
-                  </li>
-                ))}
-              </ol>
             </div>
-
           </div>
         </section>
 
@@ -235,7 +214,7 @@ export default function TentangPage() {
           className="border-t border-slate-200 dark:border-slate-700"
         >
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24">
-            <div className="mb-10">
+            <div className="mb-12">
               <div className="mb-3 flex items-center gap-2">
                 <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
                 <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
@@ -247,23 +226,20 @@ export default function TentangPage() {
                 className="font-black tracking-tighter text-slate-900 dark:text-slate-50"
                 style={{ fontSize: "clamp(1.75rem, 2.5vw + 1rem, 2.75rem)" }}
               >
-                Mengapa Memilih Kami?
+                Mengapa Memilih Kami
               </h2>
             </div>
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" role="list">
-              {values.map(({ icon: Icon, title, desc }) => (
-                <li key={title}>
-                  <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
-                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
-                      <Icon size={20} aria-hidden="true" />
-                    </div>
-                    <h3 className="mb-2 text-sm font-semibold text-slate-900 dark:text-slate-50">
-                      {title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-                      {desc}
-                    </p>
-                  </div>
+
+            <ul role="list" className="divide-y divide-slate-200 dark:divide-slate-700">
+              {values.map(({ title, desc }, i) => (
+                <li key={title} className="grid grid-cols-[2rem_1fr] gap-x-6 py-7 sm:grid-cols-[2rem_1fr_2fr] sm:gap-x-10">
+                  <span className="mt-0.5 font-mono text-xs tabular-nums text-slate-400 dark:text-slate-500">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="font-semibold text-slate-900 dark:text-slate-50">{title}</h3>
+                  <p className="col-start-2 mt-1 text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:col-start-3 sm:mt-0">
+                    {desc}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -285,17 +261,16 @@ export default function TentangPage() {
             </div>
             <h2
               id="vm-heading"
-              className="mb-12 font-black tracking-tighter text-slate-900 dark:text-slate-50"
+              className="mb-14 font-black tracking-tighter text-slate-900 dark:text-slate-50"
               style={{ fontSize: "clamp(1.75rem, 2.5vw + 1rem, 2.75rem)" }}
             >
               Visi &amp; Misi
             </h2>
 
             {/* Visi */}
-            <div className="mb-12 rounded-2xl border border-blue-100 bg-blue-50/50 p-8 dark:border-blue-900/40 dark:bg-blue-950/20 md:p-10">
-              <p className="mb-3 flex items-center gap-2">
-                <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
-                <span className="text-xs font-semibold uppercase tracking-widest text-blue-600">Visi</span>
+            <div className="mb-14">
+              <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-blue-600">
+                Visi
               </p>
               <p
                 className="font-bold leading-snug tracking-tight text-slate-900 dark:text-slate-50"
@@ -309,25 +284,20 @@ export default function TentangPage() {
 
             {/* Misi */}
             <div>
-              <p className="mb-6 flex items-center gap-2">
-                <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
-                <span className="text-xs font-semibold uppercase tracking-widest text-blue-600">Misi</span>
+              <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-blue-600">
+                Misi
               </p>
-              <ul role="list">
+              <ul role="list" className="divide-y divide-slate-200 dark:divide-slate-700">
                 {misi.map((m, i) => (
-                  <li
-                    key={i}
-                    className="group flex items-start gap-5 border-t border-slate-100 py-5 first:border-t-0 dark:border-slate-800"
-                  >
-                    <span className="shrink-0 font-mono text-xs tabular-nums text-slate-400 dark:text-slate-500 mt-0.5">
-                      0{i + 1}
+                  <li key={i} className="flex items-start gap-5 py-5">
+                    <span className="mt-0.5 shrink-0 font-mono text-xs tabular-nums text-slate-400 dark:text-slate-500">
+                      {String(i + 1).padStart(2, "0")}
                     </span>
                     <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300 md:text-base">
                       {m}
                     </p>
                   </li>
                 ))}
-                <li className="border-t border-slate-100 dark:border-slate-800" role="presentation" />
               </ul>
             </div>
 
@@ -340,7 +310,7 @@ export default function TentangPage() {
           className="border-t border-slate-200 dark:border-slate-700"
         >
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24">
-            <div className="mb-10">
+            <div className="mb-12">
               <div className="mb-3 flex items-center gap-2">
                 <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
                 <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
@@ -355,14 +325,17 @@ export default function TentangPage() {
                 Empat Cabang di Yogyakarta
               </h2>
             </div>
+
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2" role="list">
               {STORES.map((store) => (
                 <li key={store.name}>
-                  <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
-                    <h3 className="mb-4 text-sm font-semibold text-slate-900 dark:text-slate-50">
+                  <div className="flex h-full flex-col rounded-2xl border border-slate-200/80 bg-white p-6 transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-blue-100 hover:shadow-[0_6px_20px_-4px_rgb(37_99_235_/_0.09)] dark:border-slate-700/80 dark:bg-slate-900 dark:hover:border-blue-900"
+                    style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
+                  >
+                    <h3 className="mb-5 text-base font-bold text-slate-900 dark:text-slate-50">
                       {store.name}
                     </h3>
-                    <div className="space-y-2.5 text-sm text-slate-500 dark:text-slate-400">
+                    <div className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
                       <div className="flex items-start gap-2.5">
                         <MapPin size={14} className="mt-0.5 shrink-0 text-blue-600" aria-hidden="true" />
                         <span>{store.address}</span>
@@ -373,7 +346,7 @@ export default function TentangPage() {
                           href={`https://wa.me/${store.whatsapp}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="transition-colors hover:text-blue-600"
+                          className="transition-colors duration-150 hover:text-blue-600"
                         >
                           {store.phone}
                         </a>
@@ -387,7 +360,7 @@ export default function TentangPage() {
                       href={store.mapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 transition-colors hover:text-blue-500"
+                      className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 py-2.5 text-xs font-semibold text-slate-600 transition-[border-color,background-color,color] duration-150 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-700 dark:text-slate-400 dark:hover:border-blue-700 dark:hover:bg-blue-950/40 dark:hover:text-blue-400"
                     >
                       Lihat di Google Maps
                       <ArrowRight size={12} aria-hidden="true" />
@@ -399,27 +372,27 @@ export default function TentangPage() {
           </div>
         </section>
 
-        {/* ── CTA ── */}
+        {/* ── Bottom CTA ── */}
         <section aria-label="Hubungi kami" className="border-t border-slate-200 dark:border-slate-700">
-          <div className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24">
-            <div className="rounded-2xl bg-blue-600 px-8 py-12 text-center md:py-16">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-blue-200">
-                Siap Berkolaborasi?
-              </p>
-              <h2
-                className="mb-4 font-black tracking-tighter text-white"
-                style={{ fontSize: "clamp(1.75rem, 2.5vw + 1rem, 2.75rem)" }}
-              >
-                Hubungi Kami Sekarang
-              </h2>
-              <p className="mx-auto mb-8 max-w-md text-base leading-relaxed text-blue-100">
-                Dapatkan konsultasi gratis tentang produk yang tepat untuk kebutuhan usaha Anda. Tim kami siap merespons dengan cepat.
-              </p>
+          <div className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-20">
+            <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2
+                  className="font-black tracking-tighter text-slate-900 dark:text-slate-50"
+                  style={{ fontSize: "clamp(1.5rem, 2vw + 0.75rem, 2.25rem)" }}
+                >
+                  Siap Bermitra dengan Kami?
+                </h2>
+                <p className="mt-2 text-base text-slate-500 dark:text-slate-400">
+                  Konsultasi gratis, respons dalam 1×24 jam kerja.
+                </p>
+              </div>
               <a
-                href={`https://wa.me/${CONTACT.whatsapp}`}
+                href={`https://wa.me/${CONTACT.whatsapp}?text=Halo Sumber Aneka Plastik dan Kemasan, saya ingin konsultasi kebutuhan plastik dan kemasan untuk bisnis saya.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-blue-600 transition-[background-color,transform] duration-150 hover:bg-blue-50 active:scale-[0.97]"
+                className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-blue-500 active:scale-[0.97]"
+                style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
               >
                 Chat via WhatsApp
                 <ArrowRight size={14} aria-hidden="true" />

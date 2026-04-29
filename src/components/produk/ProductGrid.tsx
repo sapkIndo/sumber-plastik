@@ -47,34 +47,34 @@ export default function ProductGrid({
       {/* Search */}
       <div className="relative mb-8">
         <Search
-          size={16}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+          size={15}
+          className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
           aria-hidden="true"
         />
         <input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Cari produk..."
+          placeholder="Cari produk di kategori ini..."
           aria-label="Cari produk"
-          className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-11 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-[border-color,box-shadow] focus:border-blue-400 focus:ring-1 focus:ring-blue-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus:border-blue-500"
+          className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-11 pr-10 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-[border-color,box-shadow] duration-200 focus:border-blue-400 focus:shadow-[0_0_0_3px_rgb(37_99_235_/_0.08)] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus:border-blue-500"
         />
         {query && (
           <button
             onClick={() => setQuery("")}
             aria-label="Hapus pencarian"
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition-colors hover:text-slate-700"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-colors duration-150 hover:bg-slate-200 hover:text-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
           >
-            <X size={15} />
+            <X size={11} />
           </button>
         )}
       </div>
 
       {/* Results info */}
-      <p className="mb-6 text-sm text-slate-500 dark:text-slate-400">
+      <p className="mb-6 text-sm text-slate-400 dark:text-slate-500">
         {filtered
           ? `${filtered.length} hasil untuk "${query}"`
-          : `Menampilkan ${Math.min((currentPage - 1) * PRODUCTS_PER_PAGE + 1, totalCount)}–${Math.min(currentPage * PRODUCTS_PER_PAGE, totalCount)} dari ${totalCount} produk`
+          : `${Math.min((currentPage - 1) * PRODUCTS_PER_PAGE + 1, totalCount)}–${Math.min(currentPage * PRODUCTS_PER_PAGE, totalCount)} dari ${totalCount.toLocaleString("id-ID")} produk`
         }
       </p>
 

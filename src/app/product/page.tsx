@@ -51,7 +51,7 @@ export default function ProdukPage() {
 
       <main id="main-content" className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24">
         {/* Header */}
-        <header className="mb-12">
+        <header className="mb-14">
           <div className="mb-4 flex items-center gap-2">
             <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
@@ -59,12 +59,12 @@ export default function ProdukPage() {
             </p>
           </div>
           <h1
-            className="mb-4 font-black tracking-tighter text-slate-900 dark:text-slate-50"
+            className="mb-5 font-black tracking-tighter text-slate-900 dark:text-slate-50"
             style={{ fontSize: "clamp(2rem, 4vw + 1rem, 3.5rem)" }}
           >
             Semua Kategori
           </h1>
-          <p className="max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-400">
+          <p className="max-w-xl text-base leading-relaxed text-slate-500 dark:text-slate-400">
             {totalProducts > 0
               ? `${totalProducts.toLocaleString("id-ID")} produk dalam ${CATEGORIES.length} kategori — ecer & grosir, food grade, halal, bersertifikat ISO.`
               : `${CATEGORIES.length} kategori produk kemasan — ecer & grosir, food grade, halal, bersertifikat ISO.`}
@@ -79,8 +79,12 @@ export default function ProdukPage() {
               className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
               role="list"
             >
-              {CATEGORIES.map((category) => (
-                <li key={category.slug}>
+              {CATEGORIES.map((category, index) => (
+                <li
+                  key={category.slug}
+                  className="animate-fadein-up"
+                  style={{ animationDelay: `${index * 60}ms` }}
+                >
                   <CategoryCard
                     category={category}
                     productCount={getProductCountByCategory(category.slug)}

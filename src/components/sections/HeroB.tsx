@@ -3,9 +3,8 @@
 import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(useGSAP, SplitText);
+gsap.registerPlugin(useGSAP);
 
 const categories = [
   "Plastik PP", "Plastik PET", "Plastik HDPE",
@@ -26,20 +25,20 @@ export default function HeroB() {
   const currentRadius = useRef(0);
   const rafId         = useRef<number>(0);
 
-  /* ── Entrance animation ── */
+  /* ── Entrance animation ──
+     h1 is intentionally excluded — it renders visible from first paint
+     so PageSpeed captures LCP immediately, before GSAP loads.
+     CSS animate-fadein-up on the h1 handles the visual entrance without JS. ── */
   useGSAP(
     () => {
-      const split = new SplitText(titleRef.current!, { type: "words" });
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
       tl.from(".hero-overline", { opacity: 0, y: -12, duration: 0.5 })
         .from(".hero-year",     { opacity: 0, y: -12, duration: 0.5 }, "<")
-        .from(split.words,      { opacity: 0, y: 50,  duration: 0.9, stagger: 0.055 }, "-=0.2")
-        .from(".hero-rule",     { scaleX: 0, duration: 0.7, transformOrigin: "left center" }, "-=0.5")
+        .from(".hero-rule",     { scaleX: 0, duration: 0.7, transformOrigin: "left center" }, "-=0.2")
         .from(".hero-sub",      { opacity: 0, y: 16,  duration: 0.6 }, "-=0.4")
         .from(".hero-cta",      { opacity: 0, y: 16,  duration: 0.5 }, "-=0.4")
         .from(".hero-trust",    { opacity: 0, y: 12,  duration: 0.5 }, "-=0.3")
         .from(".hero-strip",    { opacity: 0,          duration: 0.5 }, "-=0.3");
-      return () => split.revert();
     },
     { scope: heroRef }
   );
@@ -55,16 +54,37 @@ export default function HeroB() {
 
       const xTo = gsap.quickTo(el, "x", { duration: 0.9, ease: "power3.out" });
       const yTo = gsap.quickTo(el, "y", { duration: 0.9, ease: "power3.out" });
-      const onMove  = (e: MouseEvent) => {
-        const rect = el.getBoundingClientRect();
-        xTo((e.clientX - rect.left - rect.width  / 2) * 0.05);
-        yTo((e.clientY - rect.top  - rect.height / 2) * 0.04);
+
+      // Cache rects — updated on scroll/resize, never read per-mousemove
+      let heroVisible = false;
+      let elCX = 0, elCY = 0;
+      const updateCache = () => {
+        const heroRect = heroRef.current?.getBoundingClientRect();
+        if (heroRect) heroVisible = heroRect.bottom > 0 && heroRect.top < window.innerHeight;
+        const elRect = el.getBoundingClientRect();
+        elCX = elRect.left + elRect.width  / 2;
+        elCY = elRect.top  + elRect.height / 2;
       };
-      const onLeave = () => { xTo(0); yTo(0); };
+      updateCache();
+      window.addEventListener("scroll", updateCache, { passive: true });
+      window.addEventListener("resize", updateCache, { passive: true });
+
+      const onMove   = (e: MouseEvent) => {
+        if (!heroVisible) return;
+        xTo((e.clientX - elCX) * 0.05);
+        yTo((e.clientY - elCY) * 0.04);
+      };
+      const onLeave  = () => { xTo(0); yTo(0); };
+      const onScroll = () => { if (!heroVisible) { xTo(0); yTo(0); } };
+
       window.addEventListener("mousemove",   onMove);
+      window.addEventListener("scroll",      onScroll, { passive: true });
       document.addEventListener("mouseleave", onLeave);
       return () => {
         window.removeEventListener("mousemove",   onMove);
+        window.removeEventListener("scroll",      onScroll);
+        window.removeEventListener("scroll",      updateCache);
+        window.removeEventListener("resize",      updateCache);
         document.removeEventListener("mouseleave", onLeave);
       };
     },
@@ -91,6 +111,17 @@ export default function HeroB() {
 
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
+    // Cache element position — updated on scroll/resize, never inside RAF
+    let rectLeft = 0, rectTop = 0;
+    const updateRect = () => {
+      const r = textReveal.getBoundingClientRect();
+      rectLeft = r.left;
+      rectTop  = r.top;
+    };
+    updateRect();
+    window.addEventListener("scroll", updateRect, { passive: true });
+    window.addEventListener("resize", updateRect, { passive: true });
+
     const tick = () => {
       lerped.current.x = lerp(lerped.current.x, mouse.current.x, 0.4);
       lerped.current.y = lerp(lerped.current.y, mouse.current.y, 0.4);
@@ -98,8 +129,7 @@ export default function HeroB() {
 
       const { x, y } = lerped.current;
       const r = Math.max(0, currentRadius.current);
-      const textRect = textReveal.getBoundingClientRect();
-      const mask = `radial-gradient(circle ${r}px at ${x - textRect.left}px ${y - textRect.top}px, black 0%, transparent 60%)`;
+      const mask = `radial-gradient(circle ${r}px at ${x - rectLeft}px ${y - rectTop}px, black 0%, transparent 60%)`;
       textReveal.style.maskImage = mask;
       textReveal.style.setProperty("-webkit-mask-image", mask);
 
@@ -131,6 +161,8 @@ export default function HeroB() {
 
     return () => {
       cancelAnimationFrame(rafId.current);
+      window.removeEventListener("scroll", updateRect);
+      window.removeEventListener("resize", updateRect);
       hero.removeEventListener("mousemove",  onMouseMove);
       hero.removeEventListener("mouseenter", onMouseEnter);
       hero.removeEventListener("mouseleave", onMouseLeave);
@@ -163,8 +195,8 @@ export default function HeroB() {
         {/* Headline */}
         <h1
           ref={titleRef}
-          className="hero-title will-change-transform font-black leading-[0.9] tracking-tighter text-slate-900 dark:text-slate-50"
-          style={{ fontSize: "clamp(2.25rem, 9vw + 0.25rem, 7rem)" }}
+          className="hero-title animate-fadein-up will-change-transform font-black leading-[0.9] tracking-tighter text-slate-900 dark:text-slate-50"
+          style={{ fontSize: "clamp(2.25rem, 9vw + 0.25rem, 7rem)", animationDuration: "600ms" }}
         >
           Kemasan yang Bisa
           <br className="hidden sm:block" />

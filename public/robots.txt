@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://sumberanekaplastikdankemasan.com
+Host: https://sumberplastik.com
 
 # Sitemaps
-Sitemap: https://sumberanekaplastikdankemasan.com/sitemap.xml
+Sitemap: https://sumberplastik.com/sitemap.xml

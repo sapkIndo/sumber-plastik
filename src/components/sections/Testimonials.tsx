@@ -214,7 +214,7 @@ export default function Testimonials() {
             className="relative rounded-2xl border border-slate-200 bg-white px-8 py-10 shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:shadow-slate-950/40 md:px-14 md:py-14"
           >
             {/* Stars */}
-            <div className="mb-6 flex gap-1" aria-label="Rating 5 bintang">
+            <div className="mb-6 flex gap-1" role="img" aria-label="Rating 5 bintang">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
                   key={i}

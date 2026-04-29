@@ -230,9 +230,9 @@ export default function ProductSpotlight() {
         start: "top top",
         end: `+=${(total - 1) * window.innerHeight}`,
         pin: true,
-        anticipatePin: 1,
+        // anticipatePin removed — on iPadOS it fights native touch momentum
+        // and causes the page to jump back to the top when pinning starts
         invalidateOnRefresh: true,
-        // snap is the culprit on mobile — it fights touch momentum and causes jitter
         snap: withSnap ? {
           snapTo: 1 / (total - 1),
           duration: { min: 0.3, max: 0.7 },
@@ -252,11 +252,10 @@ export default function ProductSpotlight() {
 
     const mm = gsap.matchMedia();
 
-    // Desktop: pin + snap
-    mm.add("(min-width: 768px)", () => buildScrollTrigger(true));
-
-    // Mobile: pin only, no snap — same visual, zero jitter
-    mm.add("(max-width: 767px)", () => buildScrollTrigger(false));
+    // Desktop (lg+): pin + snap
+    // iPad (< 1024px) gets no snap — snap fights iPadOS touch momentum
+    mm.add("(min-width: 1024px)", () => buildScrollTrigger(true));
+    mm.add("(max-width: 1023px)", () => buildScrollTrigger(false));
   }, { scope: ref });
 
   useEffect(() => {

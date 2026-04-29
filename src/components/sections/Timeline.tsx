@@ -100,7 +100,7 @@ export default function Timeline() {
           end: () => `+=${(total - 1) * window.innerHeight}`,
           pin: true,
           scrub: 1,
-          anticipatePin: 1,
+          // anticipatePin removed — causes scroll-to-top jump on iPadOS
           invalidateOnRefresh: true,
           onUpdate(self) {
             const p = self.progress;

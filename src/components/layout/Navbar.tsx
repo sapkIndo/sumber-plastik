@@ -78,6 +78,7 @@ export default function Navbar() {
               width={130}
               height={44}
               className="object-contain dark:brightness-0 dark:invert"
+              style={{ height: "auto" }}
               priority
             />
           </Link>
@@ -153,6 +154,7 @@ export default function Navbar() {
               width={130}
               height={44}
               className="object-contain dark:brightness-0 dark:invert"
+              style={{ height: "auto" }}
             />
           </Link>
           <button

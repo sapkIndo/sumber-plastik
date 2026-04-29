@@ -66,6 +66,26 @@ body {
 .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 99px; }
 .dark ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
 
+/* ── Hero geo shapes ─────────────────────────────────────────────────── */
+
+@keyframes geo-a {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-12px) rotate(4deg); }
+}
+@keyframes geo-b {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  35%       { transform: translateY(-8px) translateX(6px); }
+  70%       { transform: translateY(6px) translateX(-5px); }
+}
+@keyframes geo-c {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(10px) rotate(-5deg); }
+}
+
+.geo-a { transform-box: fill-box; transform-origin: center; animation: geo-a 7s ease-in-out infinite; }
+.geo-b { transform-box: fill-box; transform-origin: center; animation: geo-b 9s ease-in-out infinite; }
+.geo-c { transform-box: fill-box; transform-origin: center; animation: geo-c 5.5s ease-in-out infinite; }
+
 /* ── Marquee ─────────────────────────────────────────────────────────── */
 
 @keyframes marquee {
@@ -73,8 +93,8 @@ body {
   to   { transform: translateX(-50%); }
 }
 
-.animate-marquee         { animation: marquee 28s linear infinite; }
-.animate-marquee-reverse { animation: marquee 28s linear infinite reverse; }
+.animate-marquee         { animation: marquee 18s linear infinite; }
+.animate-marquee-reverse { animation: marquee 18s linear infinite reverse; }
 
 /* ── CTA glow pulse ──────────────────────────────────────────────────── */
 

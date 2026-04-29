@@ -135,7 +135,8 @@ export default function ProductSpotlight() {
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-      ScrollTrigger.config({ pinType: "transform", ignoreMobileResize: true });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (ScrollTrigger.config as any)({ pinType: "transform", ignoreMobileResize: true });
     }
 
     const total = products.length;
@@ -278,7 +279,7 @@ export default function ProductSpotlight() {
     <section ref={ref} aria-labelledby="spotlight-heading">
       <div
         ref={stickyRef}
-        className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
+        className="relative flex h-svh w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
       >
         {/* header bar */}
         <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-4 dark:border-slate-800 md:px-12">
@@ -309,7 +310,7 @@ export default function ProductSpotlight() {
                 </div>
 
                 <h3
-                  className="ps-name mb-2 font-black leading-[1.0] tracking-tight text-slate-900 dark:text-slate-50"
+                  className="ps-name mb-2 font-black leading-none tracking-tight text-slate-900 dark:text-slate-50"
                   style={{ fontSize: "clamp(2rem, 4.5vw, 5.5rem)" }}
                 >
                   {p.name}
@@ -379,7 +380,7 @@ export default function ProductSpotlight() {
                   </text>
                 </svg>
 
-                <ul className="grid flex-1 grid-cols-2 gap-x-4 gap-y-2 md:w-full md:max-w-[200px] md:grid-cols-1 md:space-y-0" role="list">
+                <ul className="grid flex-1 grid-cols-2 gap-x-4 gap-y-2 md:w-full md:max-w-50 md:grid-cols-1 md:space-y-0" role="list">
                   {p.props.map((prop, j) => (
                     <li key={prop.label} className="ps-legend flex items-center gap-2">
                       <span

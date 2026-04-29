@@ -4,9 +4,6 @@ import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
-import { toast } from "sonner";
-import { ArrowRight } from "lucide-react";
-import { CONTACT } from "@/constants";
 
 gsap.registerPlugin(useGSAP, SplitText);
 
@@ -115,7 +112,7 @@ export default function HeroB() {
       if (targetRadius.current === 0) {
         lerped.current.x = e.clientX;
         lerped.current.y = e.clientY;
-        targetRadius.current = 260;
+        targetRadius.current = 480;
       }
     };
     const onMouseEnter = (e: MouseEvent) => {
@@ -123,7 +120,7 @@ export default function HeroB() {
       mouse.current.y = e.clientY;
       lerped.current.x = e.clientX;
       lerped.current.y = e.clientY;
-      targetRadius.current = 260;
+      targetRadius.current = 480;
     };
     const onMouseLeave = () => { targetRadius.current = 0; };
 
@@ -139,11 +136,6 @@ export default function HeroB() {
       hero.removeEventListener("mouseleave", onMouseLeave);
     };
   }, []);
-
-  const handleWhatsApp = () => {
-    toast.success("Mengarahkan ke WhatsApp...");
-    window.open(`https://wa.me/${CONTACT.whatsapp}`, "_blank");
-  };
 
   return (
     <section
@@ -190,28 +182,6 @@ export default function HeroB() {
               <br />
               Dari Yogyakarta, kirim ke seluruh Indonesia.
             </p>
-            <div className="hero-cta flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center">
-              <button
-                onClick={handleWhatsApp}
-                className="group relative w-full overflow-hidden rounded-xl bg-blue-600 px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-[background-color,box-shadow,transform] duration-150 ease-out hover:bg-blue-500 hover:shadow-blue-500/25 active:scale-[0.97] sm:w-auto sm:py-3.5"
-              >
-                <span
-                  className="absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
-                  aria-hidden="true"
-                />
-                <span className="relative flex items-center justify-center gap-2">
-                  Hubungi Kami Sekarang
-                  <ArrowRight size={15} className="transition-transform duration-150 ease-out group-hover:translate-x-1" aria-hidden="true" />
-                </span>
-              </button>
-              <a
-                href="#produk"
-                className="flex items-center justify-center gap-1.5 text-sm font-semibold text-slate-500 transition-colors duration-150 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50 sm:rounded-xl sm:border sm:border-slate-300 sm:px-7 sm:py-3.5 sm:hover:border-slate-400 dark:sm:border-slate-700 dark:sm:hover:border-slate-500"
-              >
-                Lihat Produk
-                <ArrowRight size={13} className="text-slate-400 sm:hidden" aria-hidden="true" />
-              </a>
-            </div>
           </div>
         </div>
       </div>
@@ -224,27 +194,60 @@ export default function HeroB() {
         className="relative select-none overflow-hidden md:flex-1"
       >
 
-        {/* Mobile + tablet: trust signal */}
-        <div className="hero-trust flex items-center justify-center py-12 lg:hidden">
-          <div className="flex flex-col items-center gap-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
-              Dipercaya 500+ bisnis di Indonesia
-            </p>
-            <div className="flex flex-wrap justify-center gap-2">
-              {CERTS.map((cert) => (
-                <span
-                  key={cert}
-                  className="rounded-full bg-blue-50 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-blue-700 dark:bg-blue-950/40 dark:text-blue-400"
-                >
-                  {cert}
-                </span>
-              ))}
-            </div>
-          </div>
+        {/* Mobile + tablet: decorative geometry */}
+        <div className="hero-trust flex items-center justify-center py-12 xl:hidden md:absolute md:inset-0 md:py-0">
+
+          {/* Mobile only — landscape viewBox, natural width */}
+          <svg viewBox="0 0 500 300" fill="none" className="w-full max-w-lg opacity-70 dark:opacity-40 md:hidden" aria-hidden="true">
+            <g className="geo-b">
+              <circle cx="250" cy="150" r="108" stroke="#2563eb" strokeWidth="1" strokeDasharray="5 10" opacity="0.18" />
+              <circle cx="250" cy="150" r="76"  stroke="#2563eb" strokeWidth="1.5" opacity="0.22" />
+              <circle cx="250" cy="150" r="44"  stroke="#2563eb" strokeWidth="2"   opacity="0.28" />
+              <circle cx="250" cy="150" r="12"  fill="#2563eb"   opacity="0.12" />
+            </g>
+            <g className="geo-a">
+              <rect x="42" y="110" width="72" height="95" rx="12" stroke="#3b82f6" strokeWidth="1.5" opacity="0.22" />
+              <rect x="57" y="125" width="42" height="65" rx="7"  stroke="#3b82f6" strokeWidth="1"   opacity="0.14" />
+            </g>
+            <g className="geo-c">
+              <polygon points="420,52 452,70 452,108 420,126 388,108 388,70" stroke="#2563eb" strokeWidth="1.5" opacity="0.2" />
+              <polygon points="420,70 442,82 442,106 420,118 398,106 398,82" stroke="#2563eb" strokeWidth="1"   opacity="0.12" />
+            </g>
+            <circle cx="100" cy="56"  r="9"  fill="#2563eb"  opacity="0.1"  className="geo-c" />
+            <circle cx="390" cy="240" r="18" stroke="#60a5fa" strokeWidth="1" opacity="0.2"  className="geo-a" />
+            <circle cx="155" cy="272" r="22" stroke="#2563eb" strokeWidth="1" strokeDasharray="3 7" opacity="0.16" className="geo-b" />
+            <rect   x="422"  y="185" width="32" height="44" rx="6" stroke="#3b82f6" strokeWidth="1" opacity="0.16" className="geo-b" />
+            <circle cx="62"  cy="248" r="6"  fill="#3b82f6"  opacity="0.15" className="geo-a" />
+          </svg>
+
+          {/* iPad only — square viewBox, centered in flex-1 space */}
+          <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet" fill="none" className="hidden w-auto max-h-[45vh] opacity-70 dark:opacity-40 md:block" aria-hidden="true">
+            <g className="geo-b">
+              <circle cx="250" cy="250" r="130" stroke="#2563eb" strokeWidth="1" strokeDasharray="5 10" opacity="0.18" />
+              <circle cx="250" cy="250" r="94"  stroke="#2563eb" strokeWidth="1.5" opacity="0.22" />
+              <circle cx="250" cy="250" r="58"  stroke="#2563eb" strokeWidth="2"   opacity="0.28" />
+              <circle cx="250" cy="250" r="18"  fill="#2563eb"   opacity="0.12" />
+            </g>
+            <g className="geo-a">
+              <rect x="38" y="185" width="80" height="105" rx="14" stroke="#3b82f6" strokeWidth="1.5" opacity="0.22" />
+              <rect x="54" y="201" width="48" height="73"  rx="8"  stroke="#3b82f6" strokeWidth="1"   opacity="0.14" />
+            </g>
+            <g className="geo-c">
+              <polygon points="424,88 460,108 460,150 424,170 388,150 388,108" stroke="#2563eb" strokeWidth="1.5" opacity="0.2" />
+              <polygon points="424,108 450,122 450,148 424,162 398,148 398,122" stroke="#2563eb" strokeWidth="1"   opacity="0.12" />
+            </g>
+            <circle cx="108" cy="80"  r="11" fill="#2563eb"   opacity="0.1"  className="geo-c" />
+            <circle cx="408" cy="390" r="22" stroke="#60a5fa" strokeWidth="1" opacity="0.2"  className="geo-a" />
+            <circle cx="148" cy="430" r="26" stroke="#2563eb" strokeWidth="1" strokeDasharray="3 7" opacity="0.16" className="geo-b" />
+            <rect   x="430" y="300"  width="36" height="50" rx="7" stroke="#3b82f6" strokeWidth="1" opacity="0.16" className="geo-b" />
+            <circle cx="58"  cy="370" r="7"  fill="#3b82f6"  opacity="0.15" className="geo-a" />
+            <circle cx="460" cy="250" r="10" stroke="#2563eb" strokeWidth="1" opacity="0.18" className="geo-c" />
+          </svg>
+
         </div>
 
         {/* Large desktop only: ghost QUALITY text */}
-        <div className="hidden h-full items-center justify-center lg:flex">
+        <div className="hidden h-full items-center justify-center xl:flex">
           <p
             className="text-center font-black leading-none tracking-tighter text-slate-200 dark:text-slate-800"
             style={{ fontSize: "clamp(3rem, 16vw, 18rem)" }}
@@ -256,7 +259,7 @@ export default function HeroB() {
         {/* Large desktop only: masked QUALITY text (spotlight reveal) */}
         <div
           ref={textRevealRef}
-          className="pointer-events-none absolute inset-0 hidden items-center justify-center lg:flex"
+          className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex"
         >
           <p
             className="text-center font-black leading-none tracking-tighter text-slate-900 dark:text-slate-100"

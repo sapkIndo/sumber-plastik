@@ -89,7 +89,7 @@ export default function Products() {
     cardRefs.current.forEach((card) => {
       if (!card) return;
 
-      gsap.set(card, { transformPerspective: 900 });
+      gsap.set(card, { transformPerspective: 900, rotateX: 0, rotateY: 0 });
 
       const iconEl = card.querySelector<HTMLElement>(".prod-icon");
       const rXTo   = gsap.quickTo(card,   "rotateX", { duration: 0.55, ease: "power3.out" });

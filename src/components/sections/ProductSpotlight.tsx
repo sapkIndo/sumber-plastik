@@ -125,19 +125,16 @@ export default function ProductSpotlight() {
   const ringRefs  = useRef<(SVGCircleElement | null)[]>([]);
 
   useGSAP(() => {
-    // iOS async scroll causes jitter: browser scrolls first, GSAP transform
-    // updates after — visible as shaking. Fix:
-    // 1. normalizeScroll — intercepts touch events so GSAP controls scroll
-    //    synchronously (no async gap → no shake).
-    // 2. pinType:"transform" — uses translateY instead of position:fixed so
-    //    the two systems don't fight each other.
+    // On iOS/iPadOS, default pin uses position:fixed which conflicts with
+    // native scroll momentum → jump-to-top. pinType:"transform" uses
+    // translateY instead. normalizeScroll is intentionally excluded: it
+    // intercepts scroll events globally and breaks desktop on touch laptops.
     // MacIntel + maxTouchPoints > 1 catches iPadOS 13+ (reports as Mac).
     const isIOS =
       /iPad|iPhone|iPod/.test(navigator.userAgent) ||
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
       ScrollTrigger.config({ pinType: "transform", ignoreMobileResize: true });
     }
 
@@ -281,7 +278,7 @@ export default function ProductSpotlight() {
     <section ref={ref} aria-labelledby="spotlight-heading">
       <div
         ref={stickyRef}
-        className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
+        className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900 [touch-action:pan-y] [overscroll-behavior:none]"
       >
         {/* header bar */}
         <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-4 dark:border-slate-800 md:px-12">

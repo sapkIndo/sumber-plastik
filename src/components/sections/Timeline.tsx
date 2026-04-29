@@ -81,7 +81,6 @@ export default function Timeline() {
         (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
       if (isIOS) {
-        ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
         ScrollTrigger.config({ pinType: "transform", ignoreMobileResize: true });
       }
 
@@ -153,7 +152,7 @@ export default function Timeline() {
 
       <div
         ref={stickyRef}
-        className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
+        className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900 [touch-action:pan-y] [overscroll-behavior:none]"
       >
 
         {/* ── Top bar ── */}

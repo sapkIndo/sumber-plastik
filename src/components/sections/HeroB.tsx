@@ -52,6 +52,7 @@ export default function HeroB() {
     () => {
       const el = titleRef.current;
       if (!el) return;
+      if (navigator.maxTouchPoints > 1) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
@@ -85,7 +86,9 @@ export default function HeroB() {
     textReveal.style.maskImage = initMask;
     textReveal.style.setProperty("-webkit-mask-image", initMask);
 
-    // Only wire up the interactive reveal for fine-pointer, no-reduced-motion devices.
+    // Only wire up the interactive reveal for non-touch, fine-pointer, no-reduced-motion devices.
+    // maxTouchPoints > 1 catches all iOS/Android and DevTools touch simulation.
+    if (navigator.maxTouchPoints > 1) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
@@ -221,8 +224,8 @@ export default function HeroB() {
         className="relative select-none overflow-hidden md:flex-1"
       >
 
-        {/* Mobile: trust signal */}
-        <div className="hero-trust flex items-center justify-center py-12 md:hidden">
+        {/* Mobile + tablet: trust signal */}
+        <div className="hero-trust flex items-center justify-center py-12 lg:hidden">
           <div className="flex flex-col items-center gap-4">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
               Dipercaya 500+ bisnis di Indonesia
@@ -240,8 +243,8 @@ export default function HeroB() {
           </div>
         </div>
 
-        {/* Desktop: ghost text */}
-        <div className="hidden h-full items-center justify-center md:flex">
+        {/* Large desktop only: ghost QUALITY text */}
+        <div className="hidden h-full items-center justify-center lg:flex">
           <p
             className="text-center font-black leading-none tracking-tighter text-slate-200 dark:text-slate-800"
             style={{ fontSize: "clamp(3rem, 16vw, 18rem)" }}
@@ -250,10 +253,10 @@ export default function HeroB() {
           </p>
         </div>
 
-        {/* Desktop: masked QUALITY text (spotlight reveal) */}
+        {/* Large desktop only: masked QUALITY text (spotlight reveal) */}
         <div
           ref={textRevealRef}
-          className="pointer-events-none absolute inset-0 hidden items-center justify-center md:flex"
+          className="pointer-events-none absolute inset-0 hidden items-center justify-center lg:flex"
         >
           <p
             className="text-center font-black leading-none tracking-tighter text-slate-900 dark:text-slate-100"

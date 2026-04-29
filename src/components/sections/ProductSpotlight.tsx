@@ -125,16 +125,19 @@ export default function ProductSpotlight() {
   const ringRefs  = useRef<(SVGCircleElement | null)[]>([]);
 
   useGSAP(() => {
-    // On iOS/iPadOS, GSAP's default pin uses position:fixed which conflicts
-    // with iOS scroll momentum and causes jump-to-top + jitter.
-    // pinType:"transform" keeps the element in document flow and uses
-    // translateY instead — no position:fixed, no iOS conflict.
+    // iOS async scroll causes jitter: browser scrolls first, GSAP transform
+    // updates after — visible as shaking. Fix:
+    // 1. normalizeScroll — intercepts touch events so GSAP controls scroll
+    //    synchronously (no async gap → no shake).
+    // 2. pinType:"transform" — uses translateY instead of position:fixed so
+    //    the two systems don't fight each other.
     // MacIntel + maxTouchPoints > 1 catches iPadOS 13+ (reports as Mac).
     const isIOS =
       /iPad|iPhone|iPod/.test(navigator.userAgent) ||
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
+      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
       ScrollTrigger.config({ pinType: "transform", ignoreMobileResize: true });
     }
 

@@ -81,6 +81,7 @@ export default function Timeline() {
         (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
       if (isIOS) {
+        ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
         ScrollTrigger.config({ pinType: "transform", ignoreMobileResize: true });
       }
 

@@ -22,13 +22,14 @@ const SHIFT   = 248;  // content shifts this many px right
 const GAP     = 24;   // gap between panel right edge and shifted list left edge
 
 export default function StoreBranch() {
-  const sectionRef  = useRef<HTMLElement>(null);
-  const headingRef  = useRef<HTMLHeadingElement>(null);
-  const listRef     = useRef<HTMLDivElement>(null);
-  const rowRefs     = useRef<(HTMLDivElement | null)[]>([]);
-  const panelRef    = useRef<HTMLDivElement>(null);
-  const panelBgRef  = useRef<HTMLDivElement>(null);
-  const panelNumRef = useRef<HTMLSpanElement>(null);
+  const sectionRef   = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const headingRef   = useRef<HTMLHeadingElement>(null);
+  const listRef      = useRef<HTMLDivElement>(null);
+  const rowRefs      = useRef<(HTMLDivElement | null)[]>([]);
+  const panelRef     = useRef<HTMLDivElement>(null);
+  const panelBgRef   = useRef<HTMLDivElement>(null);
+  const panelNumRef  = useRef<HTMLSpanElement>(null);
 
   useGSAP(
     () => {
@@ -94,9 +95,9 @@ export default function StoreBranch() {
        * Height = full list height so the panel spans all 4 rows.
        */
       const lRect = listRef.current!.getBoundingClientRect();
-      const sRect = sectionRef.current!.getBoundingClientRect();
-      const panelTop  = lRect.top  - sRect.top;
-      const panelLeft = (lRect.left - sRect.left) + SHIFT - PANEL_W - GAP;
+      const cRect = containerRef.current!.getBoundingClientRect();
+      const panelTop  = lRect.top  - cRect.top;
+      const panelLeft = (lRect.left - cRect.left) + SHIFT - PANEL_W - GAP;
       const panelH    = lRect.height;
 
       if (panelRef.current) panelRef.current.style.height = `${panelH}px`;
@@ -186,40 +187,40 @@ export default function StoreBranch() {
       aria-labelledby="fc-heading"
       className="relative overflow-x-hidden py-16 md:py-28"
     >
-      {/*
-        Floating panel — desktop only.
-        Height is set dynamically by GSAP to match the full list height.
-        Width is fixed; left/top are computed at mount.
-      */}
-      <div
-        ref={panelRef}
-        className="pointer-events-none absolute hidden md:block rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/25"
-        style={{ width: PANEL_W }}
-        aria-hidden="true"
-      >
+      <div ref={containerRef} className="relative mx-auto max-w-7xl px-5 md:px-6">
+        {/*
+          Floating panel — desktop only.
+          Positioned relative to the max-w-7xl container (not the section)
+          so coordinates stay consistent across all viewport widths.
+          Height is set dynamically by GSAP to match the full list height.
+        */}
         <div
-          ref={panelBgRef}
-          className="absolute inset-0 flex flex-col items-center justify-center gap-4"
-          style={{ background: "linear-gradient(160deg, #1d4ed8 0%, #3b82f6 100%)" }}
+          ref={panelRef}
+          className="pointer-events-none absolute hidden md:block rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/25"
+          style={{ width: PANEL_W }}
+          aria-hidden="true"
         >
-          <Building2 size={36} className="text-white/25" />
-          <span
-            ref={panelNumRef}
-            className="font-mono text-8xl font-black leading-none tracking-tighter text-white/90"
+          <div
+            ref={panelBgRef}
+            className="absolute inset-0 flex flex-col items-center justify-center gap-4"
+            style={{ background: "linear-gradient(160deg, #1d4ed8 0%, #3b82f6 100%)" }}
           >
-            01
-          </span>
-          <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-white/35">
-            SAPK
-          </span>
+            <Building2 size={36} className="text-white/25" />
+            <span
+              ref={panelNumRef}
+              className="font-mono text-8xl font-black leading-none tracking-tighter text-white/90"
+            >
+              01
+            </span>
+            <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-white/35">
+              SAPK
+            </span>
+          </div>
+          {/* Gloss */}
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_65%_18%,rgba(255,255,255,0.18),transparent_52%)]" />
+          {/* Bottom fade */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/20 to-transparent" />
         </div>
-        {/* Gloss */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_65%_18%,rgba(255,255,255,0.18),transparent_52%)]" />
-        {/* Bottom fade */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/20 to-transparent" />
-      </div>
-
-      <div className="mx-auto max-w-7xl px-5 md:px-6">
 
         {/* ── Header ── */}
         <div className="mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">

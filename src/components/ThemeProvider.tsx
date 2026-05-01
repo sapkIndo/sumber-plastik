@@ -15,6 +15,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const stored = localStorage.getItem("sp-theme") as Theme | null;
     const initial: Theme = stored === "dark" ? "dark" : "light";
+    // eslint-disable-next-line
     setTheme(initial);
     document.documentElement.classList.toggle("dark", initial === "dark");
   }, []);

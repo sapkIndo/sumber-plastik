@@ -135,7 +135,7 @@ export default function ProductSpotlight() {
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       (ScrollTrigger.config as any)({ pinType: "transform", ignoreMobileResize: true });
     }
 

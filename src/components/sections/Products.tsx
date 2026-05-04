@@ -92,8 +92,6 @@ export default function Products() {
       gsap.set(card, { transformPerspective: 900, rotateX: 0, rotateY: 0 });
 
       const iconEl = card.querySelector<HTMLElement>(".prod-icon");
-      const rXTo   = gsap.quickTo(card,   "rotateX", { duration: 0.55, ease: "power3.out" });
-      const rYTo   = gsap.quickTo(card,   "rotateY", { duration: 0.55, ease: "power3.out" });
       const iXTo   = iconEl ? gsap.quickTo(iconEl, "x", { duration: 0.55, ease: "power3.out" }) : null;
       const iYTo   = iconEl ? gsap.quickTo(iconEl, "y", { duration: 0.55, ease: "power3.out" }) : null;
 
@@ -101,8 +99,7 @@ export default function Products() {
         const r  = card.getBoundingClientRect();
         const dx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
         const dy = ((e.clientY - r.top)  / r.height - 0.5) * 2;
-        rXTo(-dy * 5);
-        rYTo( dx * 7);
+        gsap.to(card, { rotateX: -dy * 5, rotateY: dx * 7, duration: 0.55, ease: "power3.out", overwrite: "auto" });
         iXTo?.(-dx * 6);
         iYTo?.(-dy * 6);
       };
@@ -110,8 +107,7 @@ export default function Products() {
       const onEnter = () => gsap.to(card, { scale: 1.025, duration: 0.35, ease: "power3.out" });
 
       const onLeave = () => {
-        rXTo(0); rYTo(0);
-        gsap.to(card, { scale: 1, duration: 0.55, ease: "power3.out" });
+        gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.55, ease: "power3.out", overwrite: "auto" });
         iXTo?.(0); iYTo?.(0);
       };
 

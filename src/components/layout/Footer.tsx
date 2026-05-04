@@ -50,7 +50,7 @@ export default function Footer() {
     <footer
       ref={ref}
       role="contentinfo"
-      className="border-t border-slate-200 bg-slate-50/60 dark:border-slate-800 dark:bg-slate-950"
+      className="border-t border-slate-300 bg-slate-50/60 dark:border-slate-800 dark:bg-slate-950"
     >
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -226,7 +226,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="footer-bottom mt-12 flex flex-col items-center justify-between gap-3 border-t border-slate-200 pt-8 dark:border-slate-800 sm:flex-row">
+        <div className="footer-bottom mt-12 flex flex-col items-center justify-between gap-3 border-t border-slate-300 pt-8 dark:border-slate-800 sm:flex-row">
           <p className="text-xs text-slate-400 dark:text-slate-500">
             © {new Date().getFullYear()}{" "}
             <span className="text-slate-500 dark:text-slate-400">{SITE_NAME}</span>

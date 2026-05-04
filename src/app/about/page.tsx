@@ -130,7 +130,7 @@ export default function TentangPage() {
           </p>
 
           {/* Stats inline */}
-          <div className="mt-10 flex flex-wrap gap-8 border-t border-slate-200 pt-8 dark:border-slate-700">
+          <div className="mt-10 flex flex-wrap gap-8 border-t border-slate-300 pt-8 dark:border-slate-700">
             {stats.map((s) => (
               <div key={s.label}>
                 <p
@@ -148,7 +148,7 @@ export default function TentangPage() {
         {/* ── Story ── */}
         <section
           aria-labelledby="cerita-heading"
-          className="border-t border-slate-200 dark:border-slate-700"
+          className="border-t border-slate-300 dark:border-slate-700"
         >
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24">
             <div className="grid gap-12 md:grid-cols-2 md:gap-16 lg:gap-24">
@@ -189,7 +189,7 @@ export default function TentangPage() {
                     <li key={item.year} className="relative flex gap-5 pb-7 last:pb-0">
                       {i < milestones.length - 1 && (
                         <div
-                          className="absolute left-[1.75rem] top-8 bottom-0 w-px bg-slate-200 dark:bg-slate-700"
+                          className="absolute left-[1.75rem] top-8 bottom-0 w-px bg-slate-300 dark:bg-slate-700"
                           aria-hidden="true"
                         />
                       )}
@@ -211,7 +211,7 @@ export default function TentangPage() {
         {/* ── Values ── */}
         <section
           aria-labelledby="values-heading"
-          className="border-t border-slate-200 dark:border-slate-700"
+          className="border-t border-slate-300 dark:border-slate-700"
         >
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24">
             <div className="mb-12">
@@ -230,7 +230,7 @@ export default function TentangPage() {
               </h2>
             </div>
 
-            <ul role="list" className="divide-y divide-slate-200 dark:divide-slate-700">
+            <ul role="list" className="divide-y divide-slate-300 dark:divide-slate-700">
               {values.map(({ title, desc }, i) => (
                 <li key={title} className="grid grid-cols-[2rem_1fr] gap-x-6 py-7 sm:grid-cols-[2rem_1fr_2fr] sm:gap-x-10">
                   <span className="mt-0.5 font-mono text-xs tabular-nums text-slate-400 dark:text-slate-500">
@@ -249,7 +249,7 @@ export default function TentangPage() {
         {/* ── Visi & Misi ── */}
         <section
           aria-labelledby="vm-heading"
-          className="border-t border-slate-200 dark:border-slate-700"
+          className="border-t border-slate-300 dark:border-slate-700"
         >
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24">
 
@@ -287,7 +287,7 @@ export default function TentangPage() {
               <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-blue-600">
                 Misi
               </p>
-              <ul role="list" className="divide-y divide-slate-200 dark:divide-slate-700">
+              <ul role="list" className="divide-y divide-slate-300 dark:divide-slate-700">
                 {misi.map((m, i) => (
                   <li key={i} className="flex items-start gap-5 py-5">
                     <span className="mt-0.5 shrink-0 font-mono text-xs tabular-nums text-slate-400 dark:text-slate-500">
@@ -307,7 +307,7 @@ export default function TentangPage() {
         {/* ── Store Locations ── */}
         <section
           aria-labelledby="lokasi-heading"
-          className="border-t border-slate-200 dark:border-slate-700"
+          className="border-t border-slate-300 dark:border-slate-700"
         >
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24">
             <div className="mb-12">
@@ -373,7 +373,7 @@ export default function TentangPage() {
         </section>
 
         {/* ── Bottom CTA ── */}
-        <section aria-label="Hubungi kami" className="border-t border-slate-200 dark:border-slate-700">
+        <section aria-label="Hubungi kami" className="border-t border-slate-300 dark:border-slate-700">
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-20">
             <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
               <div>

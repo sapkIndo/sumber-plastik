@@ -88,7 +88,7 @@ export default function Stats() {
         </div>
 
         {/* Stats strip */}
-        <dl className="grid grid-cols-2 divide-x divide-y divide-slate-200 dark:divide-slate-700/60 lg:grid-cols-4 lg:divide-y-0">
+        <dl className="grid grid-cols-2 divide-x divide-y divide-slate-300 dark:divide-slate-700/60 lg:grid-cols-4 lg:divide-y-0">
           {stats.map((s, i) => (
             <div
               key={s.label}

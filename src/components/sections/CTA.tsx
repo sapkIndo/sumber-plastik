@@ -67,21 +67,33 @@ export default function CTA() {
       rafId.current = requestAnimationFrame(tick);
     };
 
+    const isNearCenter = (clientY: number) => {
+      const r = textReveal.getBoundingClientRect();
+      const centerY = r.top + r.height / 2;
+      return Math.abs(clientY - centerY) < r.height * 0.38;
+    };
+
     const onMouseMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-      if (targetRadius.current === 0) {
-        lerped.current.x = e.clientX;
-        lerped.current.y = e.clientY;
+      if (isNearCenter(e.clientY)) {
+        if (targetRadius.current === 0) {
+          lerped.current.x = e.clientX;
+          lerped.current.y = e.clientY;
+        }
         targetRadius.current = 280;
+      } else {
+        targetRadius.current = 0;
       }
     };
     const onMouseEnter = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-      lerped.current.x = e.clientX;
-      lerped.current.y = e.clientY;
-      targetRadius.current = 280;
+      if (isNearCenter(e.clientY)) {
+        lerped.current.x = e.clientX;
+        lerped.current.y = e.clientY;
+        targetRadius.current = 280;
+      }
     };
     const onMouseLeave = () => { targetRadius.current = 0; };
 
@@ -123,13 +135,6 @@ export default function CTA() {
       aria-labelledby="cta-heading"
       className="relative overflow-hidden rounded-t-[2rem] bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 px-5 py-20 md:px-10 md:py-28"
     >
-      {/* Top separator */}
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-px"
-        style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent)" }}
-        aria-hidden="true"
-      />
-
       {/* Glow blobs */}
       <div
         className="pointer-events-none absolute -left-40 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full blur-[120px]"
@@ -221,7 +226,7 @@ export default function CTA() {
           </div>
 
           {/* Right: editorial differentiators */}
-          <div className="border-t border-white/15 pt-10 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+          <div className="pt-10 lg:pl-12 lg:pt-0">
             <p className="mb-7 text-xs font-semibold uppercase tracking-widest text-blue-300">
               Mengapa Sumber Aneka Plastik
             </p>

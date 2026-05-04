@@ -82,7 +82,7 @@ export default function HeroA() {
         <div className="flex-1" />
 
         <div>
-          <div className="hero-rule mb-8 h-px w-full bg-slate-200" />
+          <div className="hero-rule mb-8 h-px w-full bg-slate-300" />
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <p className="hero-sub max-w-xs text-sm leading-relaxed text-slate-600">
               Sumber Plastik menyediakan produk plastik premium untuk industri dan rumah tangga.

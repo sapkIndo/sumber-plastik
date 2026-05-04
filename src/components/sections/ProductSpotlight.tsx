@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -123,6 +124,20 @@ export default function ProductSpotlight() {
 
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const ringRefs  = useRef<(SVGCircleElement | null)[]>([]);
+  const stRef     = useRef<ScrollTrigger | null>(null);
+
+  const [showSkip, setShowSkip] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSkip(true), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleSkip = () => {
+    const st = stRef.current;
+    if (!st) return;
+    window.scrollTo({ top: st.end + window.innerHeight });
+  };
 
   useGSAP(() => {
     // On iOS/iPadOS, default pin uses position:fixed which conflicts with
@@ -141,6 +156,9 @@ export default function ProductSpotlight() {
 
     const total = products.length;
 
+    // Stores running slideIn timelines so slideOut can kill them before fading out
+    const inTL: (gsap.core.Timeline | null)[] = Array(total).fill(null);
+
     // ── Shared helpers ────────────────────────────────────────────────────────
     function q<T extends Element>(el: HTMLDivElement, sel: string) {
       return el.querySelector<T>(sel);
@@ -152,17 +170,17 @@ export default function ProductSpotlight() {
     function initSlide(i: number) {
       const s = slideRefs.current[i];
       if (!s) return;
-      gsap.set(s, { opacity: i === 0 ? 1 : 0, scale: i === 0 ? 1 : 1.03 });
-      gsap.set(q(s, ".ps-overline"),  { opacity: 0, y: 12 });
-      gsap.set(q(s, ".ps-tagline"),   { opacity: 0, y: 8  });
-      gsap.set(q(s, ".ps-name"),      { opacity: 0, y: 32 });
-      gsap.set(q(s, ".ps-desc"),      { opacity: 0, y: 20 });
-      gsap.set(q(s, ".ps-industries"),{ opacity: 0        });
-      gsap.set(qa(s, ".ps-spec"),     { opacity: 0, y: 14, scale: 0.8 });
-      gsap.set(qa(s, ".ps-legend"),   { opacity: 0, x: -8 });
+      gsap.set(s, { opacity: i === 0 ? 1 : 0, scale: i === 0 ? 1 : 1.03, overwrite: true });
+      gsap.set(q(s, ".ps-overline"),  { opacity: 0, y: 12, overwrite: true });
+      gsap.set(q(s, ".ps-tagline"),   { opacity: 0, y: 8,  overwrite: true });
+      gsap.set(q(s, ".ps-name"),      { opacity: 0, y: 32, overwrite: true });
+      gsap.set(q(s, ".ps-desc"),      { opacity: 0, y: 20, overwrite: true });
+      gsap.set(q(s, ".ps-industries"),{ opacity: 0,         overwrite: true });
+      gsap.set(qa(s, ".ps-spec"),     { opacity: 0, y: 14, scale: 0.8, overwrite: true });
+      gsap.set(qa(s, ".ps-legend"),   { opacity: 0, x: -8, overwrite: true });
       for (let j = 0; j < N_RINGS; j++) {
         const ring = ringRefs.current[i * N_RINGS + j];
-        if (ring) gsap.set(ring, { drawSVG: "0%" });
+        if (ring) gsap.set(ring, { drawSVG: "0%", overwrite: true });
       }
     }
 
@@ -170,6 +188,7 @@ export default function ProductSpotlight() {
       const s = slideRefs.current[i];
       if (!s) return;
       const tl = gsap.timeline();
+      inTL[i] = tl;
 
       tl.to(s, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 0);
 
@@ -196,11 +215,13 @@ export default function ProductSpotlight() {
     function slideOut(i: number) {
       const s = slideRefs.current[i];
       if (!s) return;
+      // Kill the in-progress slideIn timeline so it can't fight the fade-out
+      if (inTL[i]) { inTL[i]!.kill(); inTL[i] = null; }
       for (let j = 0; j < N_RINGS; j++) {
         const ring = ringRefs.current[i * N_RINGS + j];
-        if (ring) gsap.to(ring, { drawSVG: "0%", duration: 0.28, ease: "power2.in" });
+        if (ring) gsap.to(ring, { drawSVG: "0%", duration: 0.28, ease: "power2.in", overwrite: true });
       }
-      gsap.to(s, { opacity: 0, scale: 0.97, duration: 0.32, ease: "power2.in" });
+      gsap.to(s, { opacity: 0, scale: 0.97, duration: 0.32, ease: "power2.in", overwrite: true });
     }
 
     // ── Shared ScrollTrigger factory (desktop vs mobile differ only by snap) ──
@@ -239,7 +260,7 @@ export default function ProductSpotlight() {
         pendingIn = gsap.delayedCall(0.22, () => slideIn(next));
       }
 
-      ScrollTrigger.create({
+      stRef.current = ScrollTrigger.create({
         trigger: stickyRef.current,
         start: "top top",
         end: () => `+=${(total - 1) * window.innerHeight}`,
@@ -289,7 +310,17 @@ export default function ProductSpotlight() {
               Material Unggulan
             </h2>
           </div>
-          <span ref={counterRef} className="font-mono text-[11px] tabular-nums text-slate-400 dark:text-slate-500" />
+          <div className="flex items-center gap-4">
+            <span ref={counterRef} className="font-mono text-[11px] tabular-nums text-slate-400 dark:text-slate-500" />
+            <button
+              onClick={handleSkip}
+              aria-label="Lewati section Material Unggulan"
+              className={`flex items-center gap-1 rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-400 backdrop-blur-sm transition-all duration-500 hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-500 ${showSkip ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+            >
+              Lewati
+              <ChevronDown className="h-3 w-3" />
+            </button>
+          </div>
         </div>
 
         {/* slides */}
@@ -341,9 +372,9 @@ export default function ProductSpotlight() {
               </div>
 
               {/* chart column */}
-              <div className="flex shrink-0 items-center gap-5 md:w-[45%] md:flex-col md:items-center md:gap-4">
+              <div className="flex shrink-0 flex-col items-center gap-3 md:w-[45%] md:gap-4">
                 <svg
-                  className="h-36 w-36 shrink-0 md:h-64 md:w-64 lg:h-72 lg:w-72"
+                  className="h-40 w-40 shrink-0 md:h-64 md:w-64 lg:h-72 lg:w-72"
                   viewBox="0 0 260 260"
                   aria-hidden="true"
                 >
@@ -364,23 +395,23 @@ export default function ProductSpotlight() {
                   </g>
 
                   <text
-                    x={CX} y={CY - 6}
-                    textAnchor="middle" fontSize="22" fontWeight="900"
-                    fill="rgba(37,99,235,0.12)"
+                    x={CX} y={CY - 4}
+                    textAnchor="middle" fontSize="18" fontWeight="900"
+                    fill="rgba(37,99,235,0.55)"
                     style={{ fontFamily: "inherit", letterSpacing: "-0.02em" }}
                   >
                     {p.abbr}
                   </text>
                   <text
-                    x={CX} y={CY + 14}
-                    textAnchor="middle" fontSize="9" fill="rgba(37,99,235,0.2)"
+                    x={CX} y={CY + 16}
+                    textAnchor="middle" fontSize="9" fill="rgba(37,99,235,0.38)"
                     style={{ fontFamily: "inherit", letterSpacing: "0.12em", textTransform: "uppercase" }}
                   >
                     properties
                   </text>
                 </svg>
 
-                <ul className="grid flex-1 grid-cols-2 gap-x-4 gap-y-2 md:w-full md:max-w-50 md:grid-cols-1 md:space-y-0" role="list">
+                <ul className="grid w-full grid-cols-2 gap-x-5 gap-y-1.5 md:max-w-50 md:grid-cols-1" role="list">
                   {p.props.map((prop, j) => (
                     <li key={prop.label} className="ps-legend flex items-center gap-2">
                       <span

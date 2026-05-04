@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -68,11 +69,25 @@ export default function Timeline() {
   const progressRef = useRef<HTMLDivElement>(null);
   const pathRef     = useRef<SVGPathElement>(null);
   const pinVisualRefs = useRef<(SVGGElement | null)[]>([]);
+  const stRef         = useRef<ScrollTrigger | null>(null);
+
+  const [showSkip, setShowSkip] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => ScrollTrigger.refresh(), 200);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSkip(true), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleSkip = () => {
+    const st = stRef.current;
+    if (!st) return;
+    window.scrollTo({ top: st.end + window.innerHeight });
+  };
 
   useGSAP(
     () => {
@@ -111,6 +126,7 @@ export default function Timeline() {
           scrub: 1,
           // anticipatePin removed — causes scroll-to-top jump on iPadOS
           invalidateOnRefresh: true,
+          onRefresh(self) { stRef.current = self; },
           onUpdate(self) {
             const p = self.progress;
             for (let i = 1; i < total; i++) {
@@ -133,6 +149,8 @@ export default function Timeline() {
           },
         },
       });
+
+      if (tl.scrollTrigger) stRef.current = tl.scrollTrigger;
 
       tl.from(pathRef.current, { drawSVG: "0%", ease: "none", duration: total - 1 }, 0);
       tl.to(progressRef.current, { scaleX: 1, ease: "none", duration: total - 1 }, 0);
@@ -157,16 +175,26 @@ export default function Timeline() {
       >
 
         {/* ── Top bar ── */}
-        <div className="flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-5 dark:border-slate-800 md:px-12">
+        <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-5 dark:border-slate-800 md:px-12">
           <div className="flex items-center gap-3">
             <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
               Perjalanan Kami
             </span>
           </div>
-          <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-300 dark:text-slate-600">
-            {milestones[0].year} — {milestones[milestones.length - 1].year}
-          </span>
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-300 dark:text-slate-600">
+              {milestones[0].year} — {milestones[milestones.length - 1].year}
+            </span>
+            <button
+              onClick={handleSkip}
+              aria-label="Lewati section Perjalanan Kami"
+              className={`flex items-center gap-1 rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-400 backdrop-blur-sm transition-all duration-500 hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-500 ${showSkip ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+            >
+              Lewati
+              <ChevronDown className="h-3 w-3" />
+            </button>
+          </div>
         </div>
 
         {/* ── Main ── */}

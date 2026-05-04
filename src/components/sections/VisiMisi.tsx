@@ -77,7 +77,7 @@ export default function VisiMisi() {
         </div>
 
         {/* Visi */}
-        <div className="vm-visi relative mt-14 overflow-hidden border-b border-t border-slate-200 pb-12 pt-12 dark:border-slate-700">
+        <div className="vm-visi relative mt-14 overflow-hidden border-b border-t border-slate-300 pb-12 pt-12 dark:border-slate-700">
           <p className="mb-6 flex items-center gap-3">
             <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-600">Visi</span>
@@ -100,7 +100,7 @@ export default function VisiMisi() {
               fill="none"
               stroke="currentColor"
               strokeWidth="1"
-              className="text-blue-600 opacity-[0.11]"
+              className="text-blue-600 opacity-[0.22] dark:opacity-[0.11]"
             >
               <circle className="vm-visi-ring" cx="170" cy="170" r="38" />
               <circle className="vm-visi-ring" cx="170" cy="170" r="76" />
@@ -119,7 +119,7 @@ export default function VisiMisi() {
 
           <ul role="list">
             {misi.map((m, i) => (
-              <li key={i} className="vm-misi-row group -mx-3 rounded-xl border-t border-slate-100 px-3 py-5 transition-colors duration-200 first:border-t-0 hover:bg-blue-50/40 dark:border-slate-800 dark:hover:bg-blue-950/10">
+              <li key={i} className="vm-misi-row group -mx-3 rounded-xl border-t border-slate-300 px-3 py-5 transition-colors duration-200 first:border-t-0 hover:bg-blue-50/40 dark:border-slate-800 dark:hover:bg-blue-950/10">
                 <div className="flex items-start gap-6 md:items-center">
                   <div className="flex w-8 shrink-0 flex-col items-start gap-1 md:w-10">
                     <span className="font-mono text-xs tabular-nums text-slate-400 transition-colors duration-200 group-hover:text-blue-600 dark:text-slate-500">
@@ -144,7 +144,7 @@ export default function VisiMisi() {
                 </div>
               </li>
             ))}
-            <li className="border-t border-slate-100 dark:border-slate-800" role="presentation" />
+            <li className="border-t border-slate-300 dark:border-slate-800" role="presentation" />
           </ul>
         </div>
       </div>

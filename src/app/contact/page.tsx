@@ -64,7 +64,7 @@ export default function ContactPage() {
         {/* ── Contact methods ── */}
         <section
           aria-label="Metode kontak"
-          className="border-y border-slate-200 dark:border-slate-700"
+          className="border-y border-slate-300 dark:border-slate-700"
         >
           <div className="mx-auto max-w-7xl px-5 py-12 md:px-6 md:py-16">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">

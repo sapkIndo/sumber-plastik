@@ -154,18 +154,20 @@ export default function HeroB() {
     };
     const onMouseLeave = () => { targetRadius.current = 0; };
 
+    const container = textReveal.parentElement as HTMLElement;
+
     rafId.current = requestAnimationFrame(tick);
-    hero.addEventListener("mousemove",  onMouseMove);
-    hero.addEventListener("mouseenter", onMouseEnter);
-    hero.addEventListener("mouseleave", onMouseLeave);
+    container.addEventListener("mousemove",  onMouseMove);
+    container.addEventListener("mouseenter", onMouseEnter);
+    container.addEventListener("mouseleave", onMouseLeave);
 
     return () => {
       cancelAnimationFrame(rafId.current);
       window.removeEventListener("scroll", updateRect);
       window.removeEventListener("resize", updateRect);
-      hero.removeEventListener("mousemove",  onMouseMove);
-      hero.removeEventListener("mouseenter", onMouseEnter);
-      hero.removeEventListener("mouseleave", onMouseLeave);
+      container.removeEventListener("mousemove",  onMouseMove);
+      container.removeEventListener("mouseenter", onMouseEnter);
+      container.removeEventListener("mouseleave", onMouseLeave);
     };
   }, []);
 
@@ -207,7 +209,7 @@ export default function HeroB() {
 
         {/* Rule + Subtitle + CTAs */}
         <div>
-          <div className="hero-rule mb-8 h-px w-full bg-slate-200 dark:bg-slate-700" />
+          <div className="hero-rule mb-8 h-px w-full bg-slate-300 dark:bg-slate-700" />
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <p className="hero-sub max-w-sm text-base leading-relaxed text-slate-600 dark:text-slate-400">
               1.000+ produk food grade, halal, dan bersertifikat ISO.
@@ -279,7 +281,7 @@ export default function HeroB() {
         </div>
 
         {/* Large desktop only: ghost QUALITY text */}
-        <div className="hidden h-full items-center justify-center xl:flex">
+        <div className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex">
           <p
             className="text-center font-black leading-none tracking-tighter text-slate-200 dark:text-slate-800"
             style={{ fontSize: "clamp(3rem, 16vw, 18rem)" }}
@@ -304,7 +306,7 @@ export default function HeroB() {
 
       {/* ── Marquee strip ── */}
       <div className="hero-strip pb-12 pt-8">
-        <div className="h-px w-full bg-slate-200 dark:bg-slate-700" />
+        <div className="h-px w-full bg-slate-300 dark:bg-slate-700" />
         <div className="overflow-hidden py-3.5">
           <div className="flex animate-marquee gap-10 whitespace-nowrap" aria-hidden="true">
             {marqueeItems.map((item, i) => (
@@ -318,7 +320,7 @@ export default function HeroB() {
             ))}
           </div>
         </div>
-        <div className="h-px w-full bg-slate-200 dark:bg-slate-700" />
+        <div className="h-px w-full bg-slate-300 dark:bg-slate-700" />
       </div>
 
     </section>

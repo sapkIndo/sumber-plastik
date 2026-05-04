@@ -73,7 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Prevent flash of unstyled content — runs sync before paint */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.getItem('sp-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}`,
+            __html: `try{if(localStorage.getItem('sp-theme')!=='light')document.documentElement.classList.add('dark')}catch(e){document.documentElement.classList.add('dark')}`,
           }}
         />
         <ThemeProvider>

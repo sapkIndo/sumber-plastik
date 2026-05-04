@@ -15,7 +15,7 @@ const testimonials = [
     role: "Direktur",
     company: "PT. S***** M*****",
     quote:
-      "Sudah lebih dari 5 tahun kami percayakan kebutuhan kemasan ke sini. Kualitasnya konsisten, pengiriman tidak pernah telat meski orderan kami besar. Benar-benar partner yang bisa diandalkan.",
+      "Sudah lebih dari 10 tahun kami percayakan kebutuhan kemasan ke sini. Kualitasnya konsisten, pengiriman tidak pernah telat meski orderan kami besar. Benar-benar partner yang bisa diandalkan.",
     photo: "https://api.dicebear.com/9.x/notionists/png?seed=AgusSetiawan&size=128",
   },
   {
@@ -85,9 +85,8 @@ export default function Testimonials() {
         defaults: { ease: "expo.out" },
       });
       tl.from(".testi-header", { opacity: 0, y: 28, duration: 0.7 })
-        .from(".testi-tab", { opacity: 0, y: 14, duration: 0.45, stagger: 0.1 }, "-=0.4")
-        .from(".testi-progress-track", { opacity: 0, duration: 0.4 }, "-=0.15")
-        .from(".testi-card", { opacity: 0, y: 24, duration: 0.6 }, "-=0.3");
+        .from(".testi-progress-track", { opacity: 0, duration: 0.4 }, "-=0.3")
+        .from(".testi-card", { opacity: 0, y: 24, duration: 0.6 }, "-=0.2");
     },
     { scope: sectionRef }
   );
@@ -132,7 +131,7 @@ export default function Testimonials() {
     <section
       ref={sectionRef}
       aria-labelledby="testi-heading"
-      className="py-16 md:py-28"
+      className="min-h-screen flex flex-col justify-center py-16 md:py-28"
     >
       <div className="mx-auto max-w-4xl px-5 md:px-6">
 
@@ -150,33 +149,9 @@ export default function Testimonials() {
             <span className="text-slate-400 dark:text-slate-500">tentang Kami</span>
           </h2>
           <p className="mx-auto max-w-md text-base text-slate-600 dark:text-slate-400">
-            Kepercayaan 500+ perusahaan adalah bukti komitmen kami terhadap kualitas dan layanan.
+            Kepercayaan 5.000+ perusahaan adalah bukti komitmen kami terhadap kualitas dan layanan.
           </p>
         </div>
-
-        {/* ── Author tabs ── */}
-        <nav
-          aria-label="Pilih testimoni"
-          className="mb-6 flex flex-wrap items-center justify-center gap-3"
-        >
-          {testimonials.map((t, i) => (
-            <button
-              key={t.name}
-              onClick={() => handleSelect(i)}
-              aria-pressed={activeIdx === i}
-              className={`testi-tab flex items-center gap-2.5 rounded-full border px-3 py-2.5 text-sm font-medium transition-all duration-300 sm:px-4 ${
-                activeIdx === i
-                  ? "border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-600/20"
-                  : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600"
-              }`}
-            >
-              <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full" aria-hidden="true">
-                <Image src={t.photo} alt={t.name} fill sizes="24px" className="object-cover" />
-              </span>
-              <span className="hidden sm:inline">{t.name}</span>
-            </button>
-          ))}
-        </nav>
 
         {/* ── Progress track ── */}
         <div className="testi-progress-track mx-auto mb-10 h-0.5 max-w-[200px] overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">

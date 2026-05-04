@@ -278,7 +278,7 @@ export default function StoreBranch() {
 
         {/* ── Directory list (desktop only) ── */}
         <div ref={listRef} className="fc-list hidden md:block">
-          <div className="fc-divider h-px w-full bg-slate-200 dark:bg-slate-700" />
+          <div className="fc-divider h-px w-full bg-slate-300 dark:bg-slate-700" />
 
           {STORES.map((store, i) => {
             const num = String(i + 1).padStart(2, "0");
@@ -334,7 +334,7 @@ export default function StoreBranch() {
 
                   </div>
                 </div>
-                <div className="fc-divider h-px w-full bg-slate-200 dark:bg-slate-700" />
+                <div className="fc-divider h-px w-full bg-slate-300 dark:bg-slate-700" />
               </div>
             );
           })}

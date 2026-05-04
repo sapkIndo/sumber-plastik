@@ -15,7 +15,7 @@ export default function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
 
-  openRef.current = open;
+  useEffect(() => { openRef.current = open; }, [open]);
 
   // Scroll-based hide/show — passive event + single RAF per scroll event
   useEffect(() => {

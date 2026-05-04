@@ -95,6 +95,9 @@ body {
 .animate-marquee         { animation: marquee 18s linear infinite; }
 .animate-marquee-reverse { animation: marquee 18s linear infinite reverse; }
 
+.marquee-track:hover .animate-marquee,
+.marquee-track:hover .animate-marquee-reverse { animation-play-state: paused; }
+
 /* ── Interactive background blob drift ───────────────────────────────── */
 
 .blob-drift-1 { animation: blobDrift1 22s ease-in-out infinite; }

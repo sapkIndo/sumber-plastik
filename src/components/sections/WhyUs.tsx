@@ -160,8 +160,8 @@ export default function WhyUs() {
               key={f.title}
               className={[
                 "whyus-item group flex gap-5 py-7 transition-colors duration-200 hover:bg-slate-50/70 dark:hover:bg-slate-800/20",
-                "border-b border-slate-100 dark:border-slate-800/70 last:border-b-0",
-                isRight   ? "md:border-l md:border-slate-100 dark:md:border-slate-800/70 md:pl-8 md:pr-0" : "md:pl-0 md:pr-8",
+                "border-b border-slate-300 dark:border-slate-800/70 last:border-b-0",
+                isRight   ? "md:border-l md:border-slate-300 dark:md:border-slate-800/70 md:pl-8 md:pr-0" : "md:pl-0 md:pr-8",
                 isLastRow ? "md:border-b-0" : "",
               ].filter(Boolean).join(" ")}
             >

@@ -54,7 +54,7 @@ const features = [
       </svg>
     ),
     title: "Pengiriman Cepat",
-    desc: "Jaringan logistik handal ke seluruh Indonesia. Jabodetabek 1–2 hari, luar Jawa 3–7 hari kerja.",
+    desc: "Jaringan logistik handal ke seluruh Indonesia. Pengiriman sampai seluruh pulau Indonesia.",
   },
   {
     svg: (
@@ -66,7 +66,7 @@ const features = [
       </svg>
     ),
     title: "Harga Kompetitif",
-    desc: "Langsung dari produsen tanpa perantara. Dapatkan harga terbaik di pasar dengan kualitas yang tidak berkompromi.",
+    desc: "Langsung dari produsen tanpa perantara. Dapatkan harga terbaik di pasar dengan kualitas yang premium.",
   },
   {
     svg: (
@@ -176,7 +176,7 @@ export default function WhyUs() {
               {/* Text */}
               <div className="min-w-0">
                 <h3 className="mb-1.5 text-base font-semibold text-slate-900 dark:text-slate-50">
-                  {f.title}
+                  {f.title === "After-Sales Support" ? <em>{f.title}</em> : f.title}
                 </h3>
                 <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                   {f.desc}

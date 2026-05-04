@@ -12,7 +12,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const testimonials = [
   {
     name: "Agus Setiawan",
-    role: "Direktur",
+    role: "Direktur", roleEn: false,
     company: "PT. S***** M*****",
     quote:
       "Sudah lebih dari 10 tahun kami percayakan kebutuhan kemasan ke sini. Kualitasnya konsisten, pengiriman tidak pernah telat meski orderan kami besar. Benar-benar partner yang bisa diandalkan.",
@@ -20,7 +20,7 @@ const testimonials = [
   },
   {
     name: "Laila Rahmawati",
-    role: "Procurement Manager",
+    role: "Procurement Manager", roleEn: true,
     company: "CV. B***** I*****",
     quote:
       "Harga bersaing, kualitas tidak pernah mengecewakan. Tim-nya juga cepat respons kalau ada pertanyaan soal spesifikasi — ini yang bikin kami terus balik ke sini.",
@@ -28,7 +28,7 @@ const testimonials = [
   },
   {
     name: "Ferdi Nugroho",
-    role: "CEO",
+    role: "CEO", roleEn: true,
     company: "PT. N***** M*****",
     quote:
       "Pernah coba beberapa supplier lain, tapi ujung-ujungnya balik ke sini. Produknya sesuai spek, dokumen lengkap, dan after-sales-nya terasa — bukan sekadar janji.",
@@ -36,7 +36,7 @@ const testimonials = [
   },
   {
     name: "Wulan Prasetyo",
-    role: "Manajer Operasional",
+    role: "Manajer Operasional", roleEn: false,
     company: "CV. M***** S*****",
     quote:
       "Pelayanannya ramah tapi tetap profesional. Kalau ada masalah, langsung ditangani — tidak perlu follow-up berkali-kali. Itu yang penting buat kami.",
@@ -44,7 +44,7 @@ const testimonials = [
   },
   {
     name: "Eko Kurniawan",
-    role: "Purchasing Manager",
+    role: "Purchasing Manager", roleEn: true,
     company: "PT. A***** F*****",
     quote:
       "Stok selalu ready, tidak pernah sampai kehabisan di saat kami butuh cepat. Sudah 3 tahun lebih bermitra dan belum ada kejadian yang bikin produksi kami terhambat.",
@@ -52,7 +52,7 @@ const testimonials = [
   },
   {
     name: "Nisa Permata",
-    role: "Owner",
+    role: "Owner", roleEn: true,
     company: "UD. K***** B*****",
     quote:
       "Usaha kami masih skala menengah, tapi tidak pernah diperlakukan sebelah mata. Pesanan kecil pun dilayani dengan serius. Sangat cocok untuk bisnis yang masih berkembang.",
@@ -60,7 +60,7 @@ const testimonials = [
   },
   {
     name: "Rendra Mahardika",
-    role: "Manajer Produksi",
+    role: "Manajer Produksi", roleEn: false,
     company: "PT. T***** P*****",
     quote:
       "Dimensi dan bahan kemasan selalu sesuai dengan yang kami minta. Tidak ada miskomunikasi soal spesifikasi — ini kelihatan sepele tapi dampaknya besar ke lini produksi kami.",
@@ -213,7 +213,7 @@ export default function Testimonials() {
                 <div>
                   <p className="font-semibold text-slate-900 dark:text-slate-50">{active.name}</p>
                   <p className="text-sm text-slate-500 dark:text-slate-400">
-                    {active.role} · {active.company}
+                    {active.roleEn ? <em>{active.role}</em> : active.role} · {active.company}
                   </p>
                 </div>
               </figcaption>

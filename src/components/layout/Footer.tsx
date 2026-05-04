@@ -78,7 +78,7 @@ export default function Footer() {
               melayani kebutuhan industri nasional.
             </p>
             <p className="mt-3 text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-500">
-              Est. 2010 · Food Grade · ISO
+              <em>Est. 2010 · Food Grade · ISO</em>
             </p>
           </div>
 
@@ -139,7 +139,7 @@ export default function Footer() {
                 <Phone size={14} className="mt-0.5 shrink-0 text-blue-600" aria-hidden="true" />
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                    Hotline Order WA
+                    <em>Hotline Order</em> WA
                   </p>
                   <div className="mt-0.5 flex items-center gap-2">
                     <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">

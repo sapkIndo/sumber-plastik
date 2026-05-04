@@ -236,11 +236,11 @@ export default function StoreBranch() {
             >
               4 Toko, Siap Melayani
               <br className="hidden sm:block" />
-              <span className="text-slate-400 dark:text-slate-500"> di Kota Anda</span>
+              <span className="text-slate-400 dark:text-slate-500">Seluruh Indonesia</span>
             </h2>
           </div>
           <p className="fc-subtitle max-w-xs text-sm leading-relaxed text-slate-600 dark:text-slate-400 md:text-right">
-            Temukan toko Sumber Aneka Plastik dan Kemasan terdekat. Stok lengkap, tim siap bantu, pengiriman hari yang sama.
+            Kedepannya kami berkomitmen untuk membuka cabang di seluruh Kota di Indonesia. Stok lengkap, tim siap bantu, pengiriman di hari yang sama.
           </p>
         </div>
 

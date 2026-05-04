@@ -9,11 +9,11 @@ import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 gsap.registerPlugin(useGSAP, ScrollTrigger, DrawSVGPlugin);
 
 const misi = [
-  "Menyediakan produk plastik dan kemasan lengkap untuk segala kebutuhan usaha, dari skala kecil hingga besar, dengan kualitas unggul dan harga bersaing.",
-  "Menjadi one-stop solution yang memudahkan pelanggan dengan layanan cepat, aman, dan efisien di seluruh Indonesia.",
-  "Membangun kepercayaan melalui transparansi, profesionalisme, dan konsistensi dalam setiap transaksi.",
   "Terus berinovasi dalam produk dan layanan untuk mendukung pertumbuhan bisnis pelanggan kami.",
+  "Membangun kepercayaan melalui transparansi, profesionalisme, dan konsistensi dalam setiap transaksi.",
+  <>Menjadi <em>one-stop solution</em> yang memudahkan pelanggan dengan layanan cepat, aman, dan efisien di seluruh Indonesia.</>,
   "Menjadi rekan yang selalu diingat karena solusi lengkap, pelayanan prima, dan kepedulian terhadap kesuksesan setiap pelanggan.",
+  "Menyediakan produk plastik dan kemasan lengkap untuk segala kebutuhan usaha, dari skala kecil hingga besar, dengan kualitas unggul dan harga bersaing.",
 ];
 
 export default function VisiMisi() {

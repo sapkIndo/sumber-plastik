@@ -22,14 +22,14 @@ const milestones = [
     tag: "Pertumbuhan",
     title: "Memperluas Ragam Produk",
     desc: "Menjawab kebutuhan pelanggan yang terus berkembang, kami mulai menghadirkan lebih banyak pilihan kemasan — dari berbagai jenis botol plastik hingga beragam wadah untuk kebutuhan industri.",
-    stat: { value: "30+", label: "Jenis produk baru" },
+    stat: { value: "100+", label: "Jenis produk baru" },
   },
   {
     year: "2018",
     tag: "Kepercayaan",
     title: "Fondasi yang Semakin Kokoh",
     desc: "Dengan pelayanan konsisten dan kualitas yang terjaga, kepercayaan pelanggan terus tumbuh. Kami pun memperkuat kapasitas operasional untuk melayani lebih banyak mitra bisnis.",
-    stat: { value: "100+", label: "Pelanggan setia" },
+    stat: { value: "1000+", label: "Pelanggan setia" },
   },
   {
     year: "2022",
@@ -39,11 +39,11 @@ const milestones = [
     stat: { value: "12+", label: "Tahun pengalaman" },
   },
   {
-    year: "2024",
+    year: "2026",
     tag: "Transformasi",
     title: "Sumber Aneka Plastik dan Kemasan",
-    desc: "Berkembang melampaui botol, kini kami hadir sebagai Sumber Aneka Plastik dan Kemasan — melayani kebutuhan kemasan menyeluruh dengan platform digital dan lebih dari 500 client setia.",
-    stat: { value: "500+", label: "Client setia hari ini" },
+    desc: "Berkembang melampaui botol, kini kami hadir sebagai Sumber Aneka Plastik dan Kemasan — melayani kebutuhan kemasan menyeluruh dengan platform digital dan lebih dari 5000 client setia.",
+    stat: { value: "5000+", label: "Client setia hari ini" },
   },
 ];
 

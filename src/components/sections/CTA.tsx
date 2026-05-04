@@ -11,11 +11,13 @@ import { CONTACT } from "@/constants";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const differentiators = [
-  "Berdiri sejak 2010, 4 cabang di Yogyakarta",
-  "Food grade & halal, bersertifikat ISO",
-  "Ecer dan grosir — MOQ fleksibel",
-  "Lebih dari 1.000 jenis produk kemasan",
-  "Respons penawaran dalam 1×24 jam kerja",
+  "Respons dalam 1×24 jam kerja",
+  <>Ecer dan grosir — <em>MOQ</em> fleksibel</>,
+  "Jaminan pelayanan after sales 24/7",
+  "Lebih dari 5.000 jenis produk kemasan",
+  <><em>Food grade</em> &amp; halal, serta bersertifikat <em>ISO</em></>,
+  "Berdiri sejak 2010 dan sudah berpengalaman",
+  
 ];
 
 export default function CTA() {
@@ -207,7 +209,7 @@ export default function CTA() {
               >
                 <span className="flex items-center justify-center gap-2">
                   <MessageCircle size={18} aria-hidden="true" />
-                  Chat via WhatsApp
+                  <em>Chat via WhatsApp</em>
                   <ArrowRight
                     size={16}
                     className="transition-transform duration-200 group-hover:translate-x-1"
@@ -231,8 +233,8 @@ export default function CTA() {
               Mengapa Sumber Aneka Plastik
             </p>
             <ul className="space-y-5" role="list">
-              {differentiators.map((item) => (
-                <li key={item} className="cta-diff-item flex items-start gap-4">
+              {differentiators.map((item, i) => (
+                <li key={i} className="cta-diff-item flex items-start gap-4">
                   <span
                     className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-white/15 text-white"
                     aria-hidden="true"

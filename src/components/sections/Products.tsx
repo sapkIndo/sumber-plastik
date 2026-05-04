@@ -12,6 +12,13 @@ import { CONTACT } from "@/constants";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
 
+const EN_SPECS = new Set([
+  "Food Grade", "Food Grade BPOM", "Recyclable", "Crystal Clear",
+  "Chemical Resistant", "Waterproof", "Rigid & Flexible",
+  "Stretch Film", "Tear Resistant", "Food Safe",
+  "Eco Friendly", "Biodegradable", "Custom Print",
+]);
+
 const products = [
   {
     num: "01", icon: Package,
@@ -180,7 +187,7 @@ export default function Products() {
                     <Icon size={26} className="text-blue-600 dark:text-blue-400" aria-hidden="true" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                    <p className="mb-0.5 text-[10px] font-semibold italic uppercase tracking-widest text-slate-400 dark:text-slate-500">
                       {p.full}
                     </p>
                     <p className="mb-2 text-xl font-bold text-slate-900 dark:text-slate-50">{p.name}</p>
@@ -188,7 +195,7 @@ export default function Products() {
                   </div>
                   <div className="flex flex-wrap gap-x-4 gap-y-1 md:shrink-0 md:flex-col md:items-end">
                     {p.specs.map(s => (
-                      <span key={s} className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      <span key={s} className={`text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500${EN_SPECS.has(s) ? " italic" : ""}`}>
                         — {s}
                       </span>
                     ))}
@@ -250,7 +257,7 @@ export default function Products() {
                 </div>
 
                 <div>
-                  <p className={`mb-0.5 text-[10px] font-semibold uppercase tracking-widest ${isFeature ? "text-blue-400" : "text-slate-400 dark:text-slate-500"}`}>
+                  <p className={`mb-0.5 text-[10px] font-semibold italic uppercase tracking-widest ${isFeature ? "text-blue-400" : "text-slate-400 dark:text-slate-500"}`}>
                     {p.full}
                   </p>
                   <p className={`mb-2 text-lg font-bold leading-tight ${isFeature ? "text-white" : "text-slate-900 dark:text-slate-50"}`}>

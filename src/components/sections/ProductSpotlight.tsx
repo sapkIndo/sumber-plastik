@@ -9,6 +9,13 @@ import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, DrawSVGPlugin);
 
+const EN_SPECS = new Set([
+  "Food Grade", "Food Grade BPOM", "Recyclable", "Crystal Clear",
+  "Chemical Resistant", "Waterproof", "Rigid & Flexible",
+  "Stretch Film", "Tear Resistant", "Food Safe",
+  "Eco Friendly", "Biodegradable", "Custom Print",
+]);
+
 const CX = 130;
 const CY = 130;
 const RADII   = [50, 68, 86, 104];
@@ -365,7 +372,7 @@ export default function ProductSpotlight() {
                       key={spec}
                       className="ps-spec rounded-full border border-blue-200 bg-blue-50 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-blue-600 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-400"
                     >
-                      {spec}
+                      {EN_SPECS.has(spec) ? <em>{spec}</em> : spec}
                     </li>
                   ))}
                 </ul>

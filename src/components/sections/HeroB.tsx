@@ -9,6 +9,7 @@ gsap.registerPlugin(useGSAP);
 const categories = [
   "Plastik PP", "Plastik PET", "Plastik HDPE",
   "Plastik PVC", "LLDPE", "PS / Styrofoam", "Paper Packaging",
+  "OPP", "Oxo-biodegradable",
 ];
 
 const marqueeItems = [...categories, ...categories, ...categories, ...categories];
@@ -175,7 +176,7 @@ export default function HeroB() {
     <section
       ref={heroRef}
       aria-label="Hero — Pengenalan Sumber Aneka Plastik dan Kemasan"
-      className="relative flex flex-col overflow-hidden px-6 pt-24 md:min-h-svh md:px-12 md:pt-28 lg:px-16"
+      className="relative flex flex-col overflow-hidden px-6 pt-24 min-h-svh md:px-12 md:pt-28 lg:px-16"
     >
 
       {/* ── Upper content ── */}
@@ -189,7 +190,7 @@ export default function HeroB() {
               Distributor Resmi &amp; Terpercaya
             </span>
           </div>
-          <span className="hero-year text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+          <span className="hero-year text-xs font-semibold italic uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
             Est. 2010
           </span>
         </div>
@@ -200,19 +201,21 @@ export default function HeroB() {
           className="hero-title animate-fadein-up will-change-transform font-black leading-[0.9] tracking-tighter text-slate-900 dark:text-slate-50"
           style={{ fontSize: "clamp(2.25rem, 9vw + 0.25rem, 7rem)", animationDuration: "600ms" }}
         >
-          Kemasan yang Bisa
+          Kemasan Yang Bisa
           <br className="hidden sm:block" />
           <span className="text-blue-600"> Anda Andalkan</span>
           <br className="hidden sm:block" />
-          <span className="font-bold text-slate-400 dark:text-slate-500"> sejak 2010.</span>
+          <span className="font-bold text-slate-400 dark:text-slate-500">- Sejak 2010.</span>
         </h1>
 
         {/* Rule + Subtitle + CTAs */}
         <div>
           <div className="hero-rule mb-8 h-px w-full bg-slate-300 dark:bg-slate-700" />
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-            <p className="hero-sub max-w-sm text-base leading-relaxed text-slate-600 dark:text-slate-400">
-              1.000+ produk food grade, halal, dan bersertifikat ISO.
+            <p className="hero-sub text-xs leading-relaxed text-slate-600 md:max-w-md md:text-base dark:text-slate-400">
+              1.000+ produk <em>food grade</em>, halal, dan bersertifikat <em>ISO</em>.
+              <br />
+              <em>One Stop Solution</em> Untuk Seluruh Kebutuhan Anda
               <br />
               Dari Yogyakarta, kirim ke seluruh Indonesia.
             </p>
@@ -225,7 +228,7 @@ export default function HeroB() {
       {/*   Desktop → QUALITY ghost text + masking reveal */}
       <div
         aria-hidden="true"
-        className="relative select-none overflow-hidden md:flex-1"
+        className="relative flex-1 select-none overflow-hidden"
       >
 
         {/* Mobile + tablet: decorative geometry */}
@@ -308,16 +311,16 @@ export default function HeroB() {
       <div className="hero-strip pb-12 pt-8">
         <div className="h-px w-full bg-slate-300 dark:bg-slate-700" />
         <div className="overflow-hidden py-3.5">
-          <div className="flex animate-marquee gap-10 whitespace-nowrap" aria-hidden="true">
-            {marqueeItems.map((item, i) => (
+          <div className="flex animate-marquee items-center gap-6 whitespace-nowrap" aria-hidden="true">
+            {marqueeItems.flatMap((item, i) => [
               <span
-                key={i}
-                className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400"
+                key={`t${i}`}
+                className="text-[10px] font-semibold italic uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400"
               >
                 {item}
-                <span className="h-1 w-1 rounded-full bg-blue-600/40" />
-              </span>
-            ))}
+              </span>,
+              <span key={`d${i}`} className="h-1 w-1 shrink-0 rounded-full bg-blue-600/40" />,
+            ])}
           </div>
         </div>
         <div className="h-px w-full bg-slate-300 dark:bg-slate-700" />

@@ -20,27 +20,27 @@ export const CONTACT = {
 export const STORES = [
   {
     name: "Sumber Aneka Plastik dan Kemasan Baciro",
-    address: "Jl. Gondosuli No.1, Baciro, Yogyakarta",
+    address: "Jl. Gondosuli No. 1, Baciro, Yogyakarta",
     phone: "0853-7110-6789",
     whatsapp: "6285371106789",
     hours: "08:00 – 18:00 WIB",
-    mapsUrl: "https://maps.google.com/?q=Jl.+Gondosuli+No.1+Baciro+Yogyakarta",
-  },
-  {
-    name: "Sumber Aneka Plastik dan Kemasan Jalan Wonosari",
-    address: "Jl. Wonosari No.Km 9,3, Dawukan, Sleman, Yogyakarta",
-    phone: "0821-1060-6789",
-    whatsapp: "6282110606789",
-    hours: "08:00 – 17:00 WIB",
-    mapsUrl: "https://maps.google.com/?q=Jl.+Wonosari+Km+9.3+Dawukan+Sleman",
+    mapsUrl: "https://maps.google.com/?q=Jl.+Gondosuli+No.+1+Baciro+Yogyakarta",
   },
   {
     name: "Sumber Aneka Plastik dan Kemasan Wirobrajan",
-    address: "Jl. R. E. Martadinata No.122, Pakuncen, Wirobrajan, Yogyakarta",
+    address: "Jl. R. E. Martadinata No. 122, Pakuncen, Wirobrajan, Yogyakarta",
     phone: "0812-2700-030",
     whatsapp: "62812270030",
     hours: "08:00 – 17:00 WIB",
     mapsUrl: "https://maps.google.com/?q=Jl.+RE+Martadinata+122+Wirobrajan+Yogyakarta",
+  },
+  {
+    name: "Sumber Aneka Plastik dan Kemasan Jalan Wonosari",
+    address: "Jl. Wonosari Km 9, 3, Dawukan, Sleman, Yogyakarta",
+    phone: "0821-1060-6789",
+    whatsapp: "6282110606789",
+    hours: "08:00 – 17:00 WIB",
+    mapsUrl: "https://maps.google.com/?q=Jl.+Wonosari+Km+9.3+Dawukan+Sleman",
   },
   {
     name: "Sumber Aneka Plastik dan Kemasan Jalan Magelang",

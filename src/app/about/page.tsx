@@ -78,7 +78,7 @@ const milestones = [
 const values = [
   {
     title: "Kualitas Terjamin",
-    desc: "Seluruh produk memenuhi standar food grade, bersertifikasi halal, dan sesuai ISO. Tidak ada kompromi soal kualitas.",
+    desc: <>Seluruh produk memenuhi standar <em>food grade</em>, bersertifikasi halal, dan sesuai <em>ISO</em>. Tidak ada kompromi soal kualitas.</>,
   },
   {
     title: "Harga Kompetitif",
@@ -86,7 +86,7 @@ const values = [
   },
   {
     title: "Pilihan Lengkap",
-    desc: "Lebih dari 1.000 produk: kresek, botol PET & HDPE, cable tie, bubble wrap, dan masih banyak lagi dalam satu tempat.",
+    desc: <>Lebih dari 1.000 produk: kresek, botol <em>PET &amp; HDPE</em>, <em>cable tie</em>, <em>bubble wrap</em>, dan masih banyak lagi dalam satu tempat.</>,
   },
   {
     title: "Layanan Responsif",
@@ -96,7 +96,7 @@ const values = [
 
 const misi = [
   "Menyediakan produk plastik dan kemasan lengkap untuk segala kebutuhan usaha, dari skala kecil hingga besar, dengan kualitas unggul dan harga bersaing.",
-  "Menjadi one-stop solution yang memudahkan pelanggan dengan layanan cepat, aman, dan efisien di seluruh Indonesia.",
+  <>Menjadi <em>one-stop solution</em> yang memudahkan pelanggan dengan layanan cepat, aman, dan efisien di seluruh Indonesia.</>,
   "Membangun kepercayaan melalui transparansi, profesionalisme, dan konsistensi dalam setiap transaksi.",
   "Terus berinovasi dalam produk dan layanan untuk mendukung pertumbuhan bisnis pelanggan kami.",
 ];
@@ -126,7 +126,7 @@ export default function TentangPage() {
             {SITE_NAME}
           </h1>
           <p className="max-w-2xl text-base leading-relaxed text-slate-500 dark:text-slate-400">
-            Distributor plastik dan kemasan terpercaya di Yogyakarta sejak 2010. Kami menyediakan lebih dari 1.000 produk berkualitas tinggi, food grade, halal, dan bersertifikat ISO, untuk kebutuhan FnB, industri, dan retail dari skala kecil hingga korporasi.
+            Distributor plastik dan kemasan terpercaya di Yogyakarta sejak 2010. Kami menyediakan lebih dari 1.000 produk berkualitas tinggi, <em>food grade</em>, halal, dan bersertifikat <em>ISO</em>, untuk kebutuhan FnB, industri, dan retail dari skala kecil hingga korporasi.
           </p>
 
           {/* Stats inline */}
@@ -394,7 +394,7 @@ export default function TentangPage() {
                 className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-blue-500 active:scale-[0.97]"
                 style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
               >
-                Chat via WhatsApp
+                <em>Chat via WhatsApp</em>
                 <ArrowRight size={14} aria-hidden="true" />
               </a>
             </div>

@@ -12,6 +12,7 @@ const stats: { num: number; sep: boolean; suffix: string; label: string; desc: s
   { num: 16,   sep: false, suffix: "+", label: "Tahun Pengalaman", desc: "Melayani industri Indonesia sejak 2010"      },
   { num: 1000, sep: true,  suffix: "+", label: "Jenis Produk",     desc: "PP, PET, HDPE, PVC, LLDPE, PS, dan lainnya" },
   { num: 99,   sep: false, suffix: "%", label: "Tingkat Kepuasan", desc: "Berdasarkan survei kepuasan tahunan kami"    },
+  { num: 50,   sep: false, suffix: "+", label: "Partner Bisnis",   desc: "Jaringan supplier dan distributor aktif"     },
 ];
 
 function fmt(n: number, sep: boolean, suffix: string) {
@@ -75,24 +76,27 @@ export default function Stats() {
 
         {/* Statement */}
         <div className="stat-item mb-14 max-w-2xl">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-blue-600">
-            Keunggulan Utama
-          </p>
+          <div className="mb-3 flex items-center gap-2">
+            <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
+            <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+              Keunggulan Utama
+            </p>
+          </div>
           <p className="font-black tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}>
             Distributor{" "}
             <span className="text-blue-600">Tangan Pertama</span>
           </p>
           <p className="mt-3 text-sm text-slate-500 dark:text-slate-400 md:text-base">
-            Langsung dari pabrik · tanpa perantara · harga paling kompetitif
+            Langsung Dari Pabrik · Tanpa Perantara · Harga Kompetitif
           </p>
         </div>
 
         {/* Stats strip */}
-        <dl className="grid grid-cols-2 divide-x divide-y divide-slate-300 dark:divide-slate-700/60 lg:grid-cols-4 lg:divide-y-0">
+        <dl className="grid grid-cols-2 divide-x divide-y divide-slate-300 dark:divide-slate-700/60 lg:grid-cols-5 lg:divide-y-0">
           {stats.map((s, i) => (
             <div
               key={s.label}
-              className="stat-item flex flex-col px-6 py-8 first:pl-0 lg:last:pr-0"
+              className={`stat-item flex flex-col px-6 py-8 lg:first:pl-0 lg:last:pr-0 ${i === stats.length - 1 ? "col-span-2 items-center text-center lg:col-span-1 lg:items-start lg:text-left" : ""}`}
             >
               <dt className="sr-only">{s.label}</dt>
               <dd

@@ -286,7 +286,7 @@ export default function HeroB() {
         {/* Large desktop only: ghost QUALITY text */}
         <div className="pointer-events-none absolute inset-0 hidden items-center justify-center [@media(min-width:1280px)_and_(min-height:750px)]:flex">
           <p
-            className="text-center font-black leading-none tracking-tighter text-slate-200 dark:text-slate-800"
+            className="text-center font-black leading-none tracking-tighter text-slate-400 dark:text-slate-800"
             style={{ fontSize: "min(12vw, 26vh, 18rem)" }}
           >
             Q U A L I T Y .

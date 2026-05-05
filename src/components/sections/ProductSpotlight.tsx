@@ -115,7 +115,7 @@ const products = [
     specs: ["Eco Friendly", "Biodegradable", "Custom Print"],
     industries: "Retail  ·  F&B  ·  E-commerce  ·  Gift",
     props: [
-      { label: "Kekuatan",      value: 75 },
+      { label: "Kekuatan",      value: 91 },
       { label: "Fleksibilitas", value: 60 },
       { label: "Tahan Panas",   value: 30 },
       { label: "Food Safety",   value: 88 },

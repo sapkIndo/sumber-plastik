@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -38,9 +38,40 @@ const SOCIALS = [
 
 export default function SocialMedia() {
   const sectionRef = useRef<HTMLElement>(null);
+  const rowRefs    = useRef<(HTMLDivElement | null)[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const activeSocial = SOCIALS.find((s) => s.id === activeId) ?? null;
+
+  // Mobile: aktivasi otomatis berdasarkan posisi scroll
+  useEffect(() => {
+    const isHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (isHover) return;
+
+    const activate = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const sr = section.getBoundingClientRect();
+      if (sr.bottom < 0 || sr.top > window.innerHeight) {
+        setActiveId(null);
+        return;
+      }
+      const mid = window.innerHeight / 2;
+      let bestIdx = -1;
+      let bestDist = Infinity;
+      rowRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const r   = el.getBoundingClientRect();
+        const dist = Math.abs(mid - (r.top + r.height / 2));
+        if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+      });
+      setActiveId(bestIdx >= 0 ? SOCIALS[bestIdx].id : null);
+    };
+
+    window.addEventListener("scroll", activate, { passive: true });
+    activate();
+    return () => window.removeEventListener("scroll", activate);
+  }, []);
 
   useGSAP(
     () => {
@@ -75,98 +106,66 @@ export default function SocialMedia() {
       ref={sectionRef}
       aria-label="Sosial Media — Sumber Aneka Plastik dan Kemasan"
       onMouseLeave={() => setActiveId(null)}
-      className="relative flex min-h-[85vh] flex-col justify-center overflow-hidden bg-slate-900 px-6 py-20 md:px-12 md:py-24 lg:px-16"
+      className="relative flex min-h-[85vh] flex-col justify-center overflow-hidden bg-[#f0f6ff] px-6 py-20 dark:bg-slate-800 md:px-12 md:py-24 lg:px-16"
     >
 
-      {/* ── Dekorasi background ── */}
-
-      {/* Color wash — berubah ke warna platform saat hover */}
+      {/* ── Color wash — berubah ke warna platform saat hover ── */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundColor: activeSocial ? `${activeSocial.color}22` : "transparent",
-          transition: "background-color 600ms cubic-bezier(0.23, 1, 0.32, 1)",
-        }}
+        className="pointer-events-none absolute inset-0 transition-colors duration-700"
+        style={{ backgroundColor: activeSocial ? `${activeSocial.color}22` : "transparent" }}
       />
 
-      {/* Ghost watermark — nama platform besar di belakang, crossfade per platform */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-        {SOCIALS.map((s) => (
-          <span
-            key={s.id}
-            className="absolute select-none font-black uppercase tracking-tighter"
-            style={{
-              fontSize: "clamp(5rem, 16vw, 16rem)",
-              color:    s.color,
-              opacity:  activeId === s.id ? 0.08 : 0,
-              transition: "opacity 500ms cubic-bezier(0.23, 1, 0.32, 1)",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {s.label}
-          </span>
-        ))}
-      </div>
-
-      {/* Static blue glow — idle state */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(ellipse 65% 50% at 30% 55%, rgba(37,99,235,0.15), transparent)" }}
-      />
-
-      {/* Ring berputar lambat */}
+      {/* ── Ring berputar lambat ── */}
       <div
         aria-hidden="true"
         className="soc-ring pointer-events-none absolute -right-16 top-1/2 h-[70vmin] w-[70vmin] -translate-y-1/2"
       >
         <svg viewBox="0 0 100 100" className="h-full w-full" fill="none">
-          <circle cx="50" cy="50" r="46" stroke="white" strokeWidth="0.5" opacity="0.07" strokeDasharray="6 14" />
-          <circle cx="50" cy="50" r="34" stroke="white" strokeWidth="0.3" opacity="0.04" />
-          <circle cx="50" cy="4"  r="1.5" fill="white" opacity="0.15" />
-          <circle cx="96" cy="50" r="1.5" fill="white" opacity="0.15" />
-          <circle cx="50" cy="96" r="1.5" fill="white" opacity="0.15" />
-          <circle cx="4"  cy="50" r="1.5" fill="white" opacity="0.15" />
+          <circle cx="50" cy="50" r="46" stroke="rgba(37,99,235,0.12)" strokeWidth="0.5" strokeDasharray="6 14" />
+          <circle cx="50" cy="50" r="34" stroke="rgba(37,99,235,0.06)" strokeWidth="0.3" />
+          <circle cx="50" cy="4"  r="1.5" fill="rgba(37,99,235,0.25)" />
+          <circle cx="96" cy="50" r="1.5" fill="rgba(37,99,235,0.25)" />
+          <circle cx="50" cy="96" r="1.5" fill="rgba(37,99,235,0.25)" />
+          <circle cx="4"  cy="50" r="1.5" fill="rgba(37,99,235,0.25)" />
         </svg>
       </div>
 
-      {/* Scatter dots */}
+      {/* ── Scatter dots ── */}
       <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full" fill="none">
-        <circle cx="8%"  cy="15%" r="2" fill="white"   opacity="0.06" />
-        <circle cx="18%" cy="80%" r="2" fill="white"   opacity="0.05" />
-        <circle cx="55%" cy="8%"  r="2" fill="white"   opacity="0.05" />
-        <circle cx="72%" cy="88%" r="3" fill="#E1306C" opacity="0.25" />
-        <circle cx="82%" cy="22%" r="3" fill="#25F4EE" opacity="0.20" />
-        <circle cx="92%" cy="65%" r="3" fill="#1877F2" opacity="0.20" />
+        <circle cx="8%"  cy="15%" r="2" fill="#2563eb" opacity="0.1" />
+        <circle cx="18%" cy="80%" r="2" fill="#2563eb" opacity="0.08" />
+        <circle cx="55%" cy="8%"  r="2" fill="#2563eb" opacity="0.08" />
+        <circle cx="72%" cy="88%" r="3" fill="#E1306C" opacity="0.22" />
+        <circle cx="82%" cy="22%" r="3" fill="#25F4EE" opacity="0.18" />
+        <circle cx="92%" cy="65%" r="3" fill="#1877F2" opacity="0.18" />
       </svg>
 
       {/* ── Header ── */}
-      <div className="relative z-10 mb-12 md:mb-16 md:max-w-2xl">
+      <div className="relative z-10 mb-14 md:mb-20 md:max-w-2xl">
         <div className="soc-overline mb-5 flex items-center gap-3">
-          <span className="h-px w-8 bg-blue-500" aria-hidden="true" />
-          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-400">
+          <span className="h-px w-8 bg-blue-600" aria-hidden="true" />
+          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-600 dark:text-blue-400">
             Sosial Media
           </span>
         </div>
 
         <h2
-          className="soc-heading font-black leading-[0.9] tracking-tighter text-white"
+          className="soc-heading font-black leading-[0.88] tracking-tighter text-slate-900 dark:text-white"
           style={{ fontSize: "clamp(3.5rem, 9vw, 8rem)" }}
         >
-          Ikuti
-          
+          Ikuti{" "}
           Kami.
         </h2>
 
-        <p className="soc-sub mt-6 text-sm leading-relaxed text-white/35 md:text-base">
+        <p className="soc-sub mt-5 max-w-sm text-sm leading-relaxed text-slate-500 dark:text-slate-400 md:text-base">
           Update produk, promo, dan konten sehari-hari.
         </p>
       </div>
 
       {/* ── Row list ── */}
       <div className="relative z-10">
-        <div className="soc-divider h-px w-full bg-white/10" />
+        <div className="soc-divider h-px w-full bg-slate-200 dark:bg-slate-700" />
 
         {SOCIALS.map((s, i) => {
           const isActive = activeId === s.id;
@@ -174,8 +173,9 @@ export default function SocialMedia() {
           return (
             <div
               key={s.id}
+              ref={el => { rowRefs.current[i] = el; }}
               style={{
-                opacity:    isDimmed ? 0.25 : 1,
+                opacity:    isDimmed ? 0.3 : 1,
                 transition: "opacity 400ms cubic-bezier(0.23, 1, 0.32, 1)",
               }}
             >
@@ -187,8 +187,35 @@ export default function SocialMedia() {
                 onMouseEnter={() => setActiveId(s.id)}
                 className="soc-row group relative flex items-center gap-5 overflow-hidden py-7 md:gap-8 md:py-9"
               >
+                {/* Subtle row hover tint */}
+                <div
+                  className="pointer-events-none absolute inset-0 -mx-6 md:-mx-12 lg:-mx-16"
+                  style={{
+                    backgroundColor: isActive ? `${s.color}14` : "transparent",
+                    transition: "background-color 400ms cubic-bezier(0.23, 1, 0.32, 1)",
+                  }}
+                />
+
+                {/* Ghost watermark — inside row agar posisi tepat di belakang platform ini */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 select-none overflow-hidden font-black uppercase tracking-tighter"
+                  style={{
+                    display:        "flex",
+                    alignItems:     "center",
+                    justifyContent: "center",
+                    fontSize:       "clamp(4rem, 14vw, 14rem)",
+                    color:          s.color,
+                    opacity:        isActive ? 0.07 : 0,
+                    transition:     "opacity 500ms cubic-bezier(0.23, 1, 0.32, 1)",
+                    whiteSpace:     "nowrap",
+                  }}
+                >
+                  {s.label}
+                </span>
+
                 {/* Nomor */}
-                <span className="relative z-10 w-7 shrink-0 font-mono text-xs text-white/20 md:w-9 md:text-sm">
+                <span className="relative z-10 w-7 shrink-0 font-mono text-xs text-slate-300 dark:text-slate-600 md:w-9 md:text-sm">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
@@ -199,7 +226,7 @@ export default function SocialMedia() {
                     className="h-5 w-5 md:h-6 md:w-6"
                     aria-hidden="true"
                     style={{
-                      fill:       isActive ? s.color : "rgba(255,255,255,0.45)",
+                      fill:       isActive ? s.color : "rgb(148,163,184)",
                       transition: "fill 400ms cubic-bezier(0.23, 1, 0.32, 1)",
                     }}
                   >
@@ -209,10 +236,10 @@ export default function SocialMedia() {
 
                 {/* Nama platform */}
                 <span
-                  className="relative z-10 font-black tracking-tighter"
+                  className={`relative z-10 font-black tracking-tighter ${!isActive ? "text-slate-900 dark:text-white" : ""}`}
                   style={{
                     fontSize:   "clamp(1.6rem, 4.5vw, 3.75rem)",
-                    color:      isActive ? s.color : "white",
+                    ...(isActive ? { color: s.color } : {}),
                     transition: "color 400ms cubic-bezier(0.23, 1, 0.32, 1)",
                   }}
                 >
@@ -226,7 +253,7 @@ export default function SocialMedia() {
                 <span
                   className="relative z-10 hidden font-mono text-sm md:block"
                   style={{
-                    color:      isActive ? `${s.color}99` : "rgba(255,255,255,0.3)",
+                    color:      isActive ? `${s.color}99` : "rgb(148,163,184)",
                     transition: "color 400ms cubic-bezier(0.23, 1, 0.32, 1)",
                   }}
                 >
@@ -239,13 +266,13 @@ export default function SocialMedia() {
                   className="relative z-10 shrink-0 text-xl font-light
                     [transition:transform_300ms_cubic-bezier(0.23,1,0.32,1),color_400ms_cubic-bezier(0.23,1,0.32,1)]
                     [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-2"
-                  style={{ color: isActive ? s.color : "rgba(255,255,255,0.4)" }}
+                  style={{ color: isActive ? s.color : "rgb(203,213,225)" }}
                 >
                   ↗
                 </span>
               </Link>
 
-              <div className="soc-divider h-px w-full bg-white/10" />
+              <div className="soc-divider h-px w-full bg-slate-200 dark:bg-slate-700" />
             </div>
           );
         })}

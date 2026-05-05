@@ -40,7 +40,7 @@ const faqs: { category: FaqCategory; q: string; a: string }[] = [
   {
     category: "Pengiriman",
     q: "Berapa lama estimasi pengiriman ke seluruh Indonesia?",
-    a: "Pengiriman kami cepat dan menjangkau seluruh Indonesia. Jabodetabek 1–2 hari kerja, Pulau Jawa 2–3 hari kerja, luar Jawa 3–7 hari kerja. Pengiriman ekspres tersedia untuk kebutuhan mendesak.",
+    a: "Pengiriman kami cepat dan menjangkau seluruh Indonesia. Pulau Jawa H+0 sampai H+4 hari kerja, luar Jawa maksimal 1 minggu. Pengiriman ekspres tersedia untuk kebutuhan mendesak.",
   },
   {
     category: "Pengiriman",

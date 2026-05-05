@@ -68,7 +68,7 @@ export default function Navbar() {
       >
         <nav
           aria-label="Navigasi utama"
-          className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6 md:px-12 lg:px-16"
+          className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-12 lg:px-16"
         >
           {/* Logo */}
           <Link
@@ -79,9 +79,9 @@ export default function Navbar() {
             <Image
               src="/logo/logo-horizontal.png"
               alt={SITE_NAME}
-              width={130}
-              height={44}
-              className="object-contain dark:brightness-0 dark:invert"
+              width={160}
+              height={54}
+              className="object-contain dark:invert"
               style={{ height: "auto" }}
               priority
             />
@@ -155,9 +155,9 @@ export default function Navbar() {
             <Image
               src="/logo/logo-horizontal.png"
               alt={SITE_NAME}
-              width={130}
-              height={44}
-              className="object-contain dark:brightness-0 dark:invert"
+              width={160}
+              height={54}
+              className="object-contain dark:invert"
               style={{ height: "auto" }}
             />
           </Link>

@@ -1,52 +1,33 @@
-## Design Context
+# Product
 
-### Users
-Pelanggan bisnis (B2B) dan retail yang membutuhkan produk plastik dan kemasan — mulai dari pemilik usaha FnB kecil, catering, restoran, hingga manajer procurement perusahaan industri dan pabrik. Mereka datang dengan tujuan jelas: cari supplier plastik terpercaya, lihat katalog produk, dan hubungi tim via WhatsApp. Keputusan pembelian sangat dipengaruhi oleh kesan **kepercayaan dan profesionalisme** yang ditangkap dalam hitungan detik pertama.
+## Register
 
-### Brand Personality
-**Tiga kata:** Profesional · Modern · Ramah
+brand
 
-Terpercaya dan berpengalaman (Est. 2010, 4 cabang di Yogyakarta), tapi tetap mudah didekati. Tone komunikasi: percaya diri tanpa arogan, hangat tanpa terkesan murahan. Bukan korporat yang kaku, tapi juga bukan toko biasa.
+## Users
 
-### Aesthetic Direction
-- **Theme:** Light & Bright sebagai default — background `#f0f6ff` (biru muda terang) dengan interactive gradient blobs (blue/sky/indigo). Dark mode didukung penuh sebagai dark variant dari skema yang sama (bukan dark/orange).
-- **Accent color:** Blue `#2563eb` — bersih, profesional, terpercaya. Digunakan sparingly: CTA button, angka kunci, aksen tipografi. **Max 15% visual real estate.**
-- **Reference:** Stripe.com / Linear.app light mode — clean, spacious, tipografi dominan, animasi halus dan purposeful
-- **Anti-reference:** Jangan ramai, jangan gradient pelangi, jangan shadow box berlebihan, jangan tampilan "toko online murahan"
-- **Texture:** Grain overlay tipis di atas background (SVG noise, opacity 0.12) — menambah kedalaman tanpa mengganggu
-- **Interactive background:** 4 gradient blobs (blue/sky/indigo) dengan CSS drift animation + GSAP mouse parallax
+Pemilik UKM dan bisnis kecil-menengah di Indonesia yang butuh botol plastik, kemasan, dan wadah dalam jumlah grosir maupun eceran. Mayoritas dari Yogyakarta dan sekitarnya. Mereka membuka situs ini sambil browse produk atau ingin menghubungi supplier, biasanya di jam kerja dari desktop atau mobile.
 
-### Color Tokens
-| Token | Value | Tailwind | Penggunaan |
-|---|---|---|---|
-| Background utama | `#f0f6ff` | `var(--background)` | html, body transparent |
-| Surface / Card | `#ffffff` | `bg-white` | Card, modal |
-| Alt section | `#f8faff` | `bg-slate-50/60` | Section selang-seling |
-| Text primary | `#0f172a` | `text-slate-900` | Heading, body utama |
-| Text secondary | `#475569` | `text-slate-600` | Subtitle, deskripsi |
-| Text muted | `#94a3b8` | `text-slate-400` | Caption, placeholder |
-| **Accent** | `#2563eb` | `text/bg-blue-600` | **CTA, angka kunci, aksen** |
-| Accent hover | `#3b82f6` | `text/bg-blue-500` | Hover state |
-| Border | `#e2e8f0` | `border-slate-200` | Garis pembatas standar |
-| Border strong | `#cbd5e1` | `border-slate-300` | Border lebih tegas |
+## Product Purpose
 
-*Dark mode: `#0f172a` background, `#f8fafc` foreground — blue accent tetap sama.*
+Website marketing untuk Sumber Aneka Plastik dan Kemasan, toko kemasan plastik berbasis Yogyakarta yang berdiri sejak 2010. Tujuan utama: membangun kepercayaan, menampilkan produk, mendorong prospek untuk menghubungi atau datang langsung. Bukan e-commerce, melainkan digital storefront yang memperkuat reputasi offline.
 
-### Typography
-- **Font:** Geist Sans (via `next/font`) — clean, modern, highly legible
-- **Heading style:** Besar, font-black/font-bold, tracking-tighter — heading adalah hero di setiap section
-- **Body:** `text-slate-600` di light, `text-slate-400` di dark — comfortable readability
-- **Hierarchy wajib:** Satu `h1` per halaman → h2 per section → h3 sub-item. Tidak boleh loncat.
+## Brand Personality
 
-### Accessibility
-- **Target:** WCAG AA
-- **Reduced motion:** Sudah dihandle via `@media (prefers-reduced-motion: reduce)` di globals.css
-- **Semantic HTML:** `<header>`, `<main>`, `<section aria-label="...">`, `<footer>` wajib di setiap halaman
-- **Images:** Selalu `next/image` dengan `alt` deskriptif
+Profesional, Modern, Ramah. Terpercaya dan berpengalaman tapi tetap mudah didekati. Percaya diri tanpa arogan, hangat tanpa murahan.
 
-### Design Principles
-1. **Whitespace adalah kemewahan** — Section padding minimal `py-24`. Jangan pernah cramped. Ruang kosong adalah bagian dari desain.
-2. **Blue sebagai tanda baca, bukan cat dinding** — `#2563eb` hanya untuk CTA utama, angka kunci, aksen judul. Max 15% visual real estate.
-3. **Tipografi memimpin** — Heading besar dan bold adalah hero di setiap section. Konten bicara lewat teks, bukan dekorasi berlebihan.
-4. **Animasi melayani, tidak menghibur** — GSAP untuk entrance smooth dan purposeful. Tidak ada bounce, tidak ada flash, tidak ada loop tanpa henti. Hanya `opacity` dan `transform`.
-5. **Cerah namun elegan** — Light theme dengan texture grain + interactive blobs menciptakan kedalaman. Shadow tipis, rounded corners, border halus — premium tanpa noisy.
+## Anti-references
+
+Situs toko plastik yang ramai dan penuh warna seperti katalog cetak. Gradient pelangi. Heavy drop shadows di setiap card. Desain yang terlihat murah atau amatir. Dark mode yang dipaksakan pada seluruh situs.
+
+## Design Principles
+
+1. **Tipografi memimpin** — heading besar dan bold adalah hero. Ruang putih adalah kemewahan, bukan pemborosan.
+2. **Biru sebagai tanda baca** — aksen `#2563eb` hanya untuk elemen terpenting: CTA, angka kunci, garis pembuka. Max 15% visual area.
+3. **Kepercayaan melalui ketenangan** — desain yang tenang dan bersih memproyeksikan profesionalisme, bukan desain yang ramai.
+4. **Animasi melayani konten** — GSAP entrance halus dan purposeful. Tidak ada bounce, flash, atau loop yang mengganggu.
+5. **Konsistensi adalah kredibilitas** — visual system yang konsisten membangun trust tanpa perlu kata-kata.
+
+## Accessibility & Inclusion
+
+WCAG AA minimum. Semua gambar wajib alt text. Semantic HTML (`<section aria-label>`, heading hierarchy). Animasi harus menghormati `prefers-reduced-motion`.

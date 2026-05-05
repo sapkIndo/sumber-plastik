@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Package } from "lucide-react";
 import { CATEGORIES } from "@/data/categories";
 import { getProductCountByCategory } from "@/data/products";
-import CategoryCard from "@/components/produk/CategoryCard";
+import CategoryBrowser from "@/components/produk/CategoryBrowser";
 import { SITE_URL } from "@/constants";
 
 export const metadata: Metadata = {
@@ -42,6 +41,11 @@ export default function ProdukPage() {
     0
   );
 
+  const categoryItems = CATEGORIES.map((category) => ({
+    category,
+    productCount: getProductCountByCategory(category.slug),
+  }));
+
   return (
     <>
       <script
@@ -51,7 +55,7 @@ export default function ProdukPage() {
 
       <main id="main-content" className="mx-auto max-w-7xl px-5 py-16 md:px-6 md:py-24">
         {/* Header */}
-        <header className="mb-14">
+        <header className="mb-10">
           <div className="mb-4 flex items-center gap-2">
             <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
@@ -59,50 +63,27 @@ export default function ProdukPage() {
             </p>
           </div>
           <h1
-            className="mb-5 font-black tracking-tighter text-slate-900 dark:text-slate-50"
+            className="mb-3 font-black tracking-tighter text-slate-900 dark:text-slate-50"
             style={{ fontSize: "clamp(2rem, 4vw + 1rem, 3.5rem)" }}
           >
             Semua Kategori
           </h1>
           <p className="max-w-xl text-base leading-relaxed text-slate-500 dark:text-slate-400">
-            {totalProducts > 0
-              ? `${totalProducts.toLocaleString("id-ID")} produk dalam ${CATEGORIES.length} kategori — ecer & grosir, food grade, halal, bersertifikat ISO.`
-              : `${CATEGORIES.length} kategori produk kemasan — ecer & grosir, food grade, halal, bersertifikat ISO.`}
+            <span className="font-semibold tabular-nums text-slate-700 dark:text-slate-300">
+              {totalProducts.toLocaleString("id-ID")}
+            </span>{" "}
+            produk dalam{" "}
+            <span className="font-semibold tabular-nums text-slate-700 dark:text-slate-300">
+              {CATEGORIES.length}
+            </span>{" "}
+            kategori — ecer &amp; grosir, food grade, halal, bersertifikat ISO.
           </p>
         </header>
 
-        {/* Category grid */}
+        {/* Browser: tabs + search + grid */}
         <section aria-labelledby="categories-heading">
           <h2 id="categories-heading" className="sr-only">Kategori produk</h2>
-          {CATEGORIES.length > 0 ? (
-            <ul
-              className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-              role="list"
-            >
-              {CATEGORIES.map((category, index) => (
-                <li
-                  key={category.slug}
-                  className="animate-fadein-up"
-                  style={{ animationDelay: `${index * 60}ms` }}
-                >
-                  <CategoryCard
-                    category={category}
-                    productCount={getProductCountByCategory(category.slug)}
-                  />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-24 text-center">
-              <Package size={40} className="mb-4 text-slate-300" aria-hidden="true" />
-              <p className="font-semibold text-slate-900 dark:text-slate-50">
-                Katalog sedang disiapkan
-              </p>
-              <p className="mt-1 text-sm text-slate-500">
-                Produk akan segera tersedia. Hubungi kami untuk informasi lebih lanjut.
-              </p>
-            </div>
-          )}
+          <CategoryBrowser categories={categoryItems} />
         </section>
       </main>
     </>

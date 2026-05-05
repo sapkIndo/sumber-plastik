@@ -4,7 +4,7 @@ import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/HeroB"; // switch: HeroA | HeroB | Hero
 
 const Stats = dynamic(() => import("@/components/sections/Stats"));
-const Products = dynamic(() => import("@/components/sections/Products"));
+const FeaturedCategories = dynamic(() => import("@/components/sections/FeaturedCategories"));
 const ProductSpotlight = dynamic(() => import("@/components/sections/ProductSpotlight"));
 const WhyUs = dynamic(() => import("@/components/sections/WhyUs"));
 const Clients = dynamic(() => import("@/components/sections/Clients"));
@@ -79,7 +79,7 @@ export default function HomePage() {
       <main id="main-content">
         <Hero />
         <Stats />
-        <Products />
+        <FeaturedCategories />
         <ProductSpotlight />
         <WhyUs />
         <Clients />

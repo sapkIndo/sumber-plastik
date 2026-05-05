@@ -257,11 +257,11 @@ export default function Timeline() {
 
                     {/* Year + tag labels — always visible once outer group renders */}
                     <text
-                      x={isLeft ? -22 : 22}
-                      y="-22"
+                      x={isLeft ? -24 : 24}
+                      y="-28"
                       textAnchor={isLeft ? "end" : "start"}
                       className="fill-slate-600 dark:fill-slate-400"
-                      fontSize="10"
+                      fontSize="13"
                       fontFamily="monospace"
                       letterSpacing="0.06em"
                       fontWeight="700"
@@ -269,11 +269,11 @@ export default function Timeline() {
                       {m.year}
                     </text>
                     <text
-                      x={isLeft ? -22 : 22}
-                      y="-10"
+                      x={isLeft ? -24 : 24}
+                      y="-14"
                       textAnchor={isLeft ? "end" : "start"}
                       className="fill-slate-400 dark:fill-slate-500"
-                      fontSize="7"
+                      fontSize="9"
                       fontFamily="monospace"
                       letterSpacing="0.1em"
                     >

@@ -47,10 +47,21 @@ export default function CTA() {
 
     // Cache element position — updated on scroll/resize, never inside RAF
     let rectLeft = 0, rectTop = 0;
+    let pLeft = 0, pTop = 0, pRight = 0, pBottom = 0;
     const updateRect = () => {
       const r = textReveal.getBoundingClientRect();
       rectLeft = r.left;
       rectTop  = r.top;
+      const p = textReveal.querySelector('p');
+      if (p) {
+        const pr = p.getBoundingClientRect();
+        pLeft = pr.left; pTop = pr.top; pRight = pr.right; pBottom = pr.bottom;
+      }
+      const sectionRect = section.getBoundingClientRect();
+      if (sectionRect.bottom < 0 || sectionRect.top > window.innerHeight) {
+        targetRadius.current = 0;
+        currentRadius.current = 0;
+      }
     };
     updateRect();
     window.addEventListener("scroll", updateRect, { passive: true });
@@ -69,16 +80,15 @@ export default function CTA() {
       rafId.current = requestAnimationFrame(tick);
     };
 
-    const isNearCenter = (clientY: number) => {
-      const r = textReveal.getBoundingClientRect();
-      const centerY = r.top + r.height / 2;
-      return Math.abs(clientY - centerY) < r.height * 0.38;
+    const isOverText = (clientX: number, clientY: number) => {
+      const pad = 16;
+      return clientX >= pLeft - pad && clientX <= pRight + pad && clientY >= pTop - pad && clientY <= pBottom + pad;
     };
 
     const onMouseMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-      if (isNearCenter(e.clientY)) {
+      if (isOverText(e.clientX, e.clientY)) {
         if (targetRadius.current === 0) {
           lerped.current.x = e.clientX;
           lerped.current.y = e.clientY;
@@ -89,9 +99,10 @@ export default function CTA() {
       }
     };
     const onMouseEnter = (e: MouseEvent) => {
+      updateRect();
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-      if (isNearCenter(e.clientY)) {
+      if (isOverText(e.clientX, e.clientY)) {
         lerped.current.x = e.clientX;
         lerped.current.y = e.clientY;
         targetRadius.current = 280;

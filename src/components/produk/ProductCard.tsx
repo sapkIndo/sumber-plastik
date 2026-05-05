@@ -11,7 +11,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <article
-      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-px hover:border-blue-100 hover:shadow-[0_6px_20px_-4px_rgb(37_99_235_/_0.09)] dark:border-slate-700/80 dark:bg-slate-900 dark:hover:border-blue-900"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-px hover:border-blue-100 hover:shadow-[0_6px_20px_-4px_rgb(37_99_235_/_0.09)] dark:border-slate-700/80 dark:bg-slate-900 dark:hover:border-blue-900"
       style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
     >
       <div className="relative aspect-square overflow-hidden bg-slate-50 dark:bg-slate-800">
@@ -20,7 +20,7 @@ export default function ProductCard({ product }: { product: Product }) {
           alt={product.name}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+          className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
           style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
           loading="lazy"
         />

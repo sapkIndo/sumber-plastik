@@ -114,10 +114,21 @@ export default function HeroB() {
 
     // Cache element position — updated on scroll/resize, never inside RAF
     let rectLeft = 0, rectTop = 0;
+    let pLeft = 0, pTop = 0, pRight = 0, pBottom = 0;
     const updateRect = () => {
       const r = textReveal.getBoundingClientRect();
       rectLeft = r.left;
       rectTop  = r.top;
+      const p = textReveal.querySelector('p');
+      if (p) {
+        const pr = p.getBoundingClientRect();
+        pLeft = pr.left; pTop = pr.top; pRight = pr.right; pBottom = pr.bottom;
+      }
+      const heroRect = hero.getBoundingClientRect();
+      if (heroRect.bottom < 0 || heroRect.top > window.innerHeight) {
+        targetRadius.current = 0;
+        currentRadius.current = 0;
+      }
     };
     updateRect();
     window.addEventListener("scroll", updateRect, { passive: true });
@@ -137,21 +148,31 @@ export default function HeroB() {
       rafId.current = requestAnimationFrame(tick);
     };
 
-    const onMouseMove  = (e: MouseEvent) => {
+    const onMouseMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-      if (targetRadius.current === 0) {
+      const pad = 16;
+      const over = e.clientX >= pLeft - pad && e.clientX <= pRight + pad && e.clientY >= pTop - pad && e.clientY <= pBottom + pad;
+      if (over) {
+        if (targetRadius.current === 0) {
+          lerped.current.x = e.clientX;
+          lerped.current.y = e.clientY;
+        }
+        targetRadius.current = 480;
+      } else {
+        targetRadius.current = 0;
+      }
+    };
+    const onMouseEnter = (e: MouseEvent) => {
+      updateRect();
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
+      const pad = 16;
+      if (e.clientX >= pLeft - pad && e.clientX <= pRight + pad && e.clientY >= pTop - pad && e.clientY <= pBottom + pad) {
         lerped.current.x = e.clientX;
         lerped.current.y = e.clientY;
         targetRadius.current = 480;
       }
-    };
-    const onMouseEnter = (e: MouseEvent) => {
-      mouse.current.x = e.clientX;
-      mouse.current.y = e.clientY;
-      lerped.current.x = e.clientX;
-      lerped.current.y = e.clientY;
-      targetRadius.current = 480;
     };
     const onMouseLeave = () => { targetRadius.current = 0; };
 

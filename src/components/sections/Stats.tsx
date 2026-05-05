@@ -8,11 +8,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const stats: { num: number; sep: boolean; suffix: string; label: string; desc: string }[] = [
-  { num: 5000, sep: true,  suffix: "+", label: "Client Aktif",     desc: "Dari UKM hingga korporasi nasional"          },
-  { num: 16,   sep: false, suffix: "+", label: "Tahun Pengalaman", desc: "Melayani industri Indonesia sejak 2010"      },
-  { num: 1000, sep: true,  suffix: "+", label: "Jenis Produk",     desc: "PP, PET, HDPE, PVC, LLDPE, PS, dan lainnya" },
+  { num: 5000, sep: true,  suffix: "+", label: "Client Aktif",     desc: "Dari UKM hingga korporasi nasional dan pemerintahan"          },
+  { num: 16,   sep: false, suffix: "+", label: "Tahun Pengalaman", desc: "Melayani industri Indonesia sejak 2010, profesionak dan berpengalaman"      },
+  { num: 1000, sep: true,  suffix: "+", label: "Jenis Produk",     desc: "PP, PET, HDPE, PVC, LLDPE, PS, Opp, Oxo-bio, Custom, Sablon dan lainnya" },
   { num: 99,   sep: false, suffix: "%", label: "Tingkat Kepuasan", desc: "Berdasarkan survei kepuasan tahunan kami"    },
-  { num: 50,   sep: false, suffix: "+", label: "Partner Bisnis",   desc: "Jaringan supplier dan distributor aktif"     },
+  { num: 50,   sep: false, suffix: "+", label: "Partner Bisnis",   desc: "Jaringan supplier, pabrik, dan distributor aktif diseluruh Indonesia"     },
 ];
 
 function fmt(n: number, sep: boolean, suffix: string) {

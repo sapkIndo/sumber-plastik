@@ -45,7 +45,7 @@ const products = [
     specs: ["Crystal Clear", "Food Grade", "Recyclable"],
     industries: "Minuman  ·  Makanan  ·  Farmasi  ·  Kosmetik",
     props: [
-      { label: "Kekuatan",      value: 90 },
+      { label: "Kekuatan",      value: 93 },
       { label: "Fleksibilitas", value: 50 },
       { label: "Tahan Panas",   value: 40 },
       { label: "Food Safety",   value: 93 },
@@ -75,7 +75,7 @@ const products = [
     props: [
       { label: "Daya Kerut",    value: 92 },
       { label: "Kejernihan",    value: 88 },
-      { label: "Kekuatan",      value: 75 },
+      { label: "Kekuatan",      value: 92 },
       { label: "Food Safety",   value: 72 },
     ],
   },
@@ -87,7 +87,7 @@ const products = [
     specs: ["Stretch Film", "Tear Resistant", "Food Safe"],
     industries: "Logistik  ·  FMCG  ·  Retail  ·  Cold Chain",
     props: [
-      { label: "Kekuatan",      value: 88 },
+      { label: "Kekuatan",      value: 92 },
       { label: "Fleksibilitas", value: 95 },
       { label: "Tahan Uap Air", value: 80 },
       { label: "Food Safety",   value: 85 },
@@ -102,7 +102,7 @@ const products = [
     industries: "F&B  ·  Catering  ·  Restoran  ·  Supermarket",
     props: [
       { label: "Food Safety",   value: 82 },
-      { label: "Kekuatan",      value: 70 },
+      { label: "Kekuatan",      value: 91 },
       { label: "Insulasi",      value: 90 },
       { label: "Tahan Panas",   value: 35 },
     ],
@@ -144,7 +144,7 @@ const products = [
     industries: "Retail  ·  Supermarket  ·  E-commerce  ·  FMCG",
     props: [
       { label: "Daya Urai",     value: 88 },
-      { label: "Kekuatan",      value: 72 },
+      { label: "Kekuatan",      value: 91 },
       { label: "Fleksibilitas", value: 85 },
       { label: "Food Safety",   value: 78 },
     ],

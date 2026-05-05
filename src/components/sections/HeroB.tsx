@@ -198,8 +198,8 @@ export default function HeroB() {
         {/* Headline */}
         <h1
           ref={titleRef}
-          className="hero-title animate-fadein-up will-change-transform font-black leading-[0.9] tracking-tighter text-slate-900 dark:text-slate-50"
-          style={{ fontSize: "clamp(2.25rem, 9vw + 0.25rem, 7rem)", animationDuration: "600ms" }}
+          className="hero-title animate-fadein-up will-change-transform font-black leading-[0.9] tracking-tighter text-slate-900 dark:text-slate-50 [@media(min-width:1280px)_and_(max-height:1024px)]:![font-size:4rem]"
+          style={{ fontSize: "clamp(2.25rem, 9vw + 0.25rem, 6rem)", animationDuration: "600ms" }}
         >
           Kemasan Yang Bisa
           <br className="hidden sm:block" />
@@ -212,7 +212,7 @@ export default function HeroB() {
         <div>
           <div className="hero-rule mb-8 h-px w-full bg-slate-300 dark:bg-slate-700" />
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-            <p className="hero-sub text-xs leading-relaxed text-slate-600 md:max-w-md md:text-base dark:text-slate-400">
+            <p className="hero-sub text-xs leading-relaxed text-slate-600 md:max-w-md md:text-base [@media(min-width:1280px)_and_(max-height:1024px)]:!text-[11px] dark:text-slate-400">
               1.000+ produk <em>food grade</em>, halal, dan bersertifikat <em>ISO</em>.
               <br />
               <em>One Stop Solution</em> Untuk Seluruh Kebutuhan Anda
@@ -284,10 +284,10 @@ export default function HeroB() {
         </div>
 
         {/* Large desktop only: ghost QUALITY text */}
-        <div className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex">
+        <div className="pointer-events-none absolute inset-0 hidden items-center justify-center [@media(min-width:1280px)_and_(min-height:750px)]:flex">
           <p
             className="text-center font-black leading-none tracking-tighter text-slate-200 dark:text-slate-800"
-            style={{ fontSize: "clamp(3rem, 16vw, 18rem)" }}
+            style={{ fontSize: "min(12vw, 26vh, 18rem)" }}
           >
             Q U A L I T Y .
           </p>
@@ -296,11 +296,11 @@ export default function HeroB() {
         {/* Large desktop only: masked QUALITY text (spotlight reveal) */}
         <div
           ref={textRevealRef}
-          className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex"
+          className="pointer-events-none absolute inset-0 hidden items-center justify-center [@media(min-width:1280px)_and_(min-height:750px)]:flex"
         >
           <p
             className="text-center font-black leading-none tracking-tighter text-slate-900 dark:text-slate-100"
-            style={{ fontSize: "clamp(3rem, 16vw, 18rem)" }}
+            style={{ fontSize: "min(12vw, 26vh, 18rem)" }}
           >
             Q U A L I T Y .
           </p>

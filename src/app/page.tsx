@@ -13,6 +13,7 @@ const Testimonials = dynamic(() => import("@/components/sections/Testimonials"))
 const Timeline = dynamic(() => import("@/components/sections/Timeline"));
 const VisiMisi = dynamic(() => import("@/components/sections/VisiMisi"));
 const FAQ = dynamic(() => import("@/components/sections/FAQ"));
+const SocialMedia = dynamic(() => import("@/components/sections/SocialMedia"));
 const CTA = dynamic(() => import("@/components/sections/CTA"));
 
 export const metadata: Metadata = {
@@ -87,6 +88,7 @@ export default function HomePage() {
         <Timeline />
         <VisiMisi />
         <FAQ />
+        <SocialMedia />
         <CTA />
       </main>
 

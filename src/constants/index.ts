@@ -25,6 +25,7 @@ export const STORES = [
     whatsapp: "6285371106789",
     hours: "08:00 – 18:00 WIB",
     mapsUrl: "https://maps.google.com/?q=Jl.+Gondosuli+No.+1+Baciro+Yogyakarta",
+    image: "https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/baciro_tpbzjj",
   },
   {
     name: "Sumber Aneka Plastik dan Kemasan Wirobrajan",
@@ -33,6 +34,7 @@ export const STORES = [
     whatsapp: "62812270030",
     hours: "08:00 – 17:00 WIB",
     mapsUrl: "https://maps.google.com/?q=Jl.+RE+Martadinata+122+Wirobrajan+Yogyakarta",
+    image: "https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/martadinata_vnawcd",
   },
   {
     name: "Sumber Aneka Plastik dan Kemasan Jalan Wonosari",
@@ -41,6 +43,7 @@ export const STORES = [
     whatsapp: "6282110606789",
     hours: "08:00 – 17:00 WIB",
     mapsUrl: "https://maps.google.com/?q=Jl.+Wonosari+Km+9.3+Dawukan+Sleman",
+    image: "https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/wonosari_ohavxh",
   },
   {
     name: "Sumber Aneka Plastik dan Kemasan Jalan Magelang",
@@ -49,5 +52,6 @@ export const STORES = [
     whatsapp: "6288991956969",
     hours: "08:00 – 17:00 WIB",
     mapsUrl: "https://maps.google.com/?q=Jl.+Magelang+Km+8.5+Mlati+Sleman",
+    image: "https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/magelang_fnubdn",
   },
 ] as const;

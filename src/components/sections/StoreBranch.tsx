@@ -5,7 +5,8 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import { MapPin, Clock, Phone, ArrowUpRight, Building2, Truck } from "lucide-react";
+import Image from "next/image";
+import { MapPin, Clock, Phone, ArrowUpRight, Truck } from "lucide-react";
 import { STORES } from "@/constants";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
@@ -29,7 +30,7 @@ export default function StoreBranch() {
   const rowRefs      = useRef<(HTMLDivElement | null)[]>([]);
   const panelRef     = useRef<HTMLDivElement>(null);
   const panelBgRef   = useRef<HTMLDivElement>(null);
-  const panelNumRef  = useRef<HTMLSpanElement>(null);
+  const imgRefs      = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(
     () => {
@@ -135,9 +136,11 @@ export default function StoreBranch() {
 
           const [from, to] = STORE_PALETTES[i];
           if (panelBgRef.current)
-            panelBgRef.current.style.background = `linear-gradient(160deg, ${from} 0%, ${to} 100%)`;
-          if (panelNumRef.current)
-            panelNumRef.current.textContent = String(i + 1).padStart(2, "0");
+            panelBgRef.current.style.background = `linear-gradient(160deg, ${from}99 0%, ${to}bb 100%)`;
+          imgRefs.current.forEach((img, j) => {
+            if (!img) return;
+            gsap.to(img, { opacity: j === i ? 1 : 0, duration: 0.35, ease: "power2.out" });
+          });
 
           gsap.to(listRef.current,  { x: SHIFT, duration: 0.45, ease: "power3.out" });
           gsap.to(panelRef.current, { x: 0, opacity: 1, duration: 0.45, ease: "power3.out" });
@@ -200,26 +203,31 @@ export default function StoreBranch() {
           style={{ width: PANEL_W }}
           aria-hidden="true"
         >
+          {/* Branch photos — stacked, swapped by GSAP on row hover */}
+          {STORES.map((store, i) => (
+            <div
+              key={store.name}
+              ref={(el) => { imgRefs.current[i] = el; }}
+              className="absolute inset-0"
+              style={{ opacity: i === 0 ? 1 : 0 }}
+            >
+              <Image
+                src={store.image}
+                alt={`Foto toko ${store.name}`}
+                fill
+                className="object-cover"
+                sizes="200px"
+              />
+            </div>
+          ))}
+          {/* Color tint overlay — GSAP changes gradient per store */}
           <div
             ref={panelBgRef}
-            className="absolute inset-0 flex flex-col items-center justify-center gap-4"
-            style={{ background: "linear-gradient(160deg, #1d4ed8 0%, #3b82f6 100%)" }}
-          >
-            <Building2 size={36} className="text-white/25" />
-            <span
-              ref={panelNumRef}
-              className="font-mono text-8xl font-black leading-none tracking-tighter text-white/90"
-            >
-              01
-            </span>
-            <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-white/35">
-              SAPK
-            </span>
-          </div>
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(160deg, #1d4ed899 0%, #3b82f6bb 100%)" }}
+          />
           {/* Gloss */}
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_65%_18%,rgba(255,255,255,0.18),transparent_52%)]" />
-          {/* Bottom fade */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/20 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_65%_18%,rgba(255,255,255,0.15),transparent_52%)]" />
         </div>
 
         {/* ── Header ── */}

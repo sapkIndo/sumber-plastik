@@ -159,31 +159,29 @@ export default function FeaturedCategories() {
               key={cat.slug}
               href={`/product/${cat.slug}`}
               aria-label={`Jelajahi kategori ${cat.name}`}
-              className="cat-card group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition-[border-color,box-shadow] duration-300 hover:border-blue-200 hover:shadow-[0_0_0_1px_rgb(191_219_254),0_8px_24px_-4px_rgb(37_99_235_/_0.12)] dark:border-slate-700/80 dark:bg-slate-900 dark:hover:border-blue-800 dark:hover:shadow-[0_0_0_1px_rgb(30_64_175),0_8px_24px_-4px_rgb(37_99_235_/_0.2)]"
+              className="cat-card group relative min-h-[180px] overflow-hidden rounded-2xl sm:min-h-[220px] lg:min-h-[260px]"
             >
-              <div className="relative aspect-square overflow-hidden bg-slate-50 dark:bg-slate-800">
-                <Image
-                  src={cat.imageUrl}
-                  alt={cat.name}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.08]"
-                />
-                {/* subtle blue wash on hover */}
-                <div className="absolute inset-0 bg-blue-600/0 transition-colors duration-500 group-hover:bg-blue-600/5" />
-              </div>
-              <div className="flex items-center justify-between px-4 py-3">
-                <div className="min-w-0">
-                  <span className="block text-[10px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                    {cat.count} produk
+              <Image
+                src={cat.imageUrl}
+                alt={cat.name}
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.07]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/20 to-transparent transition-opacity duration-500 group-hover:opacity-75" />
+              <div className="absolute inset-0 bg-blue-900/0 transition-colors duration-500 group-hover:bg-blue-900/10" />
+              <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between p-4 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-1">
+                <div>
+                  <span className="mb-1 block text-[10px] font-semibold uppercase tracking-widest text-blue-400 transition-colors duration-300 group-hover:text-blue-300">
+                    {cat.count} produk tersedia
                   </span>
-                  <p className="mt-0.5 line-clamp-1 text-sm font-semibold text-slate-900 dark:text-slate-50">
+                  <p className="text-base font-black leading-tight text-white sm:text-lg">
                     {cat.name}
                   </p>
                 </div>
                 <ArrowUpRight
-                  size={14}
-                  className="ml-2 shrink-0 text-slate-300 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-600 dark:text-slate-600 dark:group-hover:text-blue-400"
+                  size={18}
+                  className="shrink-0 text-white/25 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white"
                   aria-hidden="true"
                 />
               </div>

@@ -70,9 +70,9 @@ const stats = [
 const milestones = [
   { year: "2010", text: "Berdiri sebagai Aneka Botol — toko kemasan pertama di Yogyakarta dengan fokus pada botol plastik berkualitas." },
   { year: "2014", text: "Ekspansi ragam produk menjawab kebutuhan pelanggan: berbagai jenis kemasan untuk industri FnB dan manufaktur." },
-  { year: "2018", text: "Fondasi kepercayaan semakin kokoh dengan lebih dari 100 pelanggan setia dan kapasitas operasional yang diperkuat." },
+  { year: "2018", text: "Fondasi kepercayaan semakin kokoh dengan lebih dari 1000 pelanggan setia dan kapasitas operasional yang diperkuat." },
   { year: "2022", text: "Rebranding menjadi Sumber Aneka Botol, identitas yang lebih kuat mencerminkan komitmen dan skala bisnis yang berkembang." },
-  { year: "2024", text: "Transformasi penuh menjadi Sumber Aneka Plastik dan Kemasan, melayani kebutuhan kemasan menyeluruh dari satu atap." },
+  { year: "2026", text: "Transformasi penuh menjadi Sumber Aneka Plastik dan Kemasan, melayani kebutuhan kemasan menyeluruh dari satu atap." },
 ];
 
 const values = [
@@ -174,7 +174,7 @@ export default function TentangPage() {
                     Sumber Aneka Plastik dan Kemasan berawal di tahun 2010, ketika sebuah toko sederhana di Yogyakarta hadir dengan satu tekad: menyediakan botol dan kemasan berkualitas yang mudah dijangkau oleh semua kalangan usaha.
                   </p>
                   <p>
-                    Selama lebih dari satu dekade, kepercayaan pelanggan mendorong kami terus berkembang, memperluas ragam produk, memperkuat jaringan distribusi, dan pada akhirnya bertransformasi menjadi Sumber Aneka Plastik dan Kemasan pada 2024.
+                    Selama lebih dari satu dekade, kepercayaan pelanggan mendorong kami terus berkembang, memperluas ragam produk, memperkuat jaringan distribusi, dan pada akhirnya bertransformasi menjadi Sumber Aneka Plastik dan Kemasan pada 2026.
                   </p>
                   <p>
                     Sebagai distributor tangan pertama langsung dari pabrik, kami menghilangkan perantara sehingga pelanggan mendapatkan harga terbaik tanpa mengorbankan kualitas.

@@ -85,7 +85,7 @@ export default function VisiMisi() {
           <p className="relative z-10 max-w-4xl text-2xl font-bold leading-snug tracking-tight text-slate-900 dark:text-slate-50 sm:text-3xl md:text-4xl">
             Menjadi toko plastik dan kemasan{" "}
             <span className="text-blue-600">nomor satu di Indonesia</span>{" "}
-            yang dikenal karena kualitas, inovasi, dan layanan lengkap, sehingga setiap pelaku usaha merasa aman, praktis, dan puas ketika memilih kami sebagai mitra terpercaya.
+            yang dikenal karena kualitas, inovasi, dan layanan lengkap — mitra terpercaya bagi setiap pelaku usaha.
           </p>
 
           {/* Decorative concentric rings */}

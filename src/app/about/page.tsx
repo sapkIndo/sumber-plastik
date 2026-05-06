@@ -278,7 +278,7 @@ export default function TentangPage() {
               >
                 Menjadi toko plastik dan kemasan{" "}
                 <span className="text-blue-600">nomor satu di Indonesia</span>{" "}
-                yang dikenal karena kualitas, inovasi, dan layanan lengkap, sehingga setiap pelaku usaha merasa aman, praktis, dan puas ketika memilih kami sebagai mitra terpercaya.
+                yang dikenal karena kualitas, inovasi, dan layanan lengkap — mitra terpercaya bagi setiap pelaku usaha.
               </p>
             </div>
 

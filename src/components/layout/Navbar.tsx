@@ -81,7 +81,7 @@ export default function Navbar() {
               alt={SITE_NAME}
               width={160}
               height={54}
-              className="object-contain dark:invert"
+              className="object-contain dark:invert dark:hue-rotate-180"
               style={{ height: "auto" }}
               priority
             />
@@ -157,7 +157,7 @@ export default function Navbar() {
               alt={SITE_NAME}
               width={160}
               height={54}
-              className="object-contain dark:invert"
+              className="object-contain dark:invert dark:hue-rotate-180"
               style={{ height: "auto" }}
             />
           </Link>

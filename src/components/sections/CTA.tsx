@@ -14,10 +14,9 @@ const differentiators = [
   "Respons dalam 1×24 jam kerja",
   <>Ecer dan grosir — <em>MOQ</em> fleksibel</>,
   "Jaminan pelayanan after sales 24/7",
+  "Berdiri sejak 2010 dan berpengalaman",
   "Lebih dari 5.000 jenis produk kemasan",
   <><em>Food grade</em> &amp; halal, serta bersertifikat <em>ISO</em></>,
-  "Berdiri sejak 2010 dan sudah berpengalaman",
-  
 ];
 
 export default function CTA() {
@@ -146,7 +145,7 @@ export default function CTA() {
     <section
       ref={ref}
       aria-labelledby="cta-heading"
-      className="relative overflow-hidden rounded-t-[2rem] bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 px-5 py-20 md:px-10 md:py-28"
+      className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 px-5 py-20 md:px-10 md:py-28"
     >
       {/* Glow blobs */}
       <div

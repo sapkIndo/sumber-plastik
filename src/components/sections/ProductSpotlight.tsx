@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronsDown } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -73,10 +73,10 @@ const products = [
     specs: ["Crystal Clear", "Shrink Rate Tinggi", "Kilap Tinggi"],
     industries: "Minuman  ·  Farmasi  ·  Kosmetik  ·  Retail",
     props: [
-      { label: "Daya Kerut",    value: 92 },
-      { label: "Kejernihan",    value: 88 },
-      { label: "Kekuatan",      value: 92 },
-      { label: "Food Safety",   value: 72 },
+      { label: "Daya Menyusut",  value: 92 },
+      { label: "Kejernihan",     value: 88 },
+      { label: "Kekuatan",       value: 92 },
+      { label: "Food Safety",    value: 72 },
     ],
   },
   {
@@ -185,9 +185,11 @@ export default function ProductSpotlight() {
   const progRef    = useRef<SVGLineElement>(null);
   const counterRef = useRef<HTMLSpanElement>(null);
 
-  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const ringRefs  = useRef<(SVGCircleElement | null)[]>([]);
-  const stRef     = useRef<ScrollTrigger | null>(null);
+  const slideRefs  = useRef<(HTMLDivElement | null)[]>([]);
+  const ringRefs   = useRef<(SVGCircleElement | null)[]>([]);
+  const stRef      = useRef<ScrollTrigger | null>(null);
+  const skipBtnRef = useRef<HTMLButtonElement>(null);
+  const skipIconRef = useRef<SVGSVGElement>(null);
 
   const [showSkip, setShowSkip] = useState(false);
 
@@ -195,6 +197,30 @@ export default function ProductSpotlight() {
     const timer = setTimeout(() => setShowSkip(true), 2000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const btn  = skipBtnRef.current;
+    const icon = skipIconRef.current;
+    if (!btn || !showSkip) return;
+
+    gsap.fromTo(
+      btn,
+      { opacity: 0, x: 14, scale: 0.88 },
+      { opacity: 1, x: 0, scale: 1, duration: 0.55, ease: "back.out(1.6)", clearProps: "scale" }
+    );
+
+    if (icon) {
+      const tween = gsap.to(icon, {
+        y: 3,
+        repeat: -1,
+        yoyo: true,
+        duration: 0.55,
+        ease: "power1.inOut",
+        delay: 0.7,
+      });
+      return () => { tween.kill(); };
+    }
+  }, [showSkip]);
 
   const handleSkip = () => {
     const st = stRef.current;
@@ -376,12 +402,18 @@ export default function ProductSpotlight() {
           <div className="flex items-center gap-4">
             <span ref={counterRef} className="font-mono text-[11px] tabular-nums text-slate-400 dark:text-slate-500" />
             <button
+              ref={skipBtnRef}
               onClick={handleSkip}
               aria-label="Lewati section Material Unggulan"
-              className={`flex items-center gap-1 rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-400 backdrop-blur-sm transition-all duration-500 hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-500 ${showSkip ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+              style={{ opacity: 0, pointerEvents: showSkip ? "auto" : "none" }}
+              className="group flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-400 backdrop-blur-sm transition-colors duration-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
             >
               Lewati
-              <ChevronDown className="h-3 w-3" />
+              <ChevronsDown
+                ref={skipIconRef}
+                className="h-3.5 w-3.5 transition-colors duration-200 group-hover:text-blue-500"
+                aria-hidden="true"
+              />
             </button>
           </div>
         </div>
@@ -392,7 +424,7 @@ export default function ProductSpotlight() {
             <div
               key={p.abbr}
               ref={(el) => { slideRefs.current[i] = el; }}
-              className="absolute inset-0 flex flex-col justify-center gap-5 px-6 py-4 md:flex-row md:items-center md:gap-10 md:px-12 lg:px-16"
+              className="absolute inset-0 flex flex-col justify-center gap-6 px-6 py-3 md:flex-row md:items-center md:gap-10 md:px-12 md:py-4 lg:px-16"
             >
               {/* text column */}
               <div className="flex flex-col md:w-[55%]">
@@ -435,7 +467,7 @@ export default function ProductSpotlight() {
               </div>
 
               {/* chart column */}
-              <div className="flex shrink-0 flex-col items-center gap-3 md:w-[45%] md:gap-4">
+              <div className="flex shrink-0 items-center gap-4 md:w-[45%] md:flex-col md:gap-4">
                 <svg
                   className="h-40 w-40 shrink-0 md:h-64 md:w-64 lg:h-72 lg:w-72"
                   viewBox="0 0 260 260"
@@ -474,7 +506,7 @@ export default function ProductSpotlight() {
                   </text>
                 </svg>
 
-                <ul className="grid w-full grid-cols-2 gap-x-5 gap-y-1.5 md:max-w-50 md:grid-cols-1" role="list">
+                <ul className="grid grid-cols-1 gap-y-1.5 md:w-full md:max-w-50" role="list">
                   {p.props.map((prop, j) => (
                     <li key={prop.label} className="ps-legend flex items-center gap-2">
                       <span

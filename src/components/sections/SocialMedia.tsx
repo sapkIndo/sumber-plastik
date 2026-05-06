@@ -128,7 +128,7 @@ function TiltCard({
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 flex select-none items-center justify-center overflow-hidden font-black uppercase tracking-tighter"
               style={{
-                fontSize:   "clamp(4.5rem, 10vw, 8rem)",
+                fontSize:   "clamp(2.5rem, 4.5vw, 3.5rem)",
                 color:      s.color,
                 opacity:    isActive ? 0.1 : 0.035,
                 transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1)",

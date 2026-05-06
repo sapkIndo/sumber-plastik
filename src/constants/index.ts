@@ -14,7 +14,7 @@ export const CONTACT = {
   phone: "+62 895-0988-0988",
   whatsapp: "6289509880988",
   email: "sapkindonesia@gmail.com",
-  address: "Jl. Gondosuli No.1, Baciro, Yogyakarta",
+  address: "Jl. Gondosuli No. 1, Baciro, Yogyakarta",
 } as const;
 
 export const STORES = [

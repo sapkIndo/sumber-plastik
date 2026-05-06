@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ClientAnimations from "@/components/ClientAnimations";
 import Navbar from "@/components/layout/Navbar";
+import ScrollToTop from "@/components/ScrollToTop";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -90,6 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {children}
             </div>
           </div>
+          <ScrollToTop />
           <Toaster
             position="top-right"
             richColors

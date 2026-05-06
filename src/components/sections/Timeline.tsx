@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronsDown } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -70,6 +70,8 @@ export default function Timeline() {
   const pathRef     = useRef<SVGPathElement>(null);
   const pinVisualRefs = useRef<(SVGGElement | null)[]>([]);
   const stRef         = useRef<ScrollTrigger | null>(null);
+  const skipBtnRef    = useRef<HTMLButtonElement>(null);
+  const skipIconRef   = useRef<SVGSVGElement>(null);
 
   const [showSkip, setShowSkip] = useState(false);
 
@@ -82,6 +84,30 @@ export default function Timeline() {
     const timer = setTimeout(() => setShowSkip(true), 2000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const btn  = skipBtnRef.current;
+    const icon = skipIconRef.current;
+    if (!btn || !showSkip) return;
+
+    gsap.fromTo(
+      btn,
+      { opacity: 0, x: 14, scale: 0.88 },
+      { opacity: 1, x: 0, scale: 1, duration: 0.55, ease: "back.out(1.6)", clearProps: "scale" }
+    );
+
+    if (icon) {
+      const tween = gsap.to(icon, {
+        y: 3,
+        repeat: -1,
+        yoyo: true,
+        duration: 0.55,
+        ease: "power1.inOut",
+        delay: 0.7,
+      });
+      return () => { tween.kill(); };
+    }
+  }, [showSkip]);
 
   const handleSkip = () => {
     const st = stRef.current;
@@ -187,12 +213,18 @@ export default function Timeline() {
               {milestones[0].year} — {milestones[milestones.length - 1].year}
             </span>
             <button
+              ref={skipBtnRef}
               onClick={handleSkip}
               aria-label="Lewati section Perjalanan Kami"
-              className={`flex items-center gap-1 rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-400 backdrop-blur-sm transition-all duration-500 hover:border-blue-200 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-500 ${showSkip ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+              style={{ opacity: 0, pointerEvents: showSkip ? "auto" : "none" }}
+              className="group flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-400 backdrop-blur-sm transition-colors duration-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
             >
               Lewati
-              <ChevronDown className="h-3 w-3" />
+              <ChevronsDown
+                ref={skipIconRef}
+                className="h-3.5 w-3.5 transition-colors duration-200 group-hover:text-blue-500"
+                aria-hidden="true"
+              />
             </button>
           </div>
         </div>

@@ -11,14 +11,15 @@ import { SITE_NAME, NAV_LINKS, CONTACT, STORES } from "@/constants";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const PRODUCT_LIST = [
-  "Plastik PP (Polypropylene)",
-  "Plastik PET",
-  "HDPE",
-  "Plastik PVC",
-  "LLDPE",
-  "PS / Styrofoam",
-  "Paper Packaging",
+const FEATURED_CATEGORIES = [
+  { slug: "botol-pet",   name: "Botol PET" },
+  { slug: "mika",        name: "Mika" },
+  { slug: "thinwall",    name: "Thinwall" },
+  { slug: "plastik-opp", name: "Plastik OPP" },
+  { slug: "cup-gelas",   name: "Cup Gelas" },
+  { slug: "sendok",      name: "Sendok" },
+  { slug: "kardus",      name: "Kardus" },
+  { slug: "kresek",      name: "Kresek" },
 ];
 
 export default function Footer() {
@@ -52,10 +53,17 @@ export default function Footer() {
       role="contentinfo"
       className="border-t border-slate-300 bg-slate-50/60 dark:border-slate-800 dark:bg-slate-950"
     >
-      <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto max-w-7xl px-6 py-14 lg:py-16">
+        {/*
+          Layout:
+          mobile  → 1-col: Brand / [Nav | Produk] / Kontak
+          lg+     → 4-col: Brand | Nav | Produk | Kontak
+          Trick: wrapper Nav+Produk pakai lg:contents sehingga
+          pada lg+ anak-anaknya jadi grid item langsung di outer grid.
+        */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-4 lg:gap-12">
 
-          {/* Brand */}
+          {/* ── Brand ── */}
           <div className="footer-col">
             <Link
               href="/"
@@ -82,59 +90,68 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Navigasi */}
+          {/*
+            ── Nav + Produk wrapper ──
+            Mobile: grid 2 kolom (side-by-side)
+            lg+:    lg:contents → wrapper menghilang, anak-anaknya masuk outer grid langsung
+          */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:contents">
+
+            {/* Navigasi */}
+            <div className="footer-col">
+              <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                Navigasi
+              </h3>
+              <ul className="space-y-0.5" role="list">
+                {NAV_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="inline-flex items-center gap-1.5 py-1.5 text-sm text-slate-500 transition-[color,transform] duration-150 hover:translate-x-0.5 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-slate-400 dark:hover:text-slate-50"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Kategori Unggulan */}
+            <div className="footer-col">
+              <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                Kategori
+              </h3>
+              <ul className="space-y-0.5" role="list">
+                {FEATURED_CATEGORIES.map((c) => (
+                  <li key={c.slug}>
+                    <Link
+                      href={`/product/${c.slug}`}
+                      className="inline-flex items-start py-1.5 text-sm leading-snug text-slate-500 transition-[color,transform] duration-150 hover:translate-x-0.5 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+                    >
+                      {c.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/product"
+                className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-blue-600 transition-[color,transform] duration-150 hover:translate-x-0.5 hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400"
+              >
+                Lihat semua
+                <ArrowRight size={11} aria-hidden="true" />
+              </Link>
+            </div>
+
+          </div>
+
+          {/* ── Kontak ── */}
           <div className="footer-col">
-            <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-              Navigasi
-            </h3>
-            <ul className="space-y-1" role="list">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="group inline-flex items-center gap-1.5 py-1.5 text-sm text-slate-500 transition-[color,transform] duration-150 hover:translate-x-0.5 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-slate-400 dark:hover:text-slate-50"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Produk — hidden on mobile (not actionable, adds scroll length) */}
-          <div className="footer-col hidden sm:block">
-            <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-              Produk
-            </h3>
-            <ul className="space-y-1" role="list">
-              {PRODUCT_LIST.map((p) => (
-                <li key={p}>
-                  <Link
-                    href="/product"
-                    className="group inline-flex items-center gap-1.5 py-1 text-sm text-slate-500 transition-[color,transform] duration-150 hover:translate-x-0.5 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
-                  >
-                    {p}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/product"
-              className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-blue-600 transition-[color,transform] duration-150 hover:translate-x-0.5 hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400"
-            >
-              Lihat semua produk
-              <ArrowRight size={11} aria-hidden="true" />
-            </Link>
-          </div>
-
-          {/* Kontak */}
-          <div className="footer-col sm:col-span-2 lg:col-span-1">
             <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
               Kontak
             </h3>
             <ul className="space-y-3" role="list">
 
-              {/* WhatsApp — pulsing dot = delight signal "kami aktif" */}
+              {/* WhatsApp */}
               <li className="flex items-start gap-3">
                 <Phone size={14} className="mt-0.5 shrink-0 text-blue-600" aria-hidden="true" />
                 <div>
@@ -163,20 +180,20 @@ export default function Footer() {
                 <Mail size={14} className="mt-0.5 shrink-0 text-blue-600" aria-hidden="true" />
                 <a
                   href={`mailto:${CONTACT.email}`}
-                  className="text-sm text-slate-500 transition-colors duration-150 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+                  className="break-all text-sm text-slate-500 transition-colors duration-150 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
                 >
                   {CONTACT.email}
                 </a>
               </li>
             </ul>
 
-            {/* Lokasi — mobile: ringkas; desktop: full list */}
+            {/* Lokasi */}
             <h3 className="mb-3 mt-6 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
               Lokasi Toko
             </h3>
 
-            {/* Mobile: single CTA */}
-            <div className="sm:hidden">
+            {/* Mobile & tablet: ringkas */}
+            <div className="lg:hidden">
               <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
                 <MapPin size={13} className="shrink-0 text-blue-600" aria-hidden="true" />
                 <span>{STORES.length} cabang di Yogyakarta</span>
@@ -191,7 +208,7 @@ export default function Footer() {
             </div>
 
             {/* Desktop: full store list */}
-            <ul className="hidden space-y-4 sm:block" role="list">
+            <ul className="hidden space-y-4 lg:block" role="list">
               {STORES.map((store) => (
                 <li key={store.name} className="flex items-start gap-3">
                   <MapPin size={14} className="mt-0.5 shrink-0 text-blue-600" aria-hidden="true" />
@@ -225,8 +242,8 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom bar */}
-        <div className="footer-bottom mt-12 flex flex-col items-center justify-between gap-3 border-t border-slate-300 pt-8 dark:border-slate-800 sm:flex-row">
+        {/* ── Bottom bar ── */}
+        <div className="footer-bottom mt-12 flex flex-col items-center justify-between gap-2 border-t border-slate-300 pt-8 dark:border-slate-800 sm:flex-row">
           <p className="text-xs text-slate-400 dark:text-slate-500">
             © {new Date().getFullYear()}{" "}
             <span className="text-slate-500 dark:text-slate-400">{SITE_NAME}</span>

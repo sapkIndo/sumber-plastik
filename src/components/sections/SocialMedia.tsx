@@ -36,6 +36,169 @@ const SOCIALS = [
   },
 ] as const;
 
+type Social = (typeof SOCIALS)[number];
+
+function TiltCard({
+  s,
+  isActive,
+  isDimmed,
+  onEnter,
+}: {
+  s: Social;
+  isActive: boolean;
+  isDimmed: boolean;
+  onEnter: () => void;
+}) {
+  const tiltRef  = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt]       = useState({ x: 0, y: 0 });
+  const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
+  const isResting = tilt.x === 0 && tilt.y === 0;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = tiltRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const dx   = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
+    const dy   = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
+    setTilt({ x: -dy * 10, y: dx * 10 });
+    setGlowPos({
+      x: ((e.clientX - rect.left) / rect.width)  * 100,
+      y: ((e.clientY - rect.top)  / rect.height) * 100,
+    });
+  };
+
+  return (
+    // Outer div: GSAP entrance target (.soc-card)
+    <div className="soc-card">
+      {/* Inner div: React-managed tilt + dimming (separate from GSAP transform) */}
+      <div
+        ref={tiltRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={onEnter}
+        onMouseLeave={() => setTilt({ x: 0, y: 0 })}
+        style={{
+          transform:  `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          opacity:    isDimmed ? 0.4 : 1,
+          transition: isResting
+            ? "transform 700ms cubic-bezier(0.23,1,0.32,1), opacity 400ms cubic-bezier(0.23,1,0.32,1)"
+            : "transform 80ms linear, opacity 400ms cubic-bezier(0.23,1,0.32,1)",
+          willChange: "transform",
+        }}
+      >
+        <Link
+          href={s.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${s.label} — ${s.handle}`}
+          className="block"
+        >
+          {/* Glass card */}
+          <div
+            className={[
+              "relative flex min-h-[340px] flex-col overflow-hidden rounded-2xl border p-6 lg:p-8",
+              isActive ? "" : "border-white/70 bg-white/50 dark:border-slate-600/50 dark:bg-slate-700/40",
+            ].join(" ")}
+            style={{
+              ...(isActive && {
+                backgroundColor: `${s.color}18`,
+                borderColor:     `${s.color}45`,
+              }),
+              backdropFilter:       "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              boxShadow: isActive
+                ? `0 25px 50px -12px ${s.color}28, 0 8px 24px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.5)`
+                : "0 4px 24px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.75)",
+              transition:
+                "background-color 400ms cubic-bezier(0.23,1,0.32,1), border-color 400ms, box-shadow 400ms",
+            }}
+          >
+            {/* Cursor glow that follows mouse */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 rounded-2xl"
+              style={{
+                background: `radial-gradient(circle 140px at ${glowPos.x}% ${glowPos.y}%, ${s.color}38, transparent)`,
+                opacity:    isActive ? 1 : 0,
+                transition: "opacity 400ms",
+              }}
+            />
+
+            {/* Ghost watermark */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 flex select-none items-center justify-center overflow-hidden font-black uppercase tracking-tighter"
+              style={{
+                fontSize:   "clamp(4.5rem, 10vw, 8rem)",
+                color:      s.color,
+                opacity:    isActive ? 0.1 : 0.035,
+                transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {s.label}
+            </span>
+
+            {/* Content */}
+            <div className="relative z-10 flex flex-1 flex-col">
+              {/* Icon top-left */}
+              <svg
+                viewBox="0 0 24 24"
+                className="h-7 w-7"
+                aria-hidden="true"
+                style={{
+                  fill:       isActive ? s.color : "rgb(148,163,184)",
+                  transition: "fill 400ms cubic-bezier(0.23,1,0.32,1)",
+                }}
+              >
+                <path d={s.path} />
+              </svg>
+
+              <div className="flex-1" />
+
+              {/* Platform name */}
+              <span
+                className="block font-black leading-none tracking-tighter text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl"
+                style={{
+                  color:      isActive ? s.color : "rgb(15,23,42)",
+                  transition: "color 400ms cubic-bezier(0.23,1,0.32,1)",
+                }}
+              >
+                {s.label}
+              </span>
+
+              {/* Handle */}
+              <span
+                className="mt-1.5 block truncate font-mono text-sm"
+                style={{
+                  color:      isActive ? `${s.color}bb` : "rgb(148,163,184)",
+                  transition: "color 400ms cubic-bezier(0.23,1,0.32,1)",
+                }}
+              >
+                {s.handle}
+              </span>
+
+              {/* Arrow */}
+              <div className="mt-5 flex justify-end">
+                <span
+                  aria-hidden="true"
+                  className="text-2xl leading-none"
+                  style={{
+                    color:      isActive ? s.color : "rgb(203,213,225)",
+                    transform:  isActive ? "translate(3px,-3px)" : "none",
+                    transition: "color 400ms, transform 300ms cubic-bezier(0.23,1,0.32,1)",
+                  }}
+                >
+                  ↗
+                </span>
+              </div>
+            </div>
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function SocialMedia() {
   const sectionRef = useRef<HTMLElement>(null);
   const rowRefs    = useRef<(HTMLDivElement | null)[]>([]);
@@ -61,7 +224,7 @@ export default function SocialMedia() {
       let bestDist = Infinity;
       rowRefs.current.forEach((el, i) => {
         if (!el) return;
-        const r   = el.getBoundingClientRect();
+        const r    = el.getBoundingClientRect();
         const dist = Math.abs(mid - (r.top + r.height / 2));
         if (dist < bestDist) { bestDist = dist; bestIdx = i; }
       });
@@ -88,13 +251,14 @@ export default function SocialMedia() {
         .from(".soc-heading",  { opacity: 0, y: 40,  duration: 0.9 }, "-=0.3")
         .from(".soc-sub",      { opacity: 0, y: 16,  duration: 0.6 }, "-=0.6")
         .from(".soc-divider",  { scaleX: 0, duration: 0.7, transformOrigin: "left center", stagger: 0.07 }, "-=0.45")
-        .from(".soc-row",      { opacity: 0, x: 32, scale: 0.98, duration: 0.75, stagger: 0.08 }, "-=0.6");
+        .from(".soc-row",      { opacity: 0, x: 32, scale: 0.98, duration: 0.75, stagger: 0.08 }, "-=0.6")
+        .from(".soc-card",     { opacity: 0, y: 48, scale: 0.94, duration: 0.85, stagger: 0.12 }, "-=0.55");
 
       gsap.to(".soc-ring", {
-        rotation: 360,
-        duration: 80,
-        ease:     "none",
-        repeat:   -1,
+        rotation:        360,
+        duration:        80,
+        ease:            "none",
+        repeat:          -1,
         transformOrigin: "center center",
       });
     },
@@ -163,8 +327,8 @@ export default function SocialMedia() {
         </p>
       </div>
 
-      {/* ── Row list ── */}
-      <div className="relative z-10">
+      {/* ── Mobile: row list (unchanged) ── */}
+      <div className="relative z-10 md:hidden">
         <div className="soc-divider h-px w-full bg-slate-200 dark:bg-slate-700" />
 
         {SOCIALS.map((s, i) => {
@@ -196,7 +360,7 @@ export default function SocialMedia() {
                   }}
                 />
 
-                {/* Ghost watermark — inside row agar posisi tepat di belakang platform ini */}
+                {/* Ghost watermark */}
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-0 select-none overflow-hidden font-black uppercase tracking-tighter"
@@ -246,7 +410,6 @@ export default function SocialMedia() {
                   {s.label}
                 </span>
 
-                {/* Spacer */}
                 <div className="relative z-10 flex-1" />
 
                 {/* Handle */}
@@ -276,6 +439,19 @@ export default function SocialMedia() {
             </div>
           );
         })}
+      </div>
+
+      {/* ── Desktop: 3D glassmorphism cards ── */}
+      <div className="relative z-10 hidden md:grid md:grid-cols-3 md:gap-6 lg:gap-8">
+        {SOCIALS.map((s) => (
+          <TiltCard
+            key={s.id}
+            s={s}
+            isActive={activeId === s.id}
+            isDimmed={!!activeId && activeId !== s.id}
+            onEnter={() => setActiveId(s.id)}
+          />
+        ))}
       </div>
 
     </section>

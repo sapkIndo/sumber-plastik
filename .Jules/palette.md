@@ -1,0 +1,3 @@
+## 2024-05-06 - Interactive Element Accessibility
+**Learning:** Interactive form elements like search inputs need associated `<label>`s (even if visually hidden via `sr-only`). Furthermore, icon-only buttons need descriptive `title` attributes for sighted mouse users in addition to `aria-label`s for screen readers. Finally, all interactive elements must have clear `focus-visible` styles (`focus-visible:outline-none focus-visible:ring-2 ...`) to ensure keyboard navigability.
+**Action:** Added `useId` to link visually hidden labels to search inputs, added `title` attributes to clear buttons and pagination controls, and added explicit `focus-visible` rings to search clearing buttons, empty state buttons, and pagination controls in product grids and category browsers.

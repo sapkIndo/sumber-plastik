@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useId } from "react";
 import { Search, X } from "lucide-react";
 import CategoryCard from "./CategoryCard";
 import type { Category } from "@/data/categories";
@@ -69,6 +69,7 @@ export default function CategoryBrowser({ categories }: CategoryBrowserProps) {
   const [activeTab, setActiveTab] = useState("semua");
   const [query, setQuery]         = useState("");
   const tabsRef = useRef<HTMLDivElement>(null);
+  const searchId = useId();
 
   const handleTab = (id: string) => {
     setActiveTab(id);
@@ -140,12 +141,14 @@ export default function CategoryBrowser({ categories }: CategoryBrowserProps) {
       {/* ── Search ── */}
       <div className="mb-7 max-w-xs">
         <div className="relative">
+          <label htmlFor={searchId} className="sr-only">Cari kategori produk</label>
           <Search
             size={14}
             className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
             aria-hidden="true"
           />
           <input
+            id={searchId}
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -158,7 +161,8 @@ export default function CategoryBrowser({ categories }: CategoryBrowserProps) {
             <button
               onClick={() => setQuery("")}
               aria-label="Hapus pencarian"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-slate-400 transition-colors hover:text-slate-600 dark:hover:text-slate-200"
+              title="Hapus pencarian"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-slate-400 transition-colors hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:hover:text-slate-200 dark:focus-visible:ring-offset-slate-900"
             >
               <X size={13} />
             </button>
@@ -203,7 +207,7 @@ export default function CategoryBrowser({ categories }: CategoryBrowserProps) {
             Coba kata kunci lain atau{" "}
             <button
               onClick={() => { setQuery(""); setActiveTab("semua"); }}
-              className="text-blue-600 underline-offset-2 hover:underline dark:text-blue-400"
+              className="text-blue-600 underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-blue-400 dark:focus-visible:ring-offset-slate-900"
             >
               lihat semua kategori
             </button>

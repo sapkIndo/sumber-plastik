@@ -58,8 +58,10 @@ export default function Navbar() {
     <>
       <header
         role="banner"
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,transform] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-          hidden ? "-translate-y-full" : "translate-y-0"
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,transform] ${
+          hidden
+            ? "duration-300 ease-in -translate-y-full"
+            : "duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] translate-y-0"
         } ${
           scrolled
             ? "border-slate-200/80 bg-white/90 backdrop-blur-md dark:border-slate-700/80 dark:bg-slate-900/90"

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -125,6 +125,8 @@ export default function Testimonials() {
   }, [activeIdx]);
 
   const handleSelect = useCallback((i: number) => setActiveIdx(i), []);
+  const handlePrev   = useCallback(() => setActiveIdx((p) => (p - 1 + testimonials.length) % testimonials.length), []);
+  const handleNext   = useCallback(() => setActiveIdx((p) => (p + 1) % testimonials.length), []);
   const active = testimonials[activeIdx];
 
   return (
@@ -162,7 +164,18 @@ export default function Testimonials() {
         </div>
 
         {/* ── Quote card ── */}
-        <div className="testi-card relative">
+        <div className="testi-card flex items-center gap-3 md:gap-5">
+
+          {/* Left arrow */}
+          <button
+            onClick={handlePrev}
+            aria-label="Testimoni sebelumnya"
+            className="shrink-0 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
+          >
+            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+          </button>
+
+          <div className="relative min-w-0 flex-1">
 
           {/* SVG decorative quote mark — top-left, very faded */}
           <svg
@@ -219,6 +232,17 @@ export default function Testimonials() {
               </figcaption>
             </figure>
           </div>
+          </div>
+
+          {/* Right arrow */}
+          <button
+            onClick={handleNext}
+            aria-label="Testimoni berikutnya"
+            className="shrink-0 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
+          >
+            <ChevronRight className="h-5 w-5" aria-hidden="true" />
+          </button>
+
         </div>
 
       </div>

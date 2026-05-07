@@ -1,13 +1,11 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { ChevronsDown } from "lucide-react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger, DrawSVGPlugin);
+gsap.registerPlugin(useGSAP, DrawSVGPlugin);
 
 const EN_SPECS = new Set([
   "Food Grade", "Food Grade BPOM", "Recyclable", "Crystal Clear",
@@ -16,9 +14,9 @@ const EN_SPECS = new Set([
   "Eco Friendly", "Biodegradable", "Custom Print",
 ]);
 
-const CX = 130;
-const CY = 130;
-const RADII   = [50, 68, 86, 104];
+const CX = 110;
+const CY = 110;
+const RADII   = [42, 57, 72, 87];
 const COLORS  = ["#2563eb", "#3b82f6", "#60a5fa", "#93c5fd"];
 const N_RINGS = 4;
 
@@ -69,7 +67,7 @@ const products = [
     abbr: "PVC",
     name: "PVC Shrink",
     tagline: "Label & sleeve yang menyesuaikan kontur kemasan",
-    desc: "Film PVC shrink untuk label botol, sleeve kemasan, dan bundling produk. Mengkerut sempurna saat terkena panas, mengikuti kontur produk dengan presisi tinggi. Tampilan glossy premium yang meningkatkan daya tarik visual di rak.",
+    desc: "Film PVC shrink untuk label botol, sleeve kemasan, dan bundling produk. Mengkerut sempurna saat terkena panas, mengikuti kontur produk dengan presisi tinggi.",
     specs: ["Crystal Clear", "Shrink Rate Tinggi", "Kilap Tinggi"],
     industries: "Minuman  ·  Farmasi  ·  Kosmetik  ·  Retail",
     props: [
@@ -97,7 +95,7 @@ const products = [
     abbr: "PS",
     name: "Polystyrene",
     tagline: "Sendok, wadah & kemasan sekali pakai serba guna",
-    desc: "Sendok, garpu, pisau plastik, wadah makanan styrofoam, baki buah & sayur, dan cup minuman. Ringan, mudah dibentuk, dan insulasi panas-dingin sangat baik — pilihan utama F&B, catering, dan event.",
+    desc: "Sendok, garpu, pisau plastik, wadah makanan styrofoam, baki buah & sayur, dan cup minuman. Ringan, mudah dibentuk, dan insulasi panas-dingin sangat baik.",
     specs: ["Insulasi Termal", "Food Grade", "Ringan"],
     industries: "F&B  ·  Catering  ·  Restoran  ·  Supermarket",
     props: [
@@ -111,7 +109,7 @@ const products = [
     abbr: "Paper",
     name: "Paper Packaging",
     tagline: "Kemasan ramah lingkungan berbasis kertas",
-    desc: "Kardus, paper bag, kraft paper, cup gelas, dan kemasan eco-friendly. Solusi sustainable yang semakin diminati pasar modern. Tersedia dalam berbagai ketebalan, gramasi, dan finishing.",
+    desc: "Kardus, paper bag, kraft paper, cup gelas, dan kemasan eco-friendly. Solusi sustainable yang semakin diminati pasar modern. Tersedia dalam berbagai ketebalan dan finishing.",
     specs: ["Eco Friendly", "Biodegradable", "Custom Print"],
     industries: "Retail  ·  F&B  ·  E-commerce  ·  Gift",
     props: [
@@ -125,7 +123,7 @@ const products = [
     abbr: "OPP",
     name: "OPP",
     tagline: "Film transparan glossy untuk kemasan premium",
-    desc: "Oriented Polypropylene — film plastik transparan dengan kilap tinggi dan permukaan halus. Ideal untuk kemasan snack, confectionery, label botol, dan wrapping produk retail. Barrier yang baik terhadap uap air dan aroma.",
+    desc: "Oriented Polypropylene — film plastik transparan dengan kilap tinggi. Ideal untuk kemasan snack, confectionery, label botol, dan wrapping produk retail.",
     specs: ["Crystal Clear", "Food Grade", "Kilap Tinggi"],
     industries: "Snack  ·  Confectionery  ·  Retail  ·  Farmasi",
     props: [
@@ -139,7 +137,7 @@ const products = [
     abbr: "Oxo-Bio",
     name: "Oxo-Biodegradable",
     tagline: "Plastik ramah lingkungan yang terurai lebih cepat",
-    desc: "Kantong plastik dengan aditif oxo-degradable yang mempercepat penguraian di lingkungan terbuka. Alternatif eco-friendly untuk kantong belanja dan kemasan ritel. Memenuhi standar degradabilitas internasional.",
+    desc: "Kantong plastik dengan aditif oxo-degradable yang mempercepat penguraian di lingkungan terbuka. Alternatif eco-friendly untuk kantong belanja dan kemasan ritel.",
     specs: ["Eco Friendly", "Biodegradable", "Dapat Terurai"],
     industries: "Retail  ·  Supermarket  ·  E-commerce  ·  FMCG",
     props: [
@@ -153,7 +151,7 @@ const products = [
     abbr: "Custom",
     name: "Custom Packaging",
     tagline: "Kemasan sesuai ukuran & spesifikasi Anda",
-    desc: "Seluruh lini produk tersedia dalam ukuran, ketebalan, dan warna sesuai permintaan. Cocok untuk brand yang ingin tampil eksklusif dengan kemasan unik. MOQ berlaku untuk spesifikasi non-standar — hubungi tim kami untuk konsultasi.",
+    desc: "Seluruh lini produk tersedia dalam ukuran, ketebalan, dan warna sesuai permintaan. Cocok untuk brand yang ingin tampil eksklusif dengan kemasan unik.",
     specs: ["MOQ Fleksibel", "Custom Ukuran", "Custom Warna"],
     industries: "F&B  ·  Retail  ·  FMCG  ·  Kosmetik",
     props: [
@@ -167,7 +165,7 @@ const products = [
     abbr: "Sablon",
     name: "Sablon Premium",
     tagline: "Cetak logo & branding langsung di kemasan",
-    desc: "Layanan cetak sablon untuk seluruh lini produk kemasan kami. Logo, merek, dan desain Anda dicetak langsung di permukaan kemasan dengan warna tajam dan tahan lama. Tersedia berbagai teknik cetak sesuai jenis material.",
+    desc: "Layanan cetak sablon untuk seluruh lini produk kemasan kami. Logo, merek, dan desain Anda dicetak langsung di permukaan kemasan dengan warna tajam dan tahan lama.",
     specs: ["Custom Print", "Multi Warna", "Tahan Luntur"],
     industries: "F&B  ·  Retail  ·  FMCG  ·  E-commerce",
     props: [
@@ -181,74 +179,15 @@ const products = [
 
 export default function ProductSpotlight() {
   const ref        = useRef<HTMLElement>(null);
-  const stickyRef  = useRef<HTMLDivElement>(null);
+  const trackRef   = useRef<HTMLDivElement>(null);
   const progRef    = useRef<SVGLineElement>(null);
-  const counterRef = useRef<HTMLSpanElement>(null);
-
   const slideRefs  = useRef<(HTMLDivElement | null)[]>([]);
   const ringRefs   = useRef<(SVGCircleElement | null)[]>([]);
-  const stRef      = useRef<ScrollTrigger | null>(null);
-  const skipBtnRef = useRef<HTMLButtonElement>(null);
-  const skipIconRef = useRef<SVGSVGElement>(null);
-
-  const [showSkip, setShowSkip] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowSkip(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const btn  = skipBtnRef.current;
-    const icon = skipIconRef.current;
-    if (!btn || !showSkip) return;
-
-    gsap.fromTo(
-      btn,
-      { opacity: 0, x: 14, scale: 0.88 },
-      { opacity: 1, x: 0, scale: 1, duration: 0.55, ease: "back.out(1.6)", clearProps: "scale" }
-    );
-
-    if (icon) {
-      const tween = gsap.to(icon, {
-        y: 3,
-        repeat: -1,
-        yoyo: true,
-        duration: 0.55,
-        ease: "power1.inOut",
-        delay: 0.7,
-      });
-      return () => { tween.kill(); };
-    }
-  }, [showSkip]);
-
-  const handleSkip = () => {
-    const st = stRef.current;
-    if (!st) return;
-    window.scrollTo({ top: st.end + window.innerHeight });
-  };
 
   useGSAP(() => {
-    // On iOS/iPadOS, default pin uses position:fixed which conflicts with
-    // native scroll momentum → jump-to-top. pinType:"transform" uses
-    // translateY instead. normalizeScroll is intentionally excluded: it
-    // intercepts scroll events globally and breaks desktop on touch laptops.
-    // MacIntel + maxTouchPoints > 1 catches iPadOS 13+ (reports as Mac).
-    const isIOS =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-
-    if (isIOS) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (ScrollTrigger.config as any)({ pinType: "transform", ignoreMobileResize: true });
-    }
-
     const total = products.length;
-
-    // Stores running slideIn timelines so slideOut can kill them before fading out
     const inTL: (gsap.core.Timeline | null)[] = Array(total).fill(null);
 
-    // ── Shared helpers ────────────────────────────────────────────────────────
     function q<T extends Element>(el: HTMLDivElement, sel: string) {
       return el.querySelector<T>(sel);
     }
@@ -256,17 +195,32 @@ export default function ProductSpotlight() {
       return el.querySelectorAll<T>(sel);
     }
 
+    // ── Background blob drift ─────────────────────────────────────────────────
+    gsap.utils.toArray<HTMLElement>(".ps-blob").forEach((blob, i) => {
+      gsap.to(blob, {
+        x: "random(-45, 45)",
+        y: "random(-28, 28)",
+        scale: "random(0.88, 1.14)",
+        duration: "random(7, 12)",
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: i * 2.2,
+      });
+    });
+
+    // ── Slide animations ──────────────────────────────────────────────────────
     function initSlide(i: number) {
       const s = slideRefs.current[i];
       if (!s) return;
-      gsap.set(s, { opacity: i === 0 ? 1 : 0, scale: i === 0 ? 1 : 1.03, overwrite: true });
-      gsap.set(q(s, ".ps-overline"),  { opacity: 0, y: 12, overwrite: true });
-      gsap.set(q(s, ".ps-tagline"),   { opacity: 0, y: 8,  overwrite: true });
-      gsap.set(q(s, ".ps-name"),      { opacity: 0, y: 32, overwrite: true });
-      gsap.set(q(s, ".ps-desc"),      { opacity: 0, y: 20, overwrite: true });
-      gsap.set(q(s, ".ps-industries"),{ opacity: 0,         overwrite: true });
-      gsap.set(qa(s, ".ps-spec"),     { opacity: 0, y: 14, scale: 0.8, overwrite: true });
-      gsap.set(qa(s, ".ps-legend"),   { opacity: 0, x: -8, overwrite: true });
+      gsap.set(q(s, ".ps-ghost"),      { opacity: 0, scale: 1.12, overwrite: true });
+      gsap.set(q(s, ".ps-overline"),   { opacity: 0, y: 10, overwrite: true });
+      gsap.set(q(s, ".ps-tagline"),    { opacity: 0, y: 6,  overwrite: true });
+      gsap.set(q(s, ".ps-name"),       { opacity: 0, y: 28, overwrite: true });
+      gsap.set(q(s, ".ps-desc"),       { opacity: 0, y: 16, overwrite: true });
+      gsap.set(q(s, ".ps-industries"), { opacity: 0,         overwrite: true });
+      gsap.set(qa(s, ".ps-spec"),      { opacity: 0, y: 12, scale: 0.82, overwrite: true });
+      gsap.set(qa(s, ".ps-legend"),    { opacity: 0, x: -8, overwrite: true });
       for (let j = 0; j < N_RINGS; j++) {
         const ring = ringRefs.current[i * N_RINGS + j];
         if (ring) gsap.set(ring, { drawSVG: "0%", overwrite: true });
@@ -279,186 +233,341 @@ export default function ProductSpotlight() {
       const tl = gsap.timeline();
       inTL[i] = tl;
 
-      tl.to(s, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 0);
+      // Ghost watermark rises in slowly
+      tl.to(q(s, ".ps-ghost"), { opacity: 1, scale: 1, duration: 1.4, ease: "power2.out" }, 0);
 
       for (let j = 0; j < N_RINGS; j++) {
         const ring = ringRefs.current[i * N_RINGS + j];
         const pct  = products[i].props[j].value;
         if (ring)
-          tl.to(ring, { drawSVG: `0% ${pct}%`, duration: 1.1, ease: "circ.out" }, 0.1 + j * 0.07);
+          tl.to(ring, { drawSVG: `0% ${pct}%`, duration: 1.0, ease: "circ.out" }, 0.12 + j * 0.06);
       }
 
-      tl.to(qa(s, ".ps-legend"),   { opacity: 1, x: 0,  duration: 0.45, stagger: 0.07, ease: "power2.out" }, 0.35);
-      tl.to(q(s, ".ps-overline"),  { opacity: 1, y: 0,  duration: 0.4,  ease: "power2.out" }, 0.14);
-      tl.to(q(s, ".ps-name"),      { opacity: 1, y: 0,  duration: 0.65, ease: "power3.out" }, 0.22);
-      tl.to(q(s, ".ps-tagline"),   { opacity: 1, y: 0,  duration: 0.4,  ease: "power2.out" }, 0.32);
-      tl.to(q(s, ".ps-desc"),      { opacity: 1, y: 0,  duration: 0.5,  ease: "power2.out" }, 0.38);
-      tl.to(q(s, ".ps-industries"),{ opacity: 1,         duration: 0.4,  ease: "power1.out" }, 0.5);
+      tl.to(qa(s, ".ps-legend"),    { opacity: 1, x: 0,  duration: 0.4,  stagger: 0.06, ease: "power2.out" }, 0.32);
+      tl.to(q(s, ".ps-overline"),   { opacity: 1, y: 0,  duration: 0.35, ease: "power2.out" }, 0.1);
+      tl.to(q(s, ".ps-name"),       { opacity: 1, y: 0,  duration: 0.6,  ease: "power3.out" }, 0.18);
+      tl.to(q(s, ".ps-tagline"),    { opacity: 1, y: 0,  duration: 0.35, ease: "power2.out" }, 0.28);
+      tl.to(q(s, ".ps-desc"),       { opacity: 1, y: 0,  duration: 0.45, ease: "power2.out" }, 0.34);
+      tl.to(q(s, ".ps-industries"), { opacity: 1,         duration: 0.35, ease: "power1.out" }, 0.44);
       tl.to(qa(s, ".ps-spec"), {
         opacity: 1, y: 0, scale: 1,
-        duration: 0.7, stagger: 0.09,
-        ease: "back.out(1.5)",
-      }, 0.54);
+        duration: 0.6, stagger: 0.08, ease: "back.out(1.5)",
+      }, 0.48);
     }
 
     function slideOut(i: number) {
       const s = slideRefs.current[i];
       if (!s) return;
-      // Kill the in-progress slideIn timeline so it can't fight the fade-out
       if (inTL[i]) { inTL[i]!.kill(); inTL[i] = null; }
       for (let j = 0; j < N_RINGS; j++) {
         const ring = ringRefs.current[i * N_RINGS + j];
-        if (ring) gsap.to(ring, { drawSVG: "0%", duration: 0.28, ease: "power2.in", overwrite: true });
+        if (ring) gsap.to(ring, { drawSVG: "0%", duration: 0.25, ease: "power2.in", overwrite: true });
       }
-      gsap.to(s, { opacity: 0, scale: 0.97, duration: 0.32, ease: "power2.in", overwrite: true });
+      const targets = [
+        q(s, ".ps-ghost"),
+        q(s, ".ps-overline"), q(s, ".ps-name"),    q(s, ".ps-tagline"),
+        q(s, ".ps-desc"),     q(s, ".ps-industries"),
+        ...Array.from(qa(s, ".ps-spec")),
+        ...Array.from(qa(s, ".ps-legend")),
+      ].filter(Boolean);
+      if (targets.length)
+        gsap.to(targets, { opacity: 0, duration: 0.18, ease: "power2.in", overwrite: true });
     }
 
-    // ── Shared ScrollTrigger factory (desktop vs mobile differ only by snap) ──
-    function buildScrollTrigger(withSnap: boolean) {
-      let current = 0;
-      let pendingIn: gsap.core.Tween | null = null;
+    // ── Init ─────────────────────────────────────────────────────────────────
+    for (let i = 0; i < total; i++) initSlide(i);
+    slideIn(0);
 
-      for (let i = 0; i < total; i++) initSlide(i);
-      slideIn(0);
+    gsap.set(progRef.current, { drawSVG: "0%" });
 
-      if (counterRef.current)
-        counterRef.current.textContent = `01 / ${String(total).padStart(2, "0")}`;
+    // ── Scroll state ──────────────────────────────────────────────────────────
+    let activeIdx    = 0;
+    let targetX      = 0;
+    let pendingIn: gsap.core.Tween | null = null;
+    let canNav       = true;
+    let gestureTimer: ReturnType<typeof setTimeout> | null = null;
 
-      gsap.set(progRef.current, { drawSVG: "0%" });
-      gsap.to(progRef.current, {
-        drawSVG: "100%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: stickyRef.current,
-          start: "top top",
-          end: () => `+=${(total - 1) * window.innerHeight}`,
-          scrub: 0.4,
-          invalidateOnRefresh: true,
-        },
+    gsap.set(trackRef.current, { x: 0 });
+
+    const xTo = gsap.quickTo(trackRef.current, "x", { duration: 0.5, ease: "power3.out" });
+
+    // ── Swipe / click hint ────────────────────────────────────────────────────
+    const hintEl   = ref.current!.querySelector<HTMLElement>(".ps-hint");
+    const ringEls  = Array.from(ref.current!.querySelectorAll<HTMLElement>(".ps-hint-ring"));
+    const arrowEl  = hintEl?.querySelector<SVGElement>(".ps-hint-arrow");
+    let breathTw: gsap.core.Tween | null = null;
+    let ringTw:   gsap.core.Tween | null = null;
+    let arrowTw:  gsap.core.Tween | null = null;
+
+    function startHintAnim() {
+      if (breathTw) breathTw.kill();
+      if (ringTw)   ringTw.kill();
+      if (arrowTw)  arrowTw.kill();
+
+      breathTw = gsap.to(hintEl, {
+        scale: 1.08, repeat: -1, yoyo: true,
+        duration: 1.4, ease: "sine.inOut",
       });
 
-      function goTo(next: number) {
-        if (next === current) return;
-        if (pendingIn) pendingIn.kill();
-        slideOut(current);
-        current = next;
-        if (counterRef.current)
-          counterRef.current.textContent =
-            `${String(next + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
-        initSlide(next);
-        pendingIn = gsap.delayedCall(0.22, () => slideIn(next));
+      if (ringEls.length) {
+        ringTw = gsap.fromTo(ringEls,
+          { scale: 1, opacity: 0.65 },
+          { scale: 2.6, opacity: 0, duration: 2.0, repeat: -1, ease: "power1.out", stagger: 1.0 },
+        );
       }
 
-      stRef.current = ScrollTrigger.create({
-        trigger: stickyRef.current,
-        start: "top top",
-        end: () => `+=${(total - 1) * window.innerHeight}`,
-        pin: true,
-        invalidateOnRefresh: true,
-        snap: withSnap ? {
-          snapTo: 1 / (total - 1),
-          duration: { min: 0.3, max: 0.7 },
-          delay: 0.05,
-          ease: "power1.inOut",
-        } : undefined,
-        onUpdate(self) {
-          const idx = Math.round(self.progress * (total - 1));
-          if (idx !== current) goTo(idx);
-        },
-      });
-
-      return () => {
-        if (pendingIn) pendingIn.kill();
-      };
+      if (arrowEl) {
+        arrowTw = gsap.to(arrowEl, {
+          x: 5, repeat: -1, yoyo: true, duration: 0.5, ease: "power1.inOut",
+        });
+      }
     }
 
-    const mm = gsap.matchMedia();
+    function showHint() {
+      if (!hintEl) return;
+      gsap.to(hintEl, {
+        opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.5)",
+        overwrite: true,
+        onComplete: startHintAnim,
+      });
+    }
 
-    // Only xl desktops get snap — all iPads (including Pro 12.9" at 1024px)
-    // are excluded because snap conflicts with iPadOS touch momentum.
-    mm.add("(min-width: 1280px)", () => buildScrollTrigger(true));
-    mm.add("(max-width: 1279px)", () => buildScrollTrigger(false));
+    function hideHint() {
+      if (!hintEl) return;
+      if (breathTw) { breathTw.kill(); breathTw = null; }
+      if (ringTw)   { ringTw.kill();   ringTw   = null; }
+      if (arrowTw)  { arrowTw.kill();  arrowTw  = null; }
+      if (arrowEl)  gsap.set(arrowEl, { x: 0 });
+      gsap.to(hintEl, { opacity: 0, scale: 0.8, duration: 0.25, overwrite: true });
+    }
+
+    if (hintEl) {
+      gsap.set(hintEl, { opacity: 0, scale: 0.8 });
+      gsap.delayedCall(2, showHint);
+
+      const onHintClick = () => { if (activeIdx < total - 1) goTo(activeIdx + 1); };
+      hintEl.addEventListener("click", onHintClick);
+      // Store for cleanup
+      (hintEl as HTMLElement & { _onClick?: () => void })._onClick = onHintClick;
+    }
+
+    const tickProgress = () => {
+      const x    = gsap.getProperty(trackRef.current!, "x") as number;
+      const maxX = (total - 1) * window.innerWidth;
+      if (maxX <= 0) return;
+      const pct = Math.min(100, Math.max(0, (Math.abs(x) / maxX) * 100));
+      gsap.set(progRef.current, { drawSVG: `0% ${pct}%` });
+    };
+    gsap.ticker.add(tickProgress);
+
+    function activate(idx: number) {
+      if (idx === activeIdx) return;
+      if (pendingIn) { pendingIn.kill(); pendingIn = null; }
+      // Hint: hilang di produk terakhir, muncul kembali kalau bukan terakhir
+      if (idx >= total - 1) hideHint(); else showHint();
+      slideOut(activeIdx);
+      activeIdx = idx;
+      initSlide(idx);
+      pendingIn = gsap.delayedCall(0.22, () => slideIn(idx));
+    }
+
+    function goTo(idx: number) {
+      const next = Math.max(0, Math.min(total - 1, idx));
+      targetX = -next * window.innerWidth;
+      xTo(targetX);
+      activate(next);
+    }
+
+    // ── Hover tracking (untuk mouse wheel navigation) ─────────────────────────
+    let isHovered = false;
+    const onMouseEnter = () => { isHovered = true; };
+    const onMouseLeave = () => { isHovered = false; };
+
+    // ── Wheel ─────────────────────────────────────────────────────────────────
+    const nav = (delta: number) => {
+      if (gestureTimer) clearTimeout(gestureTimer);
+      gestureTimer = setTimeout(() => { canNav = true; gestureTimer = null; }, 150);
+      if (!canNav) return;
+      canNav = false;
+      goTo(activeIdx + delta);
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      const absX = Math.abs(e.deltaX);
+      const absY = Math.abs(e.deltaY);
+
+      // ── Kasus 1: horizontal trackpad swipe ────────────────────────────────
+      if (absX > absY && absX > 5) {
+        // Selalu block agar browser tidak trigger back/forward
+        e.preventDefault();
+        if (e.deltaX > 0 && activeIdx >= total - 1) return;
+        if (e.deltaX < 0 && activeIdx <= 0)         return;
+        nav(e.deltaX > 0 ? 1 : -1);
+        return;
+      }
+
+      // ── Kasus 2: mouse wheel vertical saat hover di dalam section ─────────
+      if (isHovered) {
+        // Di boundary → biarkan halaman scroll melewati section
+        if (e.deltaY > 0 && activeIdx >= total - 1) return;
+        if (e.deltaY < 0 && activeIdx <= 0)         return;
+        e.preventDefault();
+        nav(e.deltaY > 0 ? 1 : -1);
+      }
+      // else: mouse di luar section → scroll halaman normal
+    };
+
+    // ── Touch — horizontal swipe navigates, vertical scrolls page ────────────
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchLastX  = 0;
+    let isHSwipe: boolean | null = null;
+
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchLastX  = touchStartX;
+      isHSwipe    = null;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      if (isHSwipe === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8))
+        isHSwipe = Math.abs(dx) > Math.abs(dy);
+      if (!isHSwipe) return;
+      e.preventDefault();
+      const delta = e.touches[0].clientX - touchLastX;
+      touchLastX  = e.touches[0].clientX;
+      targetX = Math.max(-(total - 1) * window.innerWidth, Math.min(0, targetX + delta));
+      xTo(targetX);
+    };
+
+    const onTouchEnd = () => {
+      if (!isHSwipe) return;
+      goTo(Math.max(0, Math.min(total - 1, Math.round(-targetX / window.innerWidth))));
+    };
+
+    const onResize = () => {
+      targetX = -activeIdx * window.innerWidth;
+      gsap.set(trackRef.current, { x: targetX });
+    };
+
+    const el = ref.current!;
+    el.addEventListener("mouseenter", onMouseEnter);
+    el.addEventListener("mouseleave", onMouseLeave);
+    el.addEventListener("wheel",      onWheel,      { passive: false });
+    el.addEventListener("touchstart", onTouchStart, { passive: true  });
+    el.addEventListener("touchmove",  onTouchMove,  { passive: false });
+    el.addEventListener("touchend",   onTouchEnd,   { passive: true  });
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      gsap.ticker.remove(tickProgress);
+      el.removeEventListener("mouseenter", onMouseEnter);
+      el.removeEventListener("mouseleave", onMouseLeave);
+      el.removeEventListener("wheel",      onWheel);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove",  onTouchMove);
+      el.removeEventListener("touchend",   onTouchEnd);
+      window.removeEventListener("resize", onResize);
+      if (pendingIn)    pendingIn.kill();
+      if (gestureTimer) clearTimeout(gestureTimer);
+      if (breathTw)     breathTw.kill();
+      if (ringTw)       ringTw.kill();
+      if (arrowTw)      arrowTw.kill();
+      const h = hintEl as HTMLElement & { _onClick?: () => void };
+      if (h?._onClick)  h.removeEventListener("click", h._onClick);
+    };
   }, { scope: ref });
 
-  useEffect(() => {
-    const timer = setTimeout(() => ScrollTrigger.refresh(), 250);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
-    <section ref={ref} aria-labelledby="spotlight-heading">
-      <div
-        ref={stickyRef}
-        className="relative flex h-svh w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
-      >
-        {/* header bar */}
-        <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-4 dark:border-slate-800 md:px-12">
-          <div className="flex items-center gap-3">
-            <span className="h-px w-5 bg-blue-600" aria-hidden="true" />
-            <h2 id="spotlight-heading" className="text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
-              Material Unggulan
-            </h2>
-          </div>
-          <div className="flex items-center gap-4">
-            <span ref={counterRef} className="font-mono text-[11px] tabular-nums text-slate-400 dark:text-slate-500" />
-            <button
-              ref={skipBtnRef}
-              onClick={handleSkip}
-              aria-label="Lewati section Material Unggulan"
-              style={{ opacity: 0, pointerEvents: showSkip ? "auto" : "none" }}
-              className="group flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-400 backdrop-blur-sm transition-colors duration-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
-            >
-              Lewati
-              <ChevronsDown
-                ref={skipIconRef}
-                className="h-3.5 w-3.5 transition-colors duration-200 group-hover:text-blue-500"
-                aria-hidden="true"
-              />
-            </button>
-          </div>
-        </div>
+    <section
+      ref={ref}
+      className="relative flex h-[75svh] w-full flex-col overflow-hidden bg-white dark:bg-slate-900"
+      aria-labelledby="spotlight-heading"
+    >
+      {/* ── Animated background blobs ─────────────────────────────────────── */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="ps-blob absolute -left-32 -top-24 h-[500px] w-[500px] rounded-full bg-blue-400/15 blur-[96px] dark:bg-blue-500/8" />
+        <div className="ps-blob absolute -bottom-16 -right-24 h-[420px] w-[420px] rounded-full bg-sky-300/18 blur-[80px] dark:bg-sky-400/8" />
+        <div className="ps-blob absolute left-[40%] top-[20%] h-[360px] w-[360px] rounded-full bg-indigo-300/14 blur-[72px] dark:bg-indigo-400/7" />
+      </div>
 
-        {/* slides */}
-        <div className="relative flex flex-1 overflow-hidden">
+      {/* ── Header bar ───────────────────────────────────────────────────── */}
+      <div className="relative z-10 flex shrink-0 items-center border-b border-slate-100/80 px-6 py-3 dark:border-slate-800 md:px-12">
+        <span className="h-px w-5 bg-blue-600" aria-hidden="true" />
+        <h2
+          id="spotlight-heading"
+          className="ml-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500"
+        >
+          Material Unggulan
+        </h2>
+      </div>
+
+      {/* ── Horizontal track ─────────────────────────────────────────────── */}
+      <div className="relative flex-1 overflow-hidden">
+        <div
+          ref={trackRef}
+          className="flex h-full cursor-ew-resize"
+          style={{ width: `${products.length * 100}vw` }}
+        >
           {products.map((p, i) => (
             <div
               key={p.abbr}
               ref={(el) => { slideRefs.current[i] = el; }}
-              className="absolute inset-0 flex flex-col justify-center gap-6 px-6 py-3 md:flex-row md:items-center md:gap-10 md:px-12 md:py-4 lg:px-16"
+              className="relative flex h-full w-screen flex-col justify-center gap-4 overflow-hidden px-6 py-3 md:flex-row md:items-center md:gap-8 md:px-12 lg:px-16"
             >
-              {/* text column */}
-              <div className="flex flex-col md:w-[55%]">
-                <div className="ps-overline mb-4 flex items-center gap-3">
-                  <span className="h-px w-5 shrink-0 bg-blue-600" aria-hidden="true" />
-                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-blue-600">
+              {/* Ghost watermark abbr */}
+              <div
+                className="ps-ghost pointer-events-none absolute bottom-0 right-0 flex items-end justify-end overflow-hidden"
+                aria-hidden="true"
+              >
+                <span
+                  className="select-none font-black leading-none text-blue-600/[0.12] dark:text-blue-400/[0.10]"
+                  style={{
+                    fontSize: "clamp(6rem, 18vw, 17rem)",
+                    letterSpacing: "-0.04em",
+                    lineHeight: 0.85,
+                  }}
+                >
+                  {p.abbr}
+                </span>
+              </div>
+
+              {/* ── Text column ─────────────────────────────────────────── */}
+              <div className="relative z-10 flex flex-col md:w-[52%]">
+                <div className="ps-overline mb-2 flex items-center gap-3">
+                  <span className="h-px w-4 shrink-0 bg-blue-600" aria-hidden="true" />
+                  <span className="font-mono text-xs uppercase tracking-[0.24em] text-blue-600">
                     {p.abbr}
                   </span>
                 </div>
 
                 <h3
-                  className="ps-name mb-2 font-black leading-none tracking-tight text-slate-900 dark:text-slate-50"
-                  style={{ fontSize: "clamp(2rem, 4.5vw, 5.5rem)" }}
+                  className="ps-name mb-1.5 font-black leading-none tracking-tight text-slate-900 dark:text-slate-50"
+                  style={{ fontSize: "clamp(2.4rem, 5vw, 5.5rem)" }}
                 >
                   {p.name}
                 </h3>
 
-                <p className="ps-tagline mb-4 text-sm font-medium text-blue-600 md:text-base">
+                <p className="ps-tagline mb-2.5 text-sm font-semibold text-blue-600 md:text-base">
                   {p.tagline}
                 </p>
 
-                <p className="ps-desc mb-4 text-sm leading-[1.8] text-slate-500 dark:text-slate-400 md:text-[15px]">
+                <p className="ps-desc mb-2.5 line-clamp-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400 md:text-[15px] md:leading-[1.75]">
                   {p.desc}
                 </p>
 
-                <p className="ps-industries mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">
+                <p className="ps-industries mb-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">
                   {p.industries}
                 </p>
 
-                <ul className="flex flex-wrap gap-2" role="list">
+                <ul className="flex flex-wrap gap-1.5" role="list">
                   {p.specs.map((spec) => (
                     <li
                       key={spec}
-                      className="ps-spec rounded-full border border-blue-200 bg-blue-50 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-blue-600 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-400"
+                      className="ps-spec rounded-full border border-blue-200 bg-blue-50 px-3 py-0.5 font-mono text-[11px] uppercase tracking-[0.14em] text-blue-600 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-400"
                     >
                       {EN_SPECS.has(spec) ? <em>{spec}</em> : spec}
                     </li>
@@ -466,11 +575,11 @@ export default function ProductSpotlight() {
                 </ul>
               </div>
 
-              {/* chart column */}
-              <div className="flex shrink-0 items-center gap-4 md:w-[45%] md:flex-col md:gap-4">
+              {/* ── Chart column ─────────────────────────────────────────── */}
+              <div className="relative z-10 flex shrink-0 items-center gap-3 md:w-[48%] md:flex-col md:gap-3">
                 <svg
-                  className="h-40 w-40 shrink-0 md:h-64 md:w-64 lg:h-72 lg:w-72"
-                  viewBox="0 0 260 260"
+                  className="h-36 w-36 shrink-0 md:h-52 md:w-52 lg:h-56 lg:w-56"
+                  viewBox="0 0 220 220"
                   aria-hidden="true"
                 >
                   <g transform={`rotate(-90, ${CX}, ${CY})`}>
@@ -478,12 +587,12 @@ export default function ProductSpotlight() {
                       <g key={prop.label}>
                         <circle
                           cx={CX} cy={CY} r={RADII[j]}
-                          fill="none" stroke={COLORS[j]} strokeWidth="3" opacity="0.1"
+                          fill="none" stroke={COLORS[j]} strokeWidth="2.5" opacity="0.1"
                         />
                         <circle
                           ref={(el) => { ringRefs.current[i * N_RINGS + j] = el; }}
                           cx={CX} cy={CY} r={RADII[j]}
-                          fill="none" stroke={COLORS[j]} strokeWidth="3" strokeLinecap="round"
+                          fill="none" stroke={COLORS[j]} strokeWidth="2.5" strokeLinecap="round"
                         />
                       </g>
                     ))}
@@ -492,25 +601,25 @@ export default function ProductSpotlight() {
                   <text
                     x={CX} y={CY - 4}
                     textAnchor="middle" fontSize="18" fontWeight="900"
-                    fill="rgba(37,99,235,0.55)"
+                    fill="rgba(37,99,235,0.5)"
                     style={{ fontFamily: "inherit", letterSpacing: "-0.02em" }}
                   >
                     {p.abbr}
                   </text>
                   <text
-                    x={CX} y={CY + 16}
-                    textAnchor="middle" fontSize="9" fill="rgba(37,99,235,0.38)"
+                    x={CX} y={CY + 14}
+                    textAnchor="middle" fontSize="9" fill="rgba(37,99,235,0.35)"
                     style={{ fontFamily: "inherit", letterSpacing: "0.12em", textTransform: "uppercase" }}
                   >
                     properties
                   </text>
                 </svg>
 
-                <ul className="grid grid-cols-1 gap-y-1.5 md:w-full md:max-w-50" role="list">
+                <ul className="grid grid-cols-1 gap-y-1 md:w-full md:max-w-[180px]" role="list">
                   {p.props.map((prop, j) => (
                     <li key={prop.label} className="ps-legend flex items-center gap-2">
                       <span
-                        className="h-2 w-2 shrink-0 rounded-full"
+                        className="h-1.5 w-1.5 shrink-0 rounded-full"
                         style={{ backgroundColor: COLORS[j] }}
                         aria-hidden="true"
                       />
@@ -525,18 +634,30 @@ export default function ProductSpotlight() {
             </div>
           ))}
         </div>
+      </div>
 
-        {/* progress bar */}
-        <div className="relative z-10 shrink-0 px-6 pb-5 md:px-12">
-          <svg width="100%" height="2" aria-hidden="true" style={{ overflow: "visible" }}>
-            <line x1="0" y1="1" x2="100%" y2="1" className="stroke-slate-300 dark:stroke-slate-700" strokeWidth="1.5" />
-            <line
-              ref={progRef}
-              x1="0" y1="1" x2="100%" y2="1"
-              stroke="rgb(37,99,235)" strokeWidth="1.5" strokeLinecap="round"
-            />
-          </svg>
-        </div>
+      {/* ── Swipe hint ───────────────────────────────────────────────────── */}
+      <button
+        className="ps-hint pointer-events-auto absolute right-6 top-6 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 shadow-xl shadow-blue-500/50 ring-2 ring-white/25 transition-all hover:from-blue-400 hover:to-indigo-500 hover:shadow-blue-400/60 focus:outline-none md:right-12"
+        aria-label="Produk berikutnya"
+      >
+        <div className="ps-hint-ring absolute inset-0 rounded-full bg-blue-400" />
+        <div className="ps-hint-ring absolute inset-0 rounded-full bg-indigo-400" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="ps-hint-arrow relative z-10 drop-shadow-sm">
+          <polyline points="9,5 16,12 9,19" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {/* ── Progress bar ─────────────────────────────────────────────────── */}
+      <div className="relative z-10 shrink-0 px-6 pb-4 md:px-12">
+        <svg width="100%" height="2" aria-hidden="true" style={{ overflow: "visible" }}>
+          <line x1="0" y1="1" x2="100%" y2="1" className="stroke-slate-200 dark:stroke-slate-700" strokeWidth="1.5" />
+          <line
+            ref={progRef}
+            x1="0" y1="1" x2="100%" y2="1"
+            stroke="rgb(37,99,235)" strokeWidth="1.5" strokeLinecap="round"
+          />
+        </svg>
       </div>
     </section>
   );

@@ -64,10 +64,10 @@ const PATH_D = NODES.map(([x, y], i) => `${i === 0 ? "M" : "L"} ${x},${y}`).join
 const PIN_PATH = "M 0,0 C 12,-4 14,-15 14,-27 A 14,14 0 1,0 -14,-27 C -14,-15 -12,-4 0,0 Z";
 
 export default function Timeline() {
-  const ref         = useRef<HTMLElement>(null);
-  const stickyRef   = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const pathRef     = useRef<SVGPathElement>(null);
+  const ref           = useRef<HTMLElement>(null);
+  const stickyRef     = useRef<HTMLDivElement>(null);
+  const progressRef   = useRef<HTMLDivElement>(null);
+  const pathRef       = useRef<SVGPathElement>(null);
   const pinVisualRefs = useRef<(SVGGElement | null)[]>([]);
   const stRef         = useRef<ScrollTrigger | null>(null);
   const skipBtnRef    = useRef<HTMLButtonElement>(null);
@@ -98,12 +98,7 @@ export default function Timeline() {
 
     if (icon) {
       const tween = gsap.to(icon, {
-        y: 3,
-        repeat: -1,
-        yoyo: true,
-        duration: 0.55,
-        ease: "power1.inOut",
-        delay: 0.7,
+        y: 3, repeat: -1, yoyo: true, duration: 0.55, ease: "power1.inOut", delay: 0.7,
       });
       return () => { tween.kill(); };
     }
@@ -126,23 +121,33 @@ export default function Timeline() {
         (ScrollTrigger.config as any)({ pinType: "transform", ignoreMobileResize: true });
       }
 
+      // ── Blob drift ─────────────────────────────────────────────────────────
+      gsap.utils.toArray<HTMLElement>(".tl-blob").forEach((blob, i) => {
+        gsap.to(blob, {
+          x: "random(-45, 45)",
+          y: "random(-28, 28)",
+          scale: "random(0.88, 1.14)",
+          duration: "random(9, 15)",
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: i * 2.8,
+        });
+      });
+
       const total  = milestones.length;
       const root   = ref.current!;
       const panels = gsap.utils.toArray<HTMLElement>(".tl-panel", root);
 
-      // Initial state — panels
       gsap.set(panels.slice(1), { opacity: 0, y: 40 });
 
-      // Initial state — pins 1-4 hidden (autoAlpha avoids any transform conflict)
       pinVisualRefs.current.slice(1).forEach(g => {
         if (g) gsap.set(g, { autoAlpha: 0 });
       });
 
-      // Track which pins have bounced in
       const pinDone = Array(total).fill(false);
       pinDone[0] = true;
 
-      // Main scrubbed timeline (path + panels only — no pin tweens here)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: stickyRef.current,
@@ -150,26 +155,23 @@ export default function Timeline() {
           end: () => `+=${(total - 1) * window.innerHeight}`,
           pin: true,
           scrub: 1,
-          // anticipatePin removed — causes scroll-to-top jump on iPadOS
           invalidateOnRefresh: true,
           onRefresh(self) { stRef.current = self; },
           onUpdate(self) {
             const p = self.progress;
             for (let i = 1; i < total; i++) {
-              // Each pin appears at ~80 % through each milestone segment
               const threshold = (i - 0.2) / (total - 1);
               const g = pinVisualRefs.current[i];
               if (!g) continue;
-
               if (p >= threshold && !pinDone[i]) {
                 pinDone[i] = true;
                 gsap.fromTo(g,
-                  { autoAlpha: 0, y: -18 },
-                  { autoAlpha: 1, y: 0, duration: 0.65, ease: "back.out(1.7)", overwrite: true }
+                  { autoAlpha: 0, y: -18, scale: 0.6 },
+                  { autoAlpha: 1, y: 0, scale: 1, duration: 0.65, ease: "back.out(1.9)", overwrite: true }
                 );
               } else if (p < threshold && pinDone[i]) {
                 pinDone[i] = false;
-                gsap.to(g, { autoAlpha: 0, y: -28, duration: 0.2, ease: "power2.in", overwrite: true });
+                gsap.to(g, { autoAlpha: 0, y: -24, scale: 0.7, duration: 0.2, ease: "power2.in", overwrite: true });
               }
             }
           },
@@ -200,8 +202,15 @@ export default function Timeline() {
         className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-[#f0f6ff] dark:bg-slate-900"
       >
 
-        {/* ── Top bar ── */}
-        <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-5 dark:border-slate-800 md:px-12">
+        {/* ── Animated blobs ────────────────────────────────────────────────── */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="tl-blob absolute -right-40 -top-16 h-[680px] w-[680px] rounded-full bg-blue-400/12 blur-[130px] dark:bg-blue-500/7" />
+          <div className="tl-blob absolute -bottom-20 left-[5%] h-[560px] w-[560px] rounded-full bg-sky-300/14 blur-[110px] dark:bg-sky-400/7" />
+          <div className="tl-blob absolute left-[32%] top-[25%] h-[440px] w-[440px] rounded-full bg-indigo-300/10 blur-[90px] dark:bg-indigo-400/6" />
+        </div>
+
+        {/* ── Top bar ───────────────────────────────────────────────────────── */}
+        <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-slate-100/80 px-6 py-5 dark:border-slate-800 md:px-12">
           <div className="flex items-center gap-3">
             <span className="h-px w-6 bg-blue-600" aria-hidden="true" />
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
@@ -209,7 +218,7 @@ export default function Timeline() {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-slate-300 dark:text-slate-600">
+            <span className="hidden font-mono text-[11px] uppercase tracking-[0.15em] text-slate-300 dark:text-slate-600 md:block">
               {milestones[0].year} — {milestones[milestones.length - 1].year}
             </span>
             <button
@@ -229,38 +238,57 @@ export default function Timeline() {
           </div>
         </div>
 
-        {/* ── Main ── */}
+        {/* ── Main ──────────────────────────────────────────────────────────── */}
         <div className="relative flex flex-1 flex-col overflow-hidden md:flex-row">
 
-          {/* Left — SVG zigzag (desktop only) */}
-          <div className="relative hidden shrink-0 items-center justify-center border-r border-slate-100 dark:border-slate-800 md:flex md:w-[44%]">
+          {/* Left — SVG zigzag (desktop) */}
+          <div className="relative hidden shrink-0 items-center justify-center border-r border-slate-200/50 dark:border-slate-800 md:flex md:w-[42%]">
+
+            {/* Subtle dot grid */}
+            <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true">
+              <defs>
+                <pattern id="tl-dotgrid" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+                  <circle cx="1" cy="1" r="1" fill="rgba(37,99,235,0.12)" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#tl-dotgrid)" />
+            </svg>
+
             <svg
               viewBox={`0 0 ${VB_W} ${VB_H}`}
               preserveAspectRatio="xMidYMid meet"
-              className="h-full w-full p-10"
+              className="relative h-full w-full p-10"
               aria-hidden="true"
             >
               <defs>
                 <filter id="tl-path-glow" x="-30%" y="-30%" width="160%" height="160%">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
                   <feMerge>
                     <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
-                <filter id="tl-pin-glow" x="-60%" y="-60%" width="220%" height="220%">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                <filter id="tl-pin-glow" x="-100%" y="-100%" width="300%" height="300%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
                   <feMerge>
                     <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
+                <linearGradient id="tl-line-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#3b82f6" />
+                  <stop offset="100%" stopColor="#6366f1" />
+                </linearGradient>
+                <linearGradient id="tl-pin-grad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#3b82f6" />
+                  <stop offset="100%" stopColor="#4f46e5" />
+                </linearGradient>
               </defs>
 
               {/* Ghost path */}
               <path
                 d={PATH_D}
-                className="stroke-slate-200 dark:stroke-slate-700"
+                stroke="rgba(203,213,225,0.7)"
                 strokeWidth="1.5"
                 fill="none"
                 strokeLinecap="round"
@@ -271,53 +299,61 @@ export default function Timeline() {
               <path
                 ref={pathRef}
                 d={PATH_D}
-                stroke="#2563eb"
-                strokeWidth="2"
+                stroke="url(#tl-line-grad)"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
                 filter="url(#tl-path-glow)"
               />
 
-              {/* Pins — outer <g> handles SVG positioning (never touched by GSAP).
-                  Inner <g> is the ref that GSAP animates (autoAlpha + y). */}
+              {/* Pins */}
               {milestones.map((m, i) => {
                 const [x, y] = NODES[i];
-                const isLeft  = i % 2 === 0;
+                const isLeft = i % 2 === 0;
                 return (
                   <g key={m.year} transform={`translate(${x},${y})`}>
 
-                    {/* Year + tag labels — always visible once outer group renders */}
+                    {/* Year label */}
                     <text
-                      x={isLeft ? -24 : 24}
-                      y="-28"
+                      x={isLeft ? -28 : 28}
+                      y="-22"
                       textAnchor={isLeft ? "end" : "start"}
-                      className="fill-slate-600 dark:fill-slate-400"
-                      fontSize="13"
+                      fontSize="14"
                       fontFamily="monospace"
-                      letterSpacing="0.06em"
-                      fontWeight="700"
+                      fontWeight="800"
+                      letterSpacing="-0.02em"
+                      fill="#2563eb"
                     >
                       {m.year}
                     </text>
+
+                    {/* Tag label */}
                     <text
-                      x={isLeft ? -24 : 24}
-                      y="-14"
+                      x={isLeft ? -28 : 28}
+                      y="-7"
                       textAnchor={isLeft ? "end" : "start"}
-                      className="fill-slate-400 dark:fill-slate-500"
-                      fontSize="9"
+                      fontSize="8.5"
                       fontFamily="monospace"
                       letterSpacing="0.1em"
+                      fill="rgba(148,163,184,0.9)"
                     >
                       {m.tag.toUpperCase()}
                     </text>
 
-                    {/* Visual pin — GSAP animates this (bounce drop + autoAlpha) */}
+                    {/* Short connector tick */}
+                    <line
+                      x1={isLeft ? -6 : 6} y1="-13"
+                      x2={isLeft ? -20 : 20} y2="-13"
+                      stroke="#2563eb" strokeWidth="1" opacity="0.25"
+                    />
+
+                    {/* Pin visual — GSAP ref (autoAlpha + scale bounce) */}
                     <g ref={el => { pinVisualRefs.current[i] = el; }}>
                       {/* Ground shadow */}
-                      <ellipse cx="1" cy="4" rx="7" ry="2.5" fill="rgba(37,99,235,0.15)" />
-                      {/* Teardrop body */}
-                      <path d={PIN_PATH} fill="#2563eb" filter="url(#tl-pin-glow)" />
+                      <ellipse cx="1" cy="4" rx="8" ry="3" fill="rgba(37,99,235,0.18)" />
+                      {/* Teardrop body with gradient */}
+                      <path d={PIN_PATH} fill="url(#tl-pin-grad)" filter="url(#tl-pin-glow)" />
                       {/* Inner white dot */}
                       <circle cx="0" cy="-27" r="4.5" fill="white" />
                     </g>
@@ -332,46 +368,84 @@ export default function Timeline() {
           <div className="relative flex-1 overflow-hidden">
 
             {/* Mobile dot indicator */}
-            <div className="absolute left-4 top-1/2 z-20 -translate-y-1/2 flex flex-col gap-2 md:hidden" aria-hidden="true">
+            <div className="absolute left-4 top-1/2 z-20 flex -translate-y-1/2 flex-col gap-2 md:hidden" aria-hidden="true">
               {milestones.map((_, i) => (
-                <div key={i} className="tl-dot h-1 w-1 rounded-full bg-blue-600 opacity-20" />
+                <div key={i} className="tl-dot h-1.5 w-1.5 rounded-full bg-blue-600 opacity-20" />
               ))}
             </div>
 
             {milestones.map((m, i) => (
               <div
                 key={m.year}
-                className={`tl-panel absolute inset-0 flex items-center px-8 md:px-14 lg:px-20 ${i > 0 ? "opacity-0" : ""}`}
+                className={`tl-panel absolute inset-0 flex items-center px-10 md:px-14 lg:px-20 ${i > 0 ? "opacity-0" : ""}`}
               >
-                <div className="max-w-lg">
-                  <div className="mb-5 flex items-center gap-3">
-                    <span className="h-px w-6 shrink-0 bg-blue-600" aria-hidden="true" />
-                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">{m.tag}</span>
+                {/* Ghost year watermark */}
+                <div
+                  className="pointer-events-none absolute -bottom-4 right-0 overflow-hidden"
+                  aria-hidden="true"
+                >
+                  <span
+                    className="select-none font-black leading-none text-blue-600/[0.07] dark:text-blue-400/[0.06]"
+                    style={{ fontSize: "clamp(7rem, 22vw, 21rem)", letterSpacing: "-0.06em", lineHeight: 0.82 }}
+                  >
+                    {m.year}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div className="relative z-10 max-w-xl">
+
+                  {/* Tag pill + year */}
+                  <div className="mb-6 flex items-center gap-3">
+                    <span className="rounded-full border border-blue-200 bg-blue-50/80 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600 dark:border-blue-800/50 dark:bg-blue-950/40 dark:text-blue-400">
+                      {m.tag}
+                    </span>
+                    <span className="font-mono text-xs font-bold tabular-nums text-slate-300 dark:text-slate-600">
+                      {m.year}
+                    </span>
                   </div>
-                  <h3 className="mb-5 font-black leading-[1.0] tracking-tight text-slate-900 dark:text-slate-50" style={{ fontSize: "clamp(1.875rem, 4vw + 0.5rem, 4rem)" }}>
+
+                  {/* Title */}
+                  <h3
+                    className="mb-5 font-black leading-[1.0] tracking-tight text-slate-900 dark:text-slate-50"
+                    style={{ fontSize: "clamp(2rem, 4vw + 0.5rem, 4.5rem)" }}
+                  >
                     {m.title}
                   </h3>
-                  <p className="text-sm leading-[1.8] text-slate-500 dark:text-slate-400 md:text-[15px]">{m.desc}</p>
-                  <div className="mt-8 border-t border-slate-100 pt-6 dark:border-slate-700">
-                    <div className="flex items-baseline gap-4">
-                      <span className="text-4xl font-black tracking-tight text-blue-600 md:text-5xl">{m.stat.value}</span>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500">{m.stat.label}</span>
-                    </div>
+
+                  {/* Description */}
+                  <p className="mb-10 text-sm leading-[1.85] text-slate-500 dark:text-slate-400 md:text-[15px]">
+                    {m.desc}
+                  </p>
+
+                  {/* Stat */}
+                  <div className="flex items-baseline gap-4">
+                    <span
+                      className="font-black tabular-nums tracking-tight text-blue-600"
+                      style={{ fontSize: "clamp(3rem, 5.5vw, 5.5rem)" }}
+                    >
+                      {m.stat.value}
+                    </span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500">
+                      {m.stat.label}
+                    </span>
                   </div>
+
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* ── Progress bar ── */}
-        <div className="relative h-[2px] w-full shrink-0 bg-slate-100 dark:bg-slate-800">
+        {/* ── Progress bar ──────────────────────────────────────────────────── */}
+        <div className="relative h-[2px] w-full shrink-0 bg-slate-200/60 dark:bg-slate-800">
           <div
             ref={progressRef}
-            className="absolute inset-0 origin-left bg-blue-600"
+            className="absolute inset-0 origin-left bg-gradient-to-r from-blue-500 to-indigo-500"
             style={{ transform: "scaleX(0)" }}
           />
         </div>
+
       </div>
     </section>
   );

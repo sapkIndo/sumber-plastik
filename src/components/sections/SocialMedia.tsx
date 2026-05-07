@@ -38,6 +38,9 @@ const SOCIALS = [
 
 type Social = (typeof SOCIALS)[number];
 
+// FB disembunyikan sementara — hapus filter untuk menampilkan kembali
+const VISIBLE_SOCIALS = SOCIALS.filter(s => s.id !== "facebook");
+
 function TiltCard({
   s,
   isActive,
@@ -204,7 +207,7 @@ export default function SocialMedia() {
   const rowRefs    = useRef<(HTMLDivElement | null)[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  const activeSocial = SOCIALS.find((s) => s.id === activeId) ?? null;
+  const activeSocial = VISIBLE_SOCIALS.find((s) => s.id === activeId) ?? null;
 
   // Mobile: aktivasi otomatis berdasarkan posisi scroll
   useEffect(() => {
@@ -228,7 +231,7 @@ export default function SocialMedia() {
         const dist = Math.abs(mid - (r.top + r.height / 2));
         if (dist < bestDist) { bestDist = dist; bestIdx = i; }
       });
-      setActiveId(bestIdx >= 0 ? SOCIALS[bestIdx].id : null);
+      setActiveId(bestIdx >= 0 ? VISIBLE_SOCIALS[bestIdx].id : null);
     };
 
     window.addEventListener("scroll", activate, { passive: true });
@@ -331,7 +334,7 @@ export default function SocialMedia() {
       <div className="relative z-10 md:hidden">
         <div className="soc-divider h-px w-full bg-slate-200 dark:bg-slate-700" />
 
-        {SOCIALS.map((s, i) => {
+        {VISIBLE_SOCIALS.map((s, i) => {
           const isActive = activeId === s.id;
           const isDimmed = !!activeId && !isActive;
           return (
@@ -442,8 +445,8 @@ export default function SocialMedia() {
       </div>
 
       {/* ── Desktop: 3D glassmorphism cards ── */}
-      <div className="relative z-10 hidden md:grid md:grid-cols-3 md:gap-6 lg:gap-8">
-        {SOCIALS.map((s) => (
+      <div className="relative z-10 hidden md:grid md:grid-cols-2 md:gap-6 lg:gap-8 lg:max-w-3xl">
+        {VISIBLE_SOCIALS.map((s) => (
           <TiltCard
             key={s.id}
             s={s}

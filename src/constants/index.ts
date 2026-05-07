@@ -33,7 +33,7 @@ export const STORES = [
     phone: "0812-2700-030",
     whatsapp: "62812270030",
     hours: "08:00 – 17:00 WIB",
-    mapsUrl: "https://maps.google.com/?q=Jl.+RE+Martadinata+122+Wirobrajan+Yogyakarta",
+    mapsUrl: "https://maps.app.goo.gl/igi8RCh9S1ny4oDx5",
     image: "https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/martadinata_vnawcd",
   },
   {
@@ -42,7 +42,7 @@ export const STORES = [
     phone: "0821-1060-6789",
     whatsapp: "6282110606789",
     hours: "08:00 – 17:00 WIB",
-    mapsUrl: "https://maps.google.com/?q=Jl.+Wonosari+Km+9.3+Dawukan+Sleman",
+    mapsUrl: "https://maps.app.goo.gl/EeZxLmstDEzzGfRGA",
     image: "https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/wonosari_ohavxh",
   },
   {
@@ -51,7 +51,7 @@ export const STORES = [
     phone: "0889-9195-6969",
     whatsapp: "6288991956969",
     hours: "08:00 – 17:00 WIB",
-    mapsUrl: "https://maps.google.com/?q=Jl.+Magelang+Km+8.5+Mlati+Sleman",
+    mapsUrl: "https://maps.app.goo.gl/Bek5o6kZTtstd2Xu6",
     image: "https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/magelang_fnubdn",
   },
 ] as const;

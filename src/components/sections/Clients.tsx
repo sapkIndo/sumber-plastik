@@ -51,6 +51,18 @@ const clientsRow3: Client[] = [
   { name: "Kopian", logo: CL("473780251_3997067550533683_671427783066977177_n_zpfuuc") },
 ];
 
+const clientsRow5: Client[] = [
+  { name: "Alfamart", logo: CL("logo_alfamart_transparent_si8dkc") },
+  { name: "Evita", logo: CL("evita-logo_-_Copy_ug6cwk") },
+  { name: "Universitas Gadjah Mada", logo: CL("LOGO-UGM-BAKU-tnp-back-grou-300x300_gdkki2") },
+  { name: "Norde", logo: CL("LOGO_NORDE_CUP_BLACK_NO_BG_psqjjw") },
+  { name: "Lamora Sagan", logo: CL("LAMORA-SAGAN-YOGYAKARTA_LOGOPACK-03-1024x287_-_Copy_vkxetk") },
+  { name: "Kopi Jo", logo: CL("KOPI_JO_3_pdf_001_-_Copy_suk2al") },
+  { name: "Aicare", logo: CL("LOGO-AICARE-dark-reed_-_Copy_f3obgu") },
+  { name: "RS Soerojo", logo: CL("logosoerojo2024_q79bfs") },
+  { name: "Triwara", logo: CL("TRIWARA_STICKER_nzuqs0") },
+];
+
 const clientsRow4: Client[] = [
   { name: "Badan Gizi Nasional", logo: CL("455191046_378852101657668_768894196703536366_n_pwxrdr") },
   { name: "Cosan", logo: CL("300622009_595168728703326_7752860228095121394_n_gvw8me") },
@@ -159,6 +171,14 @@ export default function Clients() {
           <ul className="animate-marquee-reverse flex min-w-full shrink-0 items-center gap-3 md:gap-4 lg:gap-6" style={{ animationDuration: "25s", animationPlayState: playState }} role="list">
             {[...clientsRow4, ...clientsRow4].map((client, i) => (
               <ClientCard key={`r4-${i}`} client={client} />
+            ))}
+          </ul>
+        </div>
+
+        <div className="marquee-track flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <ul className="animate-marquee flex min-w-full shrink-0 items-center gap-3 md:gap-4 lg:gap-6" style={{ animationDuration: "30s", animationPlayState: playState }} role="list">
+            {[...clientsRow5, ...clientsRow5].map((client, i) => (
+              <ClientCard key={`r5-${i}`} client={client} />
             ))}
           </ul>
         </div>

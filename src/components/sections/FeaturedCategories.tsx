@@ -13,34 +13,39 @@ gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
 
 const FEATURED = [
   {
-    slug:     "botol-br",
-    name:     "Botol & Wadah",
-    count:    30,
-    imageUrl: "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904654/BOTOL_BR_PUTIH_250ML_b0z6fz.jpg",
+    slug:           "botol-br",
+    name:           "Botol & Wadah",
+    count:          30,
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904651/BOTOL_BR_N24_AMBER_600_str8oq.jpg",
+    objectPosition: "50% 50%",
   },
   {
-    slug:     "cup-gelas",
-    name:     "Kemasan Minuman",
-    count:    35,
-    imageUrl: "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904706/CUP_GELAS_PP_OVAL_16OZ_idpy5k.jpg",
+    slug:           "cup-gelas",
+    name:           "Kemasan Minuman",
+    count:          35,
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904706/CUP_GELAS_PP_OVAL_16OZ_idpy5k.jpg",
+    objectPosition: "50% 50%",
   },
   {
-    slug:     "thinwall",
-    name:     "Kemasan Makanan",
-    count:    45,
-    imageUrl: "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777905469/THINWALL_VICTORY_SQ350_jf8r4v.jpg",
+    slug:           "thinwall",
+    name:           "Kemasan Makanan",
+    count:          45,
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777905469/THINWALL_VICTORY_SQ350_jf8r4v.jpg",
+    objectPosition: "50% 50%",
   },
   {
-    slug:     "toples",
-    name:     "Toples & Stoples",
-    count:    31,
-    imageUrl: "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777905477/TOPLES_TABUNG_MIM_sch9yo.jpg",
+    slug:           "toples",
+    name:           "Toples & Stoples",
+    count:          31,
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777905477/TOPLES_TABUNG_MIM_sch9yo.jpg",
+    objectPosition: "50% 50%",
   },
   {
-    slug:     "bag",
-    name:     "Kantong & Bag",
-    count:    11,
-    imageUrl: "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904648/SPUNDBOUND_HIJAU_b6cs64.jpg",
+    slug:           "bag",
+    name:           "Kantong & Bag",
+    count:          11,
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904648/SPUNDBOUND_HIJAU_b6cs64.jpg",
+    objectPosition: "50% 50%",
   },
 ];
 
@@ -130,7 +135,8 @@ export default function FeaturedCategories() {
               fill
               priority
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 50vw"
-              className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.07]"
+              className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.07]"
+              style={{ objectPosition: hero.objectPosition }}
             />
             {/* base overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/20 to-transparent transition-opacity duration-500 group-hover:opacity-75" />
@@ -166,7 +172,8 @@ export default function FeaturedCategories() {
                 alt={cat.name}
                 fill
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.07]"
+                className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.07]"
+                style={{ objectPosition: cat.objectPosition }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/20 to-transparent transition-opacity duration-500 group-hover:opacity-75" />
               <div className="absolute inset-0 bg-blue-900/0 transition-colors duration-500 group-hover:bg-blue-900/10" />

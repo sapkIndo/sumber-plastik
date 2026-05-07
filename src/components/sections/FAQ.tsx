@@ -25,7 +25,7 @@ const faqs: { category: FaqCategory; q: string; a: string }[] = [
   {
     category: "Produk",
     q: "Bagaimana struktur harga produk?",
-    a: "Kami memiliki dua tier harga: harga ecer untuk pembelian satuan (cocok untuk retail dan perorangan), dan harga grosir untuk pembelian partai besar (untuk perusahaan dan pabrik). Semua kalangan — kecil, menengah, maupun besar — mendapatkan harga yang sesuai skala kebutuhan mereka.",
+    a: "Kami memiliki dua jenis harga: harga ecer untuk pembelian satuan (cocok untuk retail dan perorangan), dan harga grosir untuk pembelian partai besar (untuk perusahaan dan pabrik). Semua kalangan — kecil, menengah, maupun besar — mendapatkan harga yang sesuai skala kebutuhan mereka.",
   },
   {
     category: "Produk",

@@ -24,7 +24,7 @@ export const STORES = [
     phone: "0853-7110-6789",
     whatsapp: "6285371106789",
     hours: "08:00 – 18:00 WIB",
-    mapsUrl: "https://maps.app.goo.gl/ZVjt95dKtQgZ6py4A",
+    mapsUrl: "https://maps.app.goo.gl/GomHeZb1FVzRcVKE6",
     image: "https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/baciro_tpbzjj",
   },
   {

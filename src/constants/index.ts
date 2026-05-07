@@ -38,7 +38,7 @@ export const STORES = [
   },
   {
     name: "Sumber Aneka Plastik dan Kemasan Jalan Wonosari",
-    address: "Jl. Wonosari Km 9, 3, Dawukan, Sleman, Yogyakarta",
+    address: "Jl. Wonosari Km 9.3, Dawukan, Sleman, Yogyakarta",
     phone: "0821-1060-6789",
     whatsapp: "6282110606789",
     hours: "08:00 – 17:00 WIB",

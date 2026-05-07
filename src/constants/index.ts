@@ -14,17 +14,17 @@ export const CONTACT = {
   phone: "+62 895-0988-0988",
   whatsapp: "6289509880988",
   email: "sapkindonesia@gmail.com",
-  address: "Jl. Gondosuli No.1, Baciro, Kec. Gondokusuman, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55165",
+  address: "Jl. Gondosuli No. 1, Baciro, Yogyakarta",
 } as const;
 
 export const STORES = [
   {
     name: "Sumber Aneka Plastik dan Kemasan Baciro",
-    address: "Jl. Gondosuli No.1, Baciro, Kec. Gondokusuman, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55165",
+    address: "Jl. Gondosuli No. 1, Baciro, Yogyakarta",
     phone: "0853-7110-6789",
     whatsapp: "6285371106789",
     hours: "08:00 – 18:00 WIB",
-    mapsUrl: "https://maps.google.com/?q=Jl.+Gondosuli+No.+1+Baciro+Yogyakarta",
+    mapsUrl: "https://maps.app.goo.gl/ZVjt95dKtQgZ6py4A",
     image: "https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/baciro_tpbzjj",
   },
   {

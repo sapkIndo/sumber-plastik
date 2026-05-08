@@ -137,7 +137,7 @@ export default function Clients() {
             <span className="text-blue-600">5.000+ Pelanggan</span>
           </h2>
           <p className="mx-auto max-w-2xl text-base md:text-lg text-slate-600 dark:text-slate-400">
-            Dari usaha kecil hingga perusahaan multinasional, kami melayani dengan standar yang sama: terbaik.
+            Dari usaha kecil hingga perusahaan multinasional, kami melayani dengan standar yang sama terbaik.
           </p>
         </div>
       </div>

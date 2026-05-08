@@ -141,7 +141,7 @@ export default function WhyUs() {
               style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}
             >
               Kenapa Ribuan Bisnis{" "}
-              <span className="text-slate-400 dark:text-slate-500">Mempercayai Kami</span>
+              <span className="text-blue-600">Mempercayai Kami</span>
             </h2>
           </div>
           <p className="max-w-sm text-sm leading-relaxed text-slate-600 dark:text-slate-400 lg:text-right">

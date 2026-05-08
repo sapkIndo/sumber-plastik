@@ -78,7 +78,7 @@ function ClientCard({ client }: { client: Client }) {
   return (
     <li className="flex w-36 h-16 md:w-52 md:h-20 lg:w-64 lg:h-28 shrink-0 items-center justify-center rounded-xl md:rounded-2xl border border-slate-200 bg-slate-50 shadow-sm transition-[border-color,background-color] duration-200 hover:border-blue-100 hover:bg-blue-50/40 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-blue-900/40 dark:hover:bg-blue-950/20">
       {client.logo ? (
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full transition-all duration-300 grayscale opacity-60 hover:grayscale-0 hover:opacity-100">
           <Image
             src={client.logo}
             alt={`Logo ${client.name}`}
@@ -134,7 +134,7 @@ export default function Clients() {
             style={{ fontSize: "clamp(1.75rem, 3vw + 1rem, 4rem)" }}
           >
             Dipercaya oleh{" "}
-            <span className="text-slate-400 dark:text-slate-500">5.000+ Pelanggan</span>
+            <span className="text-blue-600">5.000+ Pelanggan</span>
           </h2>
           <p className="mx-auto max-w-2xl text-base md:text-lg text-slate-600 dark:text-slate-400">
             Dari usaha kecil hingga perusahaan multinasional, kami melayani dengan standar yang sama: terbaik.

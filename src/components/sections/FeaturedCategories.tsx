@@ -16,36 +16,40 @@ const FEATURED = [
     slug:           "botol-br",
     name:           "Botol & Wadah",
     count:          30,
-    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904651/BOTOL_BR_N24_AMBER_600_str8oq.jpg",
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904654/BOTOL_BR_PINK_60ML_vpwfrh.jpg",
     objectPosition: "50% 50%",
   },
   {
     slug:           "cup-gelas",
     name:           "Kemasan Minuman",
     count:          35,
-    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904706/CUP_GELAS_PP_OVAL_16OZ_idpy5k.jpg",
-    objectPosition: "50% 50%",
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904705/CUP_GELAS_PET_OVAL_PLP_12_OZ_aifjsr.jpg",
+    objectPosition: "50% 38%",
+    imageScale:     2.5,
   },
   {
     slug:           "thinwall",
     name:           "Kemasan Makanan",
     count:          45,
     imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777905469/THINWALL_VICTORY_SQ350_jf8r4v.jpg",
-    objectPosition: "50% 50%",
+    objectPosition: "50% 40%",
+    imageScale:     1.8,
   },
   {
     slug:           "toples",
     name:           "Toples & Stoples",
     count:          31,
     imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777905477/TOPLES_TABUNG_MIM_sch9yo.jpg",
-    objectPosition: "50% 50%",
+    objectPosition: "50% 40%",
+    imageScale:     1.65,
   },
   {
     slug:           "bag",
     name:           "Kantong & Bag",
     count:          11,
-    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904648/SPUNDBOUND_HIJAU_b6cs64.jpg",
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904648/SOFT_HANDEL_BAG_MOTIF_30X30_x4wosi.jpg",
     objectPosition: "50% 50%",
+    imageScale:     1.5,
   },
 ];
 
@@ -108,7 +112,7 @@ export default function FeaturedCategories() {
             >
               Temukan Produk
               <br className="hidden sm:block" />
-              <span className="text-slate-400 dark:text-slate-500">yang Anda Butuhkan</span>
+              <span className="text-blue-600">yang Anda Butuhkan</span>
             </h2>
           </div>
           <div className="cat-subtext flex flex-col gap-2 lg:items-end lg:text-right">
@@ -172,8 +176,8 @@ export default function FeaturedCategories() {
                 alt={cat.name}
                 fill
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.07]"
-                style={{ objectPosition: cat.objectPosition }}
+                className="object-cover transition-[transform,scale] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.07]"
+                style={{ objectPosition: cat.objectPosition, scale: cat.imageScale ?? 1 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/20 to-transparent transition-opacity duration-500 group-hover:opacity-75" />
               <div className="absolute inset-0 bg-blue-900/0 transition-colors duration-500 group-hover:bg-blue-900/10" />

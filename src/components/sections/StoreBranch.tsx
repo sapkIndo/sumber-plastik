@@ -208,14 +208,15 @@ export default function StoreBranch() {
             <div
               key={store.name}
               ref={(el) => { imgRefs.current[i] = el; }}
-              className="absolute inset-0"
-              style={{ opacity: i === 0 ? 1 : 0 }}
+              className="absolute"
+              style={{ opacity: i === 0 ? 1 : 0, inset: (i === 0 || i === 3) ? "-20px" : "0px" }}
             >
               <Image
                 src={store.image}
                 alt={`Foto toko ${store.name}`}
                 fill
                 className="object-cover"
+                style={i === 0 ? { objectPosition: "left center" } : i === 3 ? { objectPosition: "right center" } : undefined}
                 sizes="200px"
               />
             </div>
@@ -244,7 +245,7 @@ export default function StoreBranch() {
             >
               4 Toko, Siap Melayani
               <br className="hidden sm:block" />
-              <span className="text-slate-400 dark:text-slate-500">Seluruh Indonesia</span>
+              <span className="text-blue-600">Seluruh Indonesia</span>
             </h2>
           </div>
           <p className="fc-subtitle max-w-xs text-sm leading-relaxed text-slate-600 dark:text-slate-400 md:text-right">

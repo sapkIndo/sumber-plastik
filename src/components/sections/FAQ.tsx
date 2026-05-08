@@ -133,7 +133,7 @@ export default function FAQ() {
               style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}
             >
               Pertanyaan yang{" "}
-              <span className="text-slate-400 dark:text-slate-500">Sering Ditanyakan</span>
+              <span className="text-blue-600">Sering Ditanyakan</span>
             </h2>
             <p className="mb-10 max-w-sm text-sm leading-relaxed text-slate-600 dark:text-slate-400">
               Jawaban atas pertanyaan yang paling sering kami terima. Tidak menemukan jawaban Anda?

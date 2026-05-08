@@ -312,7 +312,7 @@ export default function SocialMedia() {
       <div className="relative z-10 mb-14 md:mb-20 md:max-w-2xl">
         <div className="soc-overline mb-5 flex items-center gap-3">
           <span className="h-px w-8 bg-blue-600" aria-hidden="true" />
-          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-600 dark:text-blue-400">
+          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-600">
             Sosial Media
           </span>
         </div>
@@ -322,7 +322,7 @@ export default function SocialMedia() {
           style={{ fontSize: "clamp(3.5rem, 9vw, 8rem)" }}
         >
           Ikuti{" "}
-          Kami.
+          <span className="text-blue-600">Kami.</span>
         </h2>
 
         <p className="soc-sub mt-5 max-w-sm text-sm leading-relaxed text-slate-500 dark:text-slate-400 md:text-base">

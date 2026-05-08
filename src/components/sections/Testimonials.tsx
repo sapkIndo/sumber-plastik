@@ -148,7 +148,7 @@ export default function Testimonials() {
             style={{ fontSize: "clamp(1.875rem, 2vw + 1.25rem, 3rem)" }}
           >
             Kata Mereka{" "}
-            <span className="text-slate-400 dark:text-slate-500">tentang Kami</span>
+            <span className="text-blue-600">tentang Kami</span>
           </h2>
           <p className="mx-auto max-w-md text-base text-slate-600 dark:text-slate-400">
             Kepercayaan 5.000+ perusahaan adalah bukti komitmen kami terhadap kualitas dan layanan.

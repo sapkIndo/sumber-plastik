@@ -92,7 +92,7 @@ export default function ProdukPage() {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
               </span>
               <span className="text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
-                Live
+                ON GOING
               </span>
             </div>
             <p className="text-sm font-medium text-slate-700 dark:text-slate-300">

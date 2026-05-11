@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,79 +11,93 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 type Client = {
   name: string;
   logo?: string;
+  invert?: boolean;
+  scale?: number;
+  ty?: string;
 };
 
 const CL = (id: string) =>
   `https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/${id}`;
 
 const clientsRow1: Client[] = [
-  { name: "Alfamart", logo: CL("logo_alfamart_transparent_si8dkc") },
-  { name: "Evita", logo: CL("evita-logo_-_Copy_ug6cwk") },
-  { name: "Universitas Gadjah Mada", logo: CL("LOGO-UGM-BAKU-tnp-back-grou-300x300_gdkki2") },
-  { name: "Norde", logo: CL("LOGO_NORDE_CUP_BLACK_NO_BG_psqjjw") },
-  { name: "Lamora Sagan", logo: CL("LAMORA-SAGAN-YOGYAKARTA_LOGOPACK-03-1024x287_-_Copy_vkxetk") },
-  { name: "Kopi Jo", logo: CL("KOPI_JO_3_pdf_001_-_Copy_suk2al") },
-  { name: "Aicare", logo: CL("LOGO-AICARE-dark-reed_-_Copy_f3obgu") },
-  { name: "RS Soerojo", logo: CL("logosoerojo2024_q79bfs") },
-  { name: "Triwara", logo: CL("TRIWARA_STICKER_nzuqs0") },
+  { name: "Alfamart",              logo: CL("alafamart_tt25xt"),      scale: 0.85 },
+  { name: "Evita",                 logo: CL("evita_logo_xctg2a"),    scale: 0.85 },
+  { name: "Universitas Gadjah Mada", logo: CL("ugm_stmuh8") },
+  { name: "Norde",                 logo: CL("norde_kf48uk"),          scale: 1.4 },
+  { name: "Lamora Sagan",          logo: CL("lamora_j3gsq7"),        invert: true, scale: 0.85 },
+  { name: "Kopi Jo",               logo: CL("KOPI_JO_ohu9sx"),        scale: 0.85 },
+  { name: "Aicare",                logo: CL("aicare_tsn9ao"),         scale: 0.85 },
+  { name: "RS Soerojo",            logo: CL("RS_soerojo_b4zomd") },
+  { name: "Triwara",               logo: CL("TRIWARA_STICKER_odli5j"), scale: 1.2 },
 ];
 
 const clientsRow2: Client[] = [
-  { name: "Lab Art Aromatique", logo: CL("Logo-Lab-Art-Aromatique-Yogyakarta-lowkerjogja_-_Copy_f7byj2") },
-  { name: "Putra Farma Yogyakarta", logo: CL("logo-pfy-newzam_vjvbm0") },
-  { name: "Royal Coffee", logo: CL("Royal_Paper_Gold_MP_sbhska") },
-  { name: "Koyo Slow Bar", logo: CL("Logo_KSB-08_-_Copy_hhzjx8") },
-  { name: "Spesial Sambal", logo: CL("sppg-1757490703_edxmep") },
-  { name: "Starsteak", logo: CL("front_-_Copy_f0petx") },
-  { name: "Citranet", logo: CL("fb777e20201b7d23bbbd291f20a2ea3f_-_Copy_kwgemd") },
-  { name: "Khaira", logo: CL("logo-header_-_Copy_ylibqu") },
-  { name: "Bura Bura", logo: CL("HontizxOKlzXRY3IuUlY6wGXZUqtYW5VRMkrgTxt_-_Copy_thgbfz") },
+  { name: "Lab Art Aromatique",    logo: CL("lab_art_aromatique_wvukcd") },
+  { name: "Putra Farma Yogyakarta", logo: CL("putra_farma_w3dxkl"),   invert: true },
+  { name: "Royal Coffee",          logo: CL("royal_coffee_ou7gzi"),  scale: 1.4 },
+  { name: "Koyo Slow Bar",         logo: CL("koyo_slow_bar_qmd63t"),  scale: 1.7 },
+  { name: "Spesial Sambal",        logo: CL("special_sambal_g6wh9o"), scale: 0.85 },
+  { name: "Star Steak",            logo: CL("Star_Steak_bpnae1"),     scale: 1.7 },
+  { name: "Citranet",              logo: CL("citranet_kazw7g"),       scale: 0.85 },
+  { name: "Khaira",                logo: CL("khaira_zgovqy"),         scale: 0.85 },
+  { name: "Bura Bura",             logo: CL("Bura_bura_p4mwv1"),     scale: 0.85 },
 ];
 
 const clientsRow3: Client[] = [
-  { name: "Jovin Petshop", logo: CL("JOP-70079-918845d2-c938-4db8-8d58-30388a13013e_-_Copy_sfokqr") },
-  { name: "Gembira Loka Zoo", logo: CL("IMG_0154_-_Copy_chenb8") },
-  { name: "Cavinton Hotel Yogyakarta", logo: CL("1690982113404_v6o2o6") },
-  { name: "Bawana Kopi", logo: CL("553744264_18068688329221143_2712954494876729455_n_ineawe") },
-  { name: "Impresso Coffee", logo: CL("523102536_17846253237531652_7133214011072661210_n_jwpifc") },
-  { name: "Kenz Catering", logo: CL("520971330_18043566983640257_6527850635176471879_n_ev0opv") },
-  { name: "Sender", logo: CL("485194159_501161706384491_3593102940184971308_n_xv0kkw") },
-  { name: "Kopian", logo: CL("473780251_3997067550533683_671427783066977177_n_zpfuuc") },
-];
-
-const clientsRow5: Client[] = [
-  { name: "Alfamart", logo: CL("logo_alfamart_transparent_si8dkc") },
-  { name: "Evita", logo: CL("evita-logo_-_Copy_ug6cwk") },
-  { name: "Universitas Gadjah Mada", logo: CL("LOGO-UGM-BAKU-tnp-back-grou-300x300_gdkki2") },
-  { name: "Norde", logo: CL("LOGO_NORDE_CUP_BLACK_NO_BG_psqjjw") },
-  { name: "Lamora Sagan", logo: CL("LAMORA-SAGAN-YOGYAKARTA_LOGOPACK-03-1024x287_-_Copy_vkxetk") },
-  { name: "Kopi Jo", logo: CL("KOPI_JO_3_pdf_001_-_Copy_suk2al") },
-  { name: "Aicare", logo: CL("LOGO-AICARE-dark-reed_-_Copy_f3obgu") },
-  { name: "RS Soerojo", logo: CL("logosoerojo2024_q79bfs") },
-  { name: "Triwara", logo: CL("TRIWARA_STICKER_nzuqs0") },
+  { name: "Jovin Petshop",         logo: CL("jovin_petshop_dkurd8"),  scale: 0.85 },
+  { name: "Gembira Loka Zoo",      logo: CL("gembira_loka_zoo_mapvaz"), scale: 1.4 },
+  { name: "Cavinton Hotel",        logo: CL("cavinton_kkxbho"),       scale: 0.85 },
+  { name: "Bawana Kopi",           logo: CL("bawana_kopi_cmi7cv"),   scale: 0.85 },
+  { name: "Impresso Coffee",       logo: CL("impresso_juorev") },
+  { name: "Kenz Catering",         logo: CL("kenz_catering_dlnbcr"),  scale: 1.4, ty: "-4%" },
+  { name: "Sender",                logo: CL("sender_hiaxmp"),         scale: 0.85 },
+  { name: "Kopian",                logo: CL("kopian_nxy8r8"),         scale: 0.85 },
+  { name: "Airku",                 logo: CL("airku_wpx7bt"),          scale: 0.85 },
 ];
 
 const clientsRow4: Client[] = [
-  { name: "Badan Gizi Nasional", logo: CL("455191046_378852101657668_768894196703536366_n_pwxrdr") },
-  { name: "Cosan", logo: CL("300622009_595168728703326_7752860228095121394_n_gvw8me") },
-  { name: "Green Roots", logo: CL("358430624_726389346161030_3129359534570283439_n_gfkhme") },
-  { name: "Fyns Kopi", logo: CL("312985154_437516638327350_2173544245188706171_n_thjjaq") },
-  { name: "Sambal MamaNi", logo: CL("70378944_2428545853897311_4733108377427640320_n_q0vjcu") },
-  { name: "Bunny House", logo: CL("7b9e2a62e4fa8934fda6087a936cf0bf_tn_qjtoyf") },
-  { name: "Kopinggirjalan", logo: CL("44207c96ebf83fde59834bc79fb4ec80_s5b7ip") },
-  { name: "Lactona", logo: CL("20230324104913_qemlbs") },
+  { name: "Side to Side",          logo: CL("side_to_side_eor7ao"),  scale: 1.4 },
+  { name: "Urban Perfume",         logo: CL("Urban_Perfume_djupci"),  scale: 0.85 },
+  { name: "Badan Gizi Nasional",   logo: CL("BGN_yxg70q"),           scale: 0.85 },
+  { name: "Cosan",                 logo: CL("cosan_owhp86"),          scale: 0.85 },
+  { name: "Green Roots",           logo: CL("green_roots_yxbgtp"),   scale: 0.85 },
+  { name: "Fyns Kopi",             logo: CL("fyns_tco3mz"),           scale: 0.85 },
+  { name: "Sambal MamaNi",         logo: CL("sambal_mamani_uogus3"),  scale: 0.85 },
+  { name: "Bunny House",           logo: CL("bunny_house_iwkos4"),   scale: 0.85 },
+  { name: "Kopinggirjalan",        logo: CL("kopinggirjalan_syxdxn") },
+];
+
+const clientsRow5: Client[] = [
+  { name: "Lactona",               logo: CL("lactona_cco1nj"),        scale: 1.7 },
+  { name: "Cubiq",                 logo: CL("cubiq_kkefq3"),          scale: 0.85 },
+  { name: "Muhammadiyah Pakel",    logo: CL("muhammadiyah_pakel_xtybgt"), scale: 1.0 },
+  { name: "Perumda Tirta Binangun", logo: CL("perumda_air_minum_tirta_binangun_eaoscx"), scale: 0.85 },
+  { name: "StarUp",                logo: CL("starUp_v66xmi"),         scale: 0.85 },
+  { name: "HK",                    logo: CL("HK_wcxtdx"),            scale: 0.85 },
+  { name: "IT",                    logo: CL("it_iapixs"),            invert: true, scale: 1.4 },
+  { name: "PJ",                    logo: CL("PJ_esf9b3"),            scale: 0.85 },
+  { name: "C",                     logo: CL("c_v09iz7") },
+];
+
+const ROWS = [
+  { data: clientsRow1, duration: 28, reverse: false },
+  { data: clientsRow2, duration: 28, reverse: true  },
+  { data: clientsRow3, duration: 25, reverse: false },
+  { data: clientsRow4, duration: 25, reverse: true  },
+  { data: clientsRow5, duration: 30, reverse: false },
 ];
 
 function ClientCard({ client }: { client: Client }) {
   return (
     <li className="flex w-36 h-16 md:w-52 md:h-20 lg:w-64 lg:h-28 shrink-0 items-center justify-center rounded-xl md:rounded-2xl border border-slate-200 bg-slate-50 shadow-sm transition-[border-color,background-color] duration-200 hover:border-blue-100 hover:bg-blue-50/40 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-blue-900/40 dark:hover:bg-blue-950/20">
       {client.logo ? (
-        <div className="relative w-full h-full transition-all duration-300 grayscale opacity-60 hover:grayscale-0 hover:opacity-100">
+        <div className="relative w-full h-full">
           <Image
             src={client.logo}
             alt={`Logo ${client.name}`}
             fill
-            className="object-contain p-2 md:p-3 drop-shadow dark:drop-shadow-none dark:brightness-90"
+            className={`object-contain p-1 drop-shadow dark:drop-shadow-none dark:brightness-90${client.invert ? " invert dark:invert-0" : ""}`}
+            style={(client.scale || client.ty) ? { transform: `scale(${client.scale ?? 1}) translateY(${client.ty ?? "0"})` } : undefined}
             sizes="(max-width: 768px) 144px, (max-width: 1024px) 208px, 256px"
           />
         </div>
@@ -97,31 +111,51 @@ function ClientCard({ client }: { client: Client }) {
 }
 
 export default function Clients() {
-  const ref = useRef<HTMLElement>(null);
-  const [running, setRunning] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const ulRefs = useRef<(HTMLUListElement | null)[]>([]);
+  const tweens = useRef<gsap.core.Tween[]>([]);
 
-  useGSAP(
-    () => {
-      gsap.from(".clients-heading", {
-        opacity: 0, y: 30, duration: 0.8, ease: "power3.out",
-        scrollTrigger: { trigger: ref.current, start: "top 80%", once: true },
-      });
+  useGSAP(() => {
+    gsap.from(".clients-heading", {
+      opacity: 0, y: 30, duration: 0.8, ease: "power3.out",
+      scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true },
+    });
 
-      ScrollTrigger.create({
-        trigger: ref.current,
-        start: "top 80%",
-        once: true,
-        onEnter: () => setRunning(true),
-      });
-    },
-    { scope: ref }
-  );
+    ROWS.forEach(({ duration, reverse }, i) => {
+      const el = ulRefs.current[i];
+      if (!el) return;
+      const halfWidth = el.scrollWidth / 2;
+      let tween: gsap.core.Tween;
+      if (reverse) {
+        gsap.set(el, { x: -halfWidth });
+        tween = gsap.to(el, { x: 0, duration, ease: "none", repeat: -1, paused: true });
+      } else {
+        tween = gsap.to(el, { x: -halfWidth, duration, ease: "none", repeat: -1, paused: true });
+      }
+      tweens.current[i] = tween;
+    });
 
-  const playState = running ? "running" : "paused";
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top 80%",
+      once: true,
+      onEnter: () => tweens.current.forEach(t => t?.play()),
+    });
+  }, { scope: sectionRef });
+
+  const handleEnter = (i: number) => {
+    const t = tweens.current[i];
+    if (t) gsap.to(t, { timeScale: 0, duration: 0.6, ease: "power2.out", overwrite: true });
+  };
+
+  const handleLeave = (i: number) => {
+    const t = tweens.current[i];
+    if (t) gsap.to(t, { timeScale: 1, duration: 0.6, ease: "power2.in", overwrite: true });
+  };
 
   return (
     <section
-      ref={ref}
+      ref={sectionRef}
       aria-labelledby="clients-heading"
       className="overflow-hidden min-h-screen flex flex-col justify-center py-16 md:py-24 lg:py-28"
     >
@@ -143,45 +177,24 @@ export default function Clients() {
       </div>
 
       <div className="space-y-3 md:space-y-4 lg:space-y-6" aria-hidden="true">
-        <div className="marquee-track flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <ul className="animate-marquee flex min-w-full shrink-0 items-center gap-3 md:gap-4 lg:gap-6" style={{ animationDuration: "28s", animationPlayState: playState }} role="list">
-            {[...clientsRow1, ...clientsRow1].map((client, i) => (
-              <ClientCard key={`r1-${i}`} client={client} />
-            ))}
-          </ul>
-        </div>
-
-        <div className="marquee-track flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <ul className="animate-marquee-reverse flex min-w-full shrink-0 items-center gap-3 md:gap-4 lg:gap-6" style={{ animationDuration: "28s", animationPlayState: playState }} role="list">
-            {[...clientsRow2, ...clientsRow2].map((client, i) => (
-              <ClientCard key={`r2-${i}`} client={client} />
-            ))}
-          </ul>
-        </div>
-
-        <div className="marquee-track flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <ul className="animate-marquee flex min-w-full shrink-0 items-center gap-3 md:gap-4 lg:gap-6" style={{ animationDuration: "25s", animationPlayState: playState }} role="list">
-            {[...clientsRow3, ...clientsRow3].map((client, i) => (
-              <ClientCard key={`r3-${i}`} client={client} />
-            ))}
-          </ul>
-        </div>
-
-        <div className="marquee-track flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <ul className="animate-marquee-reverse flex min-w-full shrink-0 items-center gap-3 md:gap-4 lg:gap-6" style={{ animationDuration: "25s", animationPlayState: playState }} role="list">
-            {[...clientsRow4, ...clientsRow4].map((client, i) => (
-              <ClientCard key={`r4-${i}`} client={client} />
-            ))}
-          </ul>
-        </div>
-
-        <div className="marquee-track flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <ul className="animate-marquee flex min-w-full shrink-0 items-center gap-3 md:gap-4 lg:gap-6" style={{ animationDuration: "30s", animationPlayState: playState }} role="list">
-            {[...clientsRow5, ...clientsRow5].map((client, i) => (
-              <ClientCard key={`r5-${i}`} client={client} />
-            ))}
-          </ul>
-        </div>
+        {ROWS.map(({ data }, i) => (
+          <div
+            key={i}
+            className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+            onMouseEnter={() => handleEnter(i)}
+            onMouseLeave={() => handleLeave(i)}
+          >
+            <ul
+              ref={el => { ulRefs.current[i] = el; }}
+              className="flex shrink-0 items-center gap-3 md:gap-4 lg:gap-6"
+              role="list"
+            >
+              {[...data, ...data].map((client, j) => (
+                <ClientCard key={`r${i}-${j}`} client={client} />
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </section>
   );

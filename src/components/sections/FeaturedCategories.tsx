@@ -16,8 +16,8 @@ const FEATURED = [
     slug:           "botol-br",
     name:           "Botol & Wadah",
     count:          30,
-    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904654/BOTOL_BR_PINK_60ML_vpwfrh.jpg",
-    objectPosition: "50% 50%",
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904651/BOTOL_BR_N24_AMBER_600_str8oq.jpg",
+    objectPosition: "50% 53%",
   },
   {
     slug:           "cup-gelas",
@@ -26,14 +26,18 @@ const FEATURED = [
     imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904705/CUP_GELAS_PET_OVAL_PLP_12_OZ_aifjsr.jpg",
     objectPosition: "50% 38%",
     imageScale:     2.5,
+    scaleClass:     "scale-[3.6] lg:scale-[2.5]",
+    posClass:       "[object-position:50%_2%] lg:[object-position:50%_38%]",
   },
   {
     slug:           "thinwall",
     name:           "Kemasan Makanan",
     count:          45,
-    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777905469/THINWALL_VICTORY_SQ350_jf8r4v.jpg",
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777905468/THINWALL_VICTORY_SQ_500_c8jne0.jpg",
     objectPosition: "50% 40%",
     imageScale:     1.8,
+    scaleClass:     "scale-[2.6] lg:scale-[1.8]",
+    posClass:       "[object-position:50%_10%] lg:[object-position:50%_40%]",
   },
   {
     slug:           "toples",
@@ -42,14 +46,18 @@ const FEATURED = [
     imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777905477/TOPLES_TABUNG_MIM_sch9yo.jpg",
     objectPosition: "50% 40%",
     imageScale:     1.65,
+    scaleClass:     "scale-[3.1] lg:scale-[1.65]",
+    posClass:       "[object-position:50%_-10%] lg:[object-position:50%_40%]",
   },
   {
-    slug:           "bag",
-    name:           "Kantong & Bag",
-    count:          11,
-    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904648/SOFT_HANDEL_BAG_MOTIF_30X30_x4wosi.jpg",
-    objectPosition: "50% 50%",
+    slug:           "pvc-shrink",
+    name:           "PVC Shrink",
+    count:          2,
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777905434/PVC_SHRINK_1_ROLL_50X80_ymqo8y.jpg",
+    objectPosition: "50% 45%",
     imageScale:     1.5,
+    scaleClass:     "scale-[3.1] lg:scale-[1.9]",
+    posClass:       "[object-position:50%_0%] lg:[object-position:50%_45%]",
   },
 ];
 
@@ -139,7 +147,7 @@ export default function FeaturedCategories() {
               fill
               priority
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 50vw"
-              className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.07]"
+              className="object-cover scale-[1.5] lg:scale-100 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] lg:group-hover:scale-[1.07]"
               style={{ objectPosition: hero.objectPosition }}
             />
             {/* base overlay */}
@@ -176,8 +184,8 @@ export default function FeaturedCategories() {
                 alt={cat.name}
                 fill
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover transition-[transform,scale] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.07]"
-                style={{ objectPosition: cat.objectPosition, scale: cat.imageScale ?? 1 }}
+                className={`object-cover transition-[transform,scale] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.07]${"scaleClass" in cat ? ` ${cat.scaleClass}` : ""}${"posClass" in cat ? ` ${cat.posClass}` : ""}`}
+                style={{ ...("posClass" in cat ? {} : { objectPosition: cat.objectPosition }), ...("scaleClass" in cat ? {} : { scale: cat.imageScale ?? 1 }) }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/20 to-transparent transition-opacity duration-500 group-hover:opacity-75" />
               <div className="absolute inset-0 bg-blue-900/0 transition-colors duration-500 group-hover:bg-blue-900/10" />

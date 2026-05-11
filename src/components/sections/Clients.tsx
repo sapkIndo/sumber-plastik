@@ -79,12 +79,14 @@ const clientsRow5: Client[] = [
   { name: "C",                     logo: CL("c_v09iz7") },
 ];
 
+const ROW_SPEEDS = [90, 90, 100, 100, 80]; // px per second per row
+
 const ROWS = [
-  { data: clientsRow1, duration: 28, reverse: false },
-  { data: clientsRow2, duration: 28, reverse: true  },
-  { data: clientsRow3, duration: 25, reverse: false },
-  { data: clientsRow4, duration: 25, reverse: true  },
-  { data: clientsRow5, duration: 30, reverse: false },
+  { data: clientsRow1, reverse: false },
+  { data: clientsRow2, reverse: true  },
+  { data: clientsRow3, reverse: false },
+  { data: clientsRow4, reverse: true  },
+  { data: clientsRow5, reverse: false },
 ];
 
 function ClientCard({ client }: { client: Client }) {
@@ -121,10 +123,11 @@ export default function Clients() {
       scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true },
     });
 
-    ROWS.forEach(({ duration, reverse }, i) => {
+    ROWS.forEach(({ reverse }, i) => {
       const el = ulRefs.current[i];
       if (!el) return;
       const halfWidth = el.scrollWidth / 2;
+      const duration = halfWidth / ROW_SPEEDS[i];
       let tween: gsap.core.Tween;
       if (reverse) {
         gsap.set(el, { x: -halfWidth });

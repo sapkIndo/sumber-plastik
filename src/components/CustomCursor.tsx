@@ -53,7 +53,7 @@ export default function CustomCursor() {
     <div
       ref={dotRef}
       aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-[10001] hidden md:block"
+      className="pointer-events-none fixed left-0 top-0 z-[10001] hidden md:block [@media(pointer:coarse)]:!hidden"
       style={{ opacity: 0, transition: "opacity 0.2s", willChange: "transform" }}
     >
       <div className="h-3 w-3 rounded-full bg-blue-700 shadow-[0_0_12px_4px_rgba(37,99,235,0.3)]" />

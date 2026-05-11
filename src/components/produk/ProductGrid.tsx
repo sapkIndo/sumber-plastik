@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useId } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Search, X } from "lucide-react";
 import ProductCard from "./ProductCard";
@@ -25,6 +25,7 @@ export default function ProductGrid({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const searchId = useId();
 
   const filtered = query.trim()
     ? allProducts.filter((p) => p.name.toLowerCase().includes(query.toLowerCase().trim()))
@@ -46,12 +47,14 @@ export default function ProductGrid({
     <div>
       {/* Search */}
       <div className="relative mb-8">
+        <label htmlFor={searchId} className="sr-only">Cari produk</label>
         <Search
           size={15}
           className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
           aria-hidden="true"
         />
         <input
+          id={searchId}
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -63,7 +66,8 @@ export default function ProductGrid({
           <button
             onClick={() => setQuery("")}
             aria-label="Hapus pencarian"
-            className="absolute right-3.5 top-1/2 -translate-y-1/2 flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-colors duration-150 hover:bg-slate-200 hover:text-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
+            title="Hapus pencarian"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-colors duration-150 hover:bg-slate-200 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:focus-visible:ring-offset-slate-900"
           >
             <X size={11} />
           </button>
@@ -89,7 +93,7 @@ export default function ProductGrid({
           </p>
           <button
             onClick={() => setQuery("")}
-            className="mt-4 rounded-xl bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-500"
+            className="mt-4 rounded-xl bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
           >
             Lihat semua produk
           </button>
@@ -118,7 +122,8 @@ export default function ProductGrid({
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage <= 1 || isPending}
             aria-label="Halaman sebelumnya"
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-sm text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-400"
+            title="Halaman sebelumnya"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-sm text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-400 dark:focus-visible:ring-offset-slate-900"
           >
             ‹
           </button>
@@ -140,8 +145,9 @@ export default function ProductGrid({
                 onClick={() => goToPage(page)}
                 disabled={isPending}
                 aria-label={`Halaman ${page}`}
+                title={`Halaman ${page}`}
                 aria-current={isActive ? "page" : undefined}
-                className={`flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors disabled:opacity-70 ${
+                className={`flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 disabled:opacity-70 ${
                   isActive
                     ? "bg-blue-600 text-white"
                     : "border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-600 dark:border-slate-700 dark:text-slate-400"
@@ -156,7 +162,8 @@ export default function ProductGrid({
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage >= totalPages || isPending}
             aria-label="Halaman berikutnya"
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-sm text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-400"
+            title="Halaman berikutnya"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-sm text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-400 dark:focus-visible:ring-offset-slate-900"
           >
             ›
           </button>

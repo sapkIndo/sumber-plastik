@@ -13,10 +13,10 @@ gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
 
 const FEATURED = [
   {
-    slug:           "botol-br",
-    name:           "Botol & Wadah",
-    count:          30,
-    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904651/BOTOL_BR_N24_AMBER_600_str8oq.jpg",
+    slug:           "botol-pet",
+    name:           "Botol PET",
+    count:          94,
+    imageUrl:       "https://res.cloudinary.com/dcfqotpyr/image/upload/v1777904676/BOTOL_LN_600ML_teuxp2.jpg",
     objectPosition: "50% 53%",
   },
   {
@@ -27,7 +27,7 @@ const FEATURED = [
     objectPosition: "50% 38%",
     imageScale:     2.5,
     scaleClass:     "scale-[3.6] lg:scale-[2.5]",
-    posClass:       "[object-position:50%_2%] lg:[object-position:50%_38%]",
+    posClass:       "[object-position:50%_-7%] lg:[object-position:50%_38%]",
   },
   {
     slug:           "thinwall",
@@ -57,7 +57,7 @@ const FEATURED = [
     objectPosition: "50% 45%",
     imageScale:     1.5,
     scaleClass:     "scale-[3.1] lg:scale-[1.9]",
-    posClass:       "[object-position:50%_0%] lg:[object-position:50%_45%]",
+    posClass:       "[object-position:50%_-8%] lg:[object-position:50%_45%]",
   },
 ];
 
@@ -147,8 +147,7 @@ export default function FeaturedCategories() {
               fill
               priority
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 50vw"
-              className="object-cover scale-[1.5] lg:scale-100 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] lg:group-hover:scale-[1.07]"
-              style={{ objectPosition: hero.objectPosition }}
+              className="object-cover scale-[1.2] lg:scale-100 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] lg:group-hover:scale-[1.07] [object-position:50%_47%] lg:[object-position:50%_53%]"
             />
             {/* base overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/20 to-transparent transition-opacity duration-500 group-hover:opacity-75" />

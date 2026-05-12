@@ -256,50 +256,50 @@ export default function HeroB() {
         <div className="hero-trust flex items-center justify-center py-12 xl:hidden md:absolute md:inset-0 md:py-0">
 
           {/* Mobile only — landscape viewBox, natural width */}
-          <svg viewBox="0 0 500 300" fill="none" className="w-full max-w-lg opacity-70 dark:opacity-40 md:hidden" aria-hidden="true">
+          <svg viewBox="0 0 500 300" fill="none" className="w-full max-w-lg md:hidden" aria-hidden="true">
             <g className="geo-b">
-              <circle cx="250" cy="150" r="108" stroke="#2563eb" strokeWidth="1" strokeDasharray="5 10" opacity="0.18" />
-              <circle cx="250" cy="150" r="76"  stroke="#2563eb" strokeWidth="1.5" opacity="0.22" />
-              <circle cx="250" cy="150" r="44"  stroke="#2563eb" strokeWidth="2"   opacity="0.28" />
-              <circle cx="250" cy="150" r="12"  fill="#2563eb"   opacity="0.12" />
+              <circle cx="250" cy="150" r="108" stroke="#2563eb" strokeWidth="1" strokeDasharray="5 10" opacity="0.38" />
+              <circle cx="250" cy="150" r="76"  stroke="#2563eb" strokeWidth="1.5" opacity="0.48" />
+              <circle cx="250" cy="150" r="44"  stroke="#2563eb" strokeWidth="2"   opacity="0.55" />
+              <circle cx="250" cy="150" r="12"  fill="#2563eb"   opacity="0.28" />
             </g>
             <g className="geo-a">
-              <rect x="42" y="110" width="72" height="95" rx="12" stroke="#3b82f6" strokeWidth="1.5" opacity="0.22" />
-              <rect x="57" y="125" width="42" height="65" rx="7"  stroke="#3b82f6" strokeWidth="1"   opacity="0.14" />
+              <rect x="42" y="110" width="72" height="95" rx="12" stroke="#3b82f6" strokeWidth="1.5" opacity="0.45" />
+              <rect x="57" y="125" width="42" height="65" rx="7"  stroke="#3b82f6" strokeWidth="1"   opacity="0.30" />
             </g>
             <g className="geo-c">
-              <polygon points="420,52 452,70 452,108 420,126 388,108 388,70" stroke="#2563eb" strokeWidth="1.5" opacity="0.2" />
-              <polygon points="420,70 442,82 442,106 420,118 398,106 398,82" stroke="#2563eb" strokeWidth="1"   opacity="0.12" />
+              <polygon points="420,52 452,70 452,108 420,126 388,108 388,70" stroke="#2563eb" strokeWidth="1.5" opacity="0.42" />
+              <polygon points="420,70 442,82 442,106 420,118 398,106 398,82" stroke="#2563eb" strokeWidth="1"   opacity="0.28" />
             </g>
-            <circle cx="100" cy="56"  r="9"  fill="#2563eb"  opacity="0.1"  className="geo-c" />
-            <circle cx="390" cy="240" r="18" stroke="#60a5fa" strokeWidth="1" opacity="0.2"  className="geo-a" />
-            <circle cx="155" cy="272" r="22" stroke="#2563eb" strokeWidth="1" strokeDasharray="3 7" opacity="0.16" className="geo-b" />
-            <rect   x="422"  y="185" width="32" height="44" rx="6" stroke="#3b82f6" strokeWidth="1" opacity="0.16" className="geo-b" />
-            <circle cx="62"  cy="248" r="6"  fill="#3b82f6"  opacity="0.15" className="geo-a" />
+            <circle cx="100" cy="56"  r="9"  fill="#2563eb"  opacity="0.25"  className="geo-c" />
+            <circle cx="390" cy="240" r="18" stroke="#60a5fa" strokeWidth="1" opacity="0.42"  className="geo-a" />
+            <circle cx="155" cy="272" r="22" stroke="#2563eb" strokeWidth="1" strokeDasharray="3 7" opacity="0.35" className="geo-b" />
+            <rect   x="422"  y="185" width="32" height="44" rx="6" stroke="#3b82f6" strokeWidth="1" opacity="0.35" className="geo-b" />
+            <circle cx="62"  cy="248" r="6"  fill="#3b82f6"  opacity="0.32" className="geo-a" />
           </svg>
 
           {/* iPad only — square viewBox, centered in flex-1 space */}
-          <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet" fill="none" className="hidden w-auto max-h-[45vh] opacity-70 dark:opacity-40 md:block" aria-hidden="true">
+          <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet" fill="none" className="hidden w-auto max-h-[45vh] md:block" aria-hidden="true">
             <g className="geo-b">
-              <circle cx="250" cy="250" r="130" stroke="#2563eb" strokeWidth="1" strokeDasharray="5 10" opacity="0.18" />
-              <circle cx="250" cy="250" r="94"  stroke="#2563eb" strokeWidth="1.5" opacity="0.22" />
-              <circle cx="250" cy="250" r="58"  stroke="#2563eb" strokeWidth="2"   opacity="0.28" />
-              <circle cx="250" cy="250" r="18"  fill="#2563eb"   opacity="0.12" />
+              <circle cx="250" cy="250" r="130" stroke="#2563eb" strokeWidth="1" strokeDasharray="5 10" opacity="0.38" />
+              <circle cx="250" cy="250" r="94"  stroke="#2563eb" strokeWidth="1.5" opacity="0.48" />
+              <circle cx="250" cy="250" r="58"  stroke="#2563eb" strokeWidth="2"   opacity="0.55" />
+              <circle cx="250" cy="250" r="18"  fill="#2563eb"   opacity="0.28" />
             </g>
             <g className="geo-a">
-              <rect x="38" y="185" width="80" height="105" rx="14" stroke="#3b82f6" strokeWidth="1.5" opacity="0.22" />
-              <rect x="54" y="201" width="48" height="73"  rx="8"  stroke="#3b82f6" strokeWidth="1"   opacity="0.14" />
+              <rect x="38" y="185" width="80" height="105" rx="14" stroke="#3b82f6" strokeWidth="1.5" opacity="0.45" />
+              <rect x="54" y="201" width="48" height="73"  rx="8"  stroke="#3b82f6" strokeWidth="1"   opacity="0.30" />
             </g>
             <g className="geo-c">
-              <polygon points="424,88 460,108 460,150 424,170 388,150 388,108" stroke="#2563eb" strokeWidth="1.5" opacity="0.2" />
-              <polygon points="424,108 450,122 450,148 424,162 398,148 398,122" stroke="#2563eb" strokeWidth="1"   opacity="0.12" />
+              <polygon points="424,88 460,108 460,150 424,170 388,150 388,108" stroke="#2563eb" strokeWidth="1.5" opacity="0.42" />
+              <polygon points="424,108 450,122 450,148 424,162 398,148 398,122" stroke="#2563eb" strokeWidth="1"   opacity="0.28" />
             </g>
-            <circle cx="108" cy="80"  r="11" fill="#2563eb"   opacity="0.1"  className="geo-c" />
-            <circle cx="408" cy="390" r="22" stroke="#60a5fa" strokeWidth="1" opacity="0.2"  className="geo-a" />
-            <circle cx="148" cy="430" r="26" stroke="#2563eb" strokeWidth="1" strokeDasharray="3 7" opacity="0.16" className="geo-b" />
-            <rect   x="430" y="300"  width="36" height="50" rx="7" stroke="#3b82f6" strokeWidth="1" opacity="0.16" className="geo-b" />
-            <circle cx="58"  cy="370" r="7"  fill="#3b82f6"  opacity="0.15" className="geo-a" />
-            <circle cx="460" cy="250" r="10" stroke="#2563eb" strokeWidth="1" opacity="0.18" className="geo-c" />
+            <circle cx="108" cy="80"  r="11" fill="#2563eb"   opacity="0.25"  className="geo-c" />
+            <circle cx="408" cy="390" r="22" stroke="#60a5fa" strokeWidth="1" opacity="0.42"  className="geo-a" />
+            <circle cx="148" cy="430" r="26" stroke="#2563eb" strokeWidth="1" strokeDasharray="3 7" opacity="0.35" className="geo-b" />
+            <rect   x="430" y="300"  width="36" height="50" rx="7" stroke="#3b82f6" strokeWidth="1" opacity="0.35" className="geo-b" />
+            <circle cx="58"  cy="370" r="7"  fill="#3b82f6"  opacity="0.32" className="geo-a" />
+            <circle cx="460" cy="250" r="10" stroke="#2563eb" strokeWidth="1" opacity="0.38" className="geo-c" />
           </svg>
 
         </div>

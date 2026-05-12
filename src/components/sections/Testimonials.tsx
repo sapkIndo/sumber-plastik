@@ -164,84 +164,107 @@ export default function Testimonials() {
         </div>
 
         {/* ── Quote card ── */}
-        <div className="testi-card flex items-center gap-3 md:gap-5">
+        <div className="testi-card">
 
-          {/* Left arrow */}
-          <button
-            onClick={handlePrev}
-            aria-label="Testimoni sebelumnya"
-            className="shrink-0 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
-          >
-            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-          </button>
+          {/* Card row — side arrows visible only on md+ */}
+          <div className="flex items-center gap-5">
 
-          <div className="relative min-w-0 flex-1">
+            {/* Left arrow — desktop only */}
+            <button
+              onClick={handlePrev}
+              aria-label="Testimoni sebelumnya"
+              className="hidden shrink-0 md:flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
+            >
+              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+            </button>
 
-          {/* SVG decorative quote mark — top-left, very faded */}
-          <svg
-            className="pointer-events-none absolute -left-3 -top-8 h-36 w-36 text-blue-600/[0.07] md:-left-8 md:-top-12 md:h-52 md:w-52"
-            viewBox="0 0 80 64"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M0 64V38.4C0 21.6 8 11.2 24 4.8L28 11.2C20 14.4 16 20.8 16 30.4H30.4V64H0ZM44.8 64V38.4C44.8 21.6 52.8 11.2 68.8 4.8L72.8 11.2C64.8 14.4 60.8 20.8 60.8 30.4H75.2V64H44.8Z" />
-          </svg>
+            <div className="relative min-w-0 flex-1">
 
-          {/* SVG decorative accent — bottom-right, very faded */}
-          <svg
-            className="pointer-events-none absolute -bottom-8 -right-3 h-24 w-24 rotate-180 text-slate-300/60 dark:text-slate-600/60 md:-bottom-10 md:-right-8 md:h-36 md:w-36"
-            viewBox="0 0 80 64"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M0 64V38.4C0 21.6 8 11.2 24 4.8L28 11.2C20 14.4 16 20.8 16 30.4H30.4V64H0ZM44.8 64V38.4C44.8 21.6 52.8 11.2 68.8 4.8L72.8 11.2C64.8 14.4 60.8 20.8 60.8 30.4H75.2V64H44.8Z" />
-          </svg>
+            {/* SVG decorative quote mark — top-left, very faded */}
+            <svg
+              className="pointer-events-none absolute -left-3 -top-8 h-36 w-36 text-blue-600/[0.07] md:-left-8 md:-top-12 md:h-52 md:w-52"
+              viewBox="0 0 80 64"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M0 64V38.4C0 21.6 8 11.2 24 4.8L28 11.2C20 14.4 16 20.8 16 30.4H30.4V64H0ZM44.8 64V38.4C44.8 21.6 52.8 11.2 68.8 4.8L72.8 11.2C64.8 14.4 60.8 20.8 60.8 30.4H75.2V64H44.8Z" />
+            </svg>
 
-          <div
-            ref={quoteRef}
-            className="relative rounded-2xl border border-slate-200 bg-white px-8 py-10 shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:shadow-slate-950/40 md:px-14 md:py-14"
-          >
-            {/* Stars */}
-            <div className="mb-6 flex gap-1" role="img" aria-label="Rating 5 bintang">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className="h-4 w-4 fill-amber-400 text-amber-400"
-                  aria-hidden="true"
-                />
-              ))}
+            {/* SVG decorative accent — bottom-right, very faded */}
+            <svg
+              className="pointer-events-none absolute -bottom-8 -right-3 h-24 w-24 rotate-180 text-slate-300/60 dark:text-slate-600/60 md:-bottom-10 md:-right-8 md:h-36 md:w-36"
+              viewBox="0 0 80 64"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M0 64V38.4C0 21.6 8 11.2 24 4.8L28 11.2C20 14.4 16 20.8 16 30.4H30.4V64H0ZM44.8 64V38.4C44.8 21.6 52.8 11.2 68.8 4.8L72.8 11.2C64.8 14.4 60.8 20.8 60.8 30.4H75.2V64H44.8Z" />
+            </svg>
+
+            <div
+              ref={quoteRef}
+              className="relative rounded-2xl border border-slate-200 bg-white px-6 py-8 shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:shadow-slate-950/40 md:px-14 md:py-14"
+            >
+              {/* Stars */}
+              <div className="mb-5 flex gap-1" role="img" aria-label="Rating 5 bintang">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="h-4 w-4 fill-amber-400 text-amber-400"
+                    aria-hidden="true"
+                  />
+                ))}
+              </div>
+
+              <figure>
+                <blockquote>
+                  <p className="leading-relaxed text-slate-800 dark:text-slate-100" style={{ fontSize: "clamp(1rem, 2vw + 0.5rem, 1.875rem)" }}>
+                    &ldquo;{active.quote}&rdquo;
+                  </p>
+                </blockquote>
+
+                <figcaption className="mt-8 flex items-center gap-4 border-t border-slate-100 pt-6 dark:border-slate-700">
+                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full ring-2 ring-blue-100 dark:ring-slate-700" aria-hidden="true">
+                    <Image src={active.photo} alt={active.name} fill sizes="48px" className="object-cover" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900 dark:text-slate-50">{active.name}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      {active.roleEn ? <em>{active.role}</em> : active.role} · {active.company}
+                    </p>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
             </div>
 
-            <figure>
-              <blockquote>
-                <p className="leading-relaxed text-slate-800 dark:text-slate-100" style={{ fontSize: "clamp(1.125rem, 2vw + 0.5rem, 1.875rem)" }}>
-                  &ldquo;{active.quote}&rdquo;
-                </p>
-              </blockquote>
+            {/* Right arrow — desktop only */}
+            <button
+              onClick={handleNext}
+              aria-label="Testimoni berikutnya"
+              className="hidden shrink-0 md:flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
+            >
+              <ChevronRight className="h-5 w-5" aria-hidden="true" />
+            </button>
 
-              <figcaption className="mt-10 flex items-center gap-4 border-t border-slate-100 pt-8 dark:border-slate-700">
-                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full ring-2 ring-blue-100 dark:ring-slate-700" aria-hidden="true">
-                  <Image src={active.photo} alt={active.name} fill sizes="48px" className="object-cover" />
-                </div>
-                <div>
-                  <p className="font-semibold text-slate-900 dark:text-slate-50">{active.name}</p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    {active.roleEn ? <em>{active.role}</em> : active.role} · {active.company}
-                  </p>
-                </div>
-              </figcaption>
-            </figure>
-          </div>
           </div>
 
-          {/* Right arrow */}
-          <button
-            onClick={handleNext}
-            aria-label="Testimoni berikutnya"
-            className="shrink-0 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
-          >
-            <ChevronRight className="h-5 w-5" aria-hidden="true" />
-          </button>
+          {/* Mobile arrows — centered row below card */}
+          <div className="mt-6 flex justify-center gap-3 md:hidden">
+            <button
+              onClick={handlePrev}
+              aria-label="Testimoni sebelumnya"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
+            >
+              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+            </button>
+            <button
+              onClick={handleNext}
+              aria-label="Testimoni berikutnya"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-400"
+            >
+              <ChevronRight className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </div>
 
         </div>
 

@@ -322,11 +322,11 @@ export default function Footer() {
                 Pembayaran
               </p>
               <div className="flex flex-wrap gap-1.5">
-                {PAYMENT_LOGOS.map(({ name, src, imgClass, cardClass }) => (
+                {PAYMENT_LOGOS.map(({ name, src, imgClass }) => (
                   <div
                     key={name}
                     title={name}
-                    className={`relative h-8 overflow-hidden rounded border border-slate-200 bg-white sm:h-10 dark:border-slate-700 dark:bg-slate-900 ${cardClass ?? "w-[4.5rem] sm:w-24"}`}
+                    className="relative h-8 w-[4.5rem] overflow-hidden rounded border border-slate-200 bg-white sm:h-10 sm:w-24 dark:border-slate-700 dark:bg-slate-900"
                   >
                     <Image
                       src={src}

@@ -6,16 +6,16 @@ import CountUp from "@/components/ui/CountUp";
 import { SITE_URL } from "@/constants";
 
 export const metadata: Metadata = {
-  title: "Katalog Produk Kemasan",
+  title: "Katalog Kemasan Plastik & Paper Yogyakarta",
   description:
-    "Katalog lengkap produk kemasan plastik dan paper dari Sumber Aneka Plastik dan Kemasan — kresek, botol PET, botol HDPE, cable tie, bubble wrap. Ecer & grosir, food grade, halal, ISO.",
+    "Katalog 1.000+ produk kemasan plastik dan paper dari Sumber Aneka Plastik dan Kemasan Yogyakarta — cup gelas, gelas plastik, thinwall, kresek, botol PET, mika, thinwall, bubble wrap. Ecer & grosir, food grade, halal, ISO.",
   alternates: {
     canonical: `${SITE_URL}/product`,
   },
   openGraph: {
-    title: "Katalog Produk Kemasan | Sumber Aneka Plastik dan Kemasan",
+    title: "Katalog Kemasan Plastik & Paper Yogyakarta | Sumber Aneka Plastik dan Kemasan",
     description:
-      "Katalog lengkap produk kemasan plastik dan paper. Kresek, botol PET, botol HDPE, cable tie, bubble wrap. Ecer & grosir.",
+      "1.000+ produk kemasan plastik & paper — cup gelas, thinwall, kresek, botol PET, mika, bubble wrap. Ecer & grosir, food grade, halal.",
     url: `${SITE_URL}/product`,
   },
 };

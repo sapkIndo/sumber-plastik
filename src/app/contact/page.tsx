@@ -74,7 +74,7 @@ export default function ContactPage() {
                 href={`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent("Halo, saya ingin konsultasi produk kemasan.")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group col-span-1 flex flex-col gap-6 rounded-2xl bg-blue-600 p-8 transition-[background-color,transform] duration-200 hover:bg-blue-500 active:scale-[0.98] sm:col-span-2"
+                className="group col-span-1 flex flex-col gap-5 rounded-2xl bg-blue-600 p-8 transition-[background-color,transform] duration-200 hover:bg-blue-500 active:scale-[0.98] sm:col-span-2"
                 style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
               >
                 <div>
@@ -88,23 +88,45 @@ export default function ContactPage() {
                     {CONTACT.phone}
                   </p>
                 </div>
+
+                {/* Quick action tags */}
+                <div className="flex flex-wrap gap-2">
+                  {["Konsultasi Produk", "Cek Stok", "Pemesanan", "Minta Katalog"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white/90"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
                 <div className="mt-auto flex items-center justify-between border-t border-white/15 pt-5">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1.5">
+                      <span className="relative flex h-2 w-2">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-75" />
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+                      </span>
+                      <span className="text-xs text-white/70">Senin–Sabtu, 08.00–18.00 WIB</span>
+                    </div>
+                  </div>
                   <div className="flex items-center gap-2">
                     <MessageCircle size={15} className="text-blue-200" aria-hidden="true" />
                     <span className="text-sm font-semibold text-white">Chat via WhatsApp</span>
+                    <ArrowRight
+                      size={15}
+                      className="text-white/50 transition-transform duration-200 group-hover:translate-x-1"
+                      aria-hidden="true"
+                    />
                   </div>
-                  <ArrowRight
-                    size={15}
-                    className="text-white/50 transition-transform duration-200 group-hover:translate-x-1"
-                    aria-hidden="true"
-                  />
                 </div>
               </a>
 
               {/* Email */}
               <a
                 href={`mailto:${CONTACT.email}`}
-                className="group flex flex-col gap-6 rounded-2xl border border-slate-200/80 bg-white p-8 transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_8px_24px_-6px_rgb(37_99_235_/_0.11)] dark:border-slate-700/80 dark:bg-slate-900 dark:hover:border-blue-800"
+                className="group flex flex-col gap-5 rounded-2xl border border-slate-200/80 bg-white p-8 transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_8px_24px_-6px_rgb(37_99_235_/_0.11)] dark:border-slate-700/80 dark:bg-slate-900 dark:hover:border-blue-800"
                 style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
               >
                 <div>
@@ -115,18 +137,27 @@ export default function ContactPage() {
                     {CONTACT.email}
                   </p>
                 </div>
+
+                <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                  Untuk penawaran resmi, permintaan invoice, dokumen, dan korespondensi formal.
+                </p>
+
                 <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-5 dark:border-slate-800">
+                  <div className="flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500">
+                    <Clock size={12} aria-hidden="true" />
+                    <span>Balasan 1×24 jam kerja</span>
+                  </div>
                   <div className="flex items-center gap-2">
                     <Mail size={15} className="text-slate-400" aria-hidden="true" />
                     <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">
                       Kirim Email
                     </span>
+                    <ArrowRight
+                      size={14}
+                      className="text-slate-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-blue-600 dark:text-slate-600 dark:group-hover:text-blue-400"
+                      aria-hidden="true"
+                    />
                   </div>
-                  <ArrowRight
-                    size={14}
-                    className="text-slate-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-blue-600 dark:text-slate-600 dark:group-hover:text-blue-400"
-                    aria-hidden="true"
-                  />
                 </div>
               </a>
 

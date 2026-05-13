@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,8 +11,31 @@ import { SITE_NAME, NAV_LINKS, CONTACT, STORES } from "@/constants";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const CL = (id: string) =>
-  `https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/${id}`;
+function ShippingLogo({ name, src, filterClass, cardClass }: { name: string; src: string; filterClass?: string; cardClass?: string }) {
+  const [imgError, setImgError] = useState(false);
+  return imgError ? (
+    <span className="rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+      {name}
+    </span>
+  ) : (
+    <div
+      title={name}
+      className={`relative h-8 overflow-hidden rounded border border-slate-200 bg-white sm:h-10 dark:border-slate-700 dark:bg-slate-900 ${cardClass ?? "w-[4.5rem] sm:w-24"}`}
+    >
+      <Image
+        src={src}
+        alt={name}
+        fill
+        className={`object-contain p-1.5${filterClass ? ` ${filterClass}` : ""}`}
+        sizes="(max-width: 640px) 80px, 96px"
+        onError={() => setImgError(true)}
+      />
+    </div>
+  );
+}
+
+const CL = (id: string, extra = "") =>
+  `https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto${extra ? `,${extra}` : ""}/${id}`;
 
 const PAYMENT_LOGOS = [
   { name: "BCA",        src: CL("pay_bca") },
@@ -20,14 +43,29 @@ const PAYMENT_LOGOS = [
   { name: "BNI",        src: CL("pay_bni") },
   { name: "Mandiri",    src: CL("pay_mandiri") },
   { name: "BSI",        src: CL("pay_bsi") },
-  { name: "CIMB Niaga", src: CL("pay_cimb") },
+  { name: "CIMB",       src: CL("pay_cimb") },
   { name: "SeaBank",    src: CL("pay_seabank") },
-  { name: "UOB",        src: CL("pay_uob") },
   { name: "Mastercard", src: CL("pay_mc") },
   { name: "Visa",       src: CL("pay_visa") },
+  { name: "GoPay",      src: CL("pay_gopay_text"),    imgClass: "p-0.5" },
+  { name: "Alfamidi",   src: CL("pay_alfamidi_v2") },
+  { name: "DAN+DAN",    src: CL("pay_dandan"),         imgClass: "scale-[1.5] p-0" },
+  { name: "UOB",        src: CL("pay_uob") },
+  { name: "Alfamart",   src: CL("alafamart_tt25xt"),   imgClass: "scale-[0.9] p-0" },
 ];
 
-const SHIPPING_NAMES = ["JNE", "SiCepat", "Lion Parcel", "GoSend", "GrabExpress", "AnterAja", "JET"];
+const SHIPPING_LOGOS = [
+  { name: "JNE",         src: CL("ship_jne") },
+  { name: "SiCepat",    src: CL("ship_sicepat") },
+  { name: "Lion",       src: CL("ship_lion"),   filterClass: "scale-[2.5]" },
+  { name: "GoSend",     src: CL("ship_gosend_v2"), filterClass: "scale-[2.5]" },
+  { name: "Grab",       src: CL("ship_grab_v3") },
+  { name: "AnterAja",   src: CL("ship_anteraja") },
+  { name: "JET",        src: CL("ship_jet"), filterClass: "[filter:invert(1)_sepia(1)_saturate(10)_hue-rotate(5deg)] dark:filter-none" },
+  { name: "Herona",     src: CL("ship_herona") },
+  { name: "KIB",        src: CL("ship_kib") },
+  { name: "SPX",        src: CL("ship_spx") },
+];
 
 const FEATURED_CATEGORIES = [
   { slug: "botol-pet",   name: "Botol PET" },
@@ -269,14 +307,9 @@ export default function Footer() {
               <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
                 Pengiriman
               </p>
-              <div className="flex flex-wrap gap-2">
-                {["JNE", "SiCepat", "Lion Parcel", "GoSend", "GrabExpress", "AnterAja", "JET"].map((name) => (
-                  <span
-                    key={name}
-                    className="rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
-                  >
-                    {name}
-                  </span>
+              <div className="flex flex-wrap gap-1.5">
+                {SHIPPING_LOGOS.map(({ name, src, filterClass, cardClass }) => (
+                  <ShippingLogo key={name} name={name} src={src} filterClass={filterClass} cardClass={cardClass} />
                 ))}
               </div>
             </div>
@@ -289,18 +322,18 @@ export default function Footer() {
                 Pembayaran
               </p>
               <div className="flex flex-wrap gap-1.5">
-                {PAYMENT_LOGOS.map(({ name, src }) => (
+                {PAYMENT_LOGOS.map(({ name, src, imgClass, cardClass }) => (
                   <div
                     key={name}
                     title={name}
-                    className="relative h-7 w-[3.75rem] overflow-hidden rounded border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900"
+                    className={`relative h-8 overflow-hidden rounded border border-slate-200 bg-white sm:h-10 dark:border-slate-700 dark:bg-slate-900 ${cardClass ?? "w-[4.5rem] sm:w-24"}`}
                   >
                     <Image
                       src={src}
                       alt={name}
                       fill
-                      className="object-contain p-1"
-                      sizes="60px"
+                      className={`object-contain ${imgClass ?? "p-1.5"}`}
+                      sizes="(max-width: 640px) 80px, 96px"
                     />
                   </div>
                 ))}

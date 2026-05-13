@@ -37,7 +37,6 @@ export default function HeroB() {
         .from(".hero-year",     { opacity: 0, y: -12, duration: 0.5 }, "<")
         .from(".hero-rule",     { scaleX: 0, duration: 0.7, transformOrigin: "left center" }, "-=0.2")
         .from(".hero-sub",      { opacity: 0, y: 16,  duration: 0.6 }, "-=0.4")
-        .from(".hero-cta",      { opacity: 0, y: 16,  duration: 0.5 }, "-=0.4")
         .from(".hero-trust",    { opacity: 0, y: 12,  duration: 0.5 }, "-=0.3")
         .from(".hero-strip",    { opacity: 0,          duration: 0.5 }, "-=0.3");
     },

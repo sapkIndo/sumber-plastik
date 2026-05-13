@@ -308,8 +308,8 @@ export default function Footer() {
                 Pengiriman
               </p>
               <div className="flex flex-wrap gap-1.5">
-                {SHIPPING_LOGOS.map(({ name, src, filterClass, cardClass }) => (
-                  <ShippingLogo key={name} name={name} src={src} filterClass={filterClass} cardClass={cardClass} />
+                {SHIPPING_LOGOS.map(({ name, src, filterClass }) => (
+                  <ShippingLogo key={name} name={name} src={src} filterClass={filterClass} />
                 ))}
               </div>
             </div>

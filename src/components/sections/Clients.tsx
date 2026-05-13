@@ -29,6 +29,7 @@ const clientsRow1: Client[] = [
   { name: "Aicare",                logo: CL("aicare_tsn9ao"),         scale: 0.85 },
   { name: "RS Soerojo",            logo: CL("RS_soerojo_b4zomd") },
   { name: "Triwara",               logo: CL("TRIWARA_STICKER_odli5j"), scale: 1.2 },
+  { name: "Shio Sushi Bar",        logo: CL("shiosushibar_yuvhkx"),   scale: 0.85 },
 ];
 
 const clientsRow2: Client[] = [
@@ -41,6 +42,7 @@ const clientsRow2: Client[] = [
   { name: "Citranet",              logo: CL("citranet_kazw7g"),       scale: 0.85 },
   { name: "Khaira",                logo: CL("khaira_zgovqy"),         scale: 0.85 },
   { name: "Bura Bura",             logo: CL("Bura_bura_p4mwv1"),     scale: 0.85 },
+  { name: "Bake to Salt",          logo: CL("baketosalt_qmszt0"),     scale: 0.85 },
 ];
 
 const clientsRow3: Client[] = [
@@ -53,6 +55,7 @@ const clientsRow3: Client[] = [
   { name: "Sender",                logo: CL("sender_hiaxmp"),         scale: 0.85 },
   { name: "Kopian",                logo: CL("kopian_nxy8r8"),         scale: 0.85 },
   { name: "Airku",                 logo: CL("airku_wpx7bt"),          scale: 0.85 },
+  { name: "Shottwell",             logo: CL("sssssshottwell_rv3e6s"), scale: 0.85 },
 ];
 
 const clientsRow4: Client[] = [
@@ -65,6 +68,7 @@ const clientsRow4: Client[] = [
   { name: "Sambal MamaNi",         logo: CL("sambal_mamani_uogus3"),  scale: 0.85 },
   { name: "Bunny House",           logo: CL("bunny_house_iwkos4"),   scale: 0.85 },
   { name: "Kopinggirjalan",        logo: CL("kopinggirjalan_syxdxn") },
+  { name: "WTP",                   logo: CL("wtp_ttx1zj"),            scale: 0.85 },
 ];
 
 const clientsRow5: Client[] = [

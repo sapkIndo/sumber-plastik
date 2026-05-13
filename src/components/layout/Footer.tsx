@@ -11,6 +11,24 @@ import { SITE_NAME, NAV_LINKS, CONTACT, STORES } from "@/constants";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+const CL = (id: string) =>
+  `https://res.cloudinary.com/dcfqotpyr/image/upload/f_auto,q_auto/${id}`;
+
+const PAYMENT_LOGOS = [
+  { name: "BCA",        src: CL("pay_bca") },
+  { name: "BRI",        src: CL("pay_bri") },
+  { name: "BNI",        src: CL("pay_bni") },
+  { name: "Mandiri",    src: CL("pay_mandiri") },
+  { name: "BSI",        src: CL("pay_bsi") },
+  { name: "CIMB Niaga", src: CL("pay_cimb") },
+  { name: "SeaBank",    src: CL("pay_seabank") },
+  { name: "UOB",        src: CL("pay_uob") },
+  { name: "Mastercard", src: CL("pay_mc") },
+  { name: "Visa",       src: CL("pay_visa") },
+];
+
+const SHIPPING_NAMES = ["JNE", "SiCepat", "Lion Parcel", "GoSend", "GrabExpress", "AnterAja", "JET"];
+
 const FEATURED_CATEGORIES = [
   { slug: "botol-pet",   name: "Botol PET" },
   { slug: "mika",        name: "Mika" },
@@ -242,8 +260,58 @@ export default function Footer() {
 
         </div>
 
+        {/* ── Pengiriman & Pembayaran ── */}
+        <div className="footer-bottom mt-12 border-t border-slate-300 pt-8 dark:border-slate-800">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-10">
+
+            {/* Pengiriman */}
+            <div className="flex flex-col gap-2.5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                Pengiriman
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {["JNE", "SiCepat", "Lion Parcel", "GoSend", "GrabExpress", "AnterAja", "JET"].map((name) => (
+                  <span
+                    key={name}
+                    className="rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
+                  >
+                    {name}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="hidden h-auto w-px self-stretch bg-slate-200 dark:bg-slate-800 sm:block" aria-hidden="true" />
+
+            {/* Pembayaran */}
+            <div className="flex flex-col gap-2.5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                Pembayaran
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {PAYMENT_LOGOS.map(({ name, src }) => (
+                  <div
+                    key={name}
+                    title={name}
+                    className="relative h-7 w-[3.75rem] overflow-hidden rounded border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900"
+                  >
+                    <Image
+                      src={src}
+                      alt={name}
+                      fill
+                      className="object-contain p-1"
+                      sizes="60px"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         {/* ── Bottom bar ── */}
-        <div className="footer-bottom mt-12 flex flex-col items-center justify-between gap-2 border-t border-slate-300 pt-8 dark:border-slate-800 sm:flex-row">
+        <div className="footer-bottom mt-6 flex flex-col items-center justify-between gap-2 border-t border-slate-300 pt-6 dark:border-slate-800 sm:flex-row">
           <p className="text-xs text-slate-400 dark:text-slate-500">
             © {new Date().getFullYear()}{" "}
             <span className="text-slate-500 dark:text-slate-400">{SITE_NAME}</span>

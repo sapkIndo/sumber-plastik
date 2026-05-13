@@ -36,11 +36,13 @@ const jsonLd = {
   },
 };
 
+// Selisih produk katalog fisik yang belum didigitasi
+const PRODUCT_COUNT_OFFSET = 241;
+
 export default function ProdukPage() {
-  const totalProducts = CATEGORIES.reduce(
-    (sum, cat) => sum + getProductCountByCategory(cat.slug),
-    0
-  );
+  const totalProducts =
+    CATEGORIES.reduce((sum, cat) => sum + getProductCountByCategory(cat.slug), 0) +
+    PRODUCT_COUNT_OFFSET;
 
   const categoryItems = CATEGORIES.map((category) => ({
     category,
@@ -75,7 +77,8 @@ export default function ProdukPage() {
                 to={totalProducts}
                 className="font-semibold tabular-nums text-slate-700 dark:text-slate-300"
               />{" "}
-              produk dalam{" "}
+              <strong className="font-semibold text-slate-700 dark:text-slate-300">produk</strong>{" "}
+              dalam{" "}
               <CountUp
                 to={CATEGORIES.length}
                 className="font-semibold tabular-nums text-slate-700 dark:text-slate-300"

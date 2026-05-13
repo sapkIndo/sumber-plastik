@@ -77,8 +77,8 @@ export default function ProdukPage() {
                 to={totalProducts}
                 className="font-semibold tabular-nums text-slate-700 dark:text-slate-300"
               />{" "}
-              <strong className="font-semibold text-slate-700 dark:text-slate-300">produk</strong>{" "}
-              dalam{" "}
+              <strong className="font-semibold text-slate-700 dark:text-slate-300">lebih</strong>{" "}
+              produk dalam{" "}
               <CountUp
                 to={CATEGORIES.length}
                 className="font-semibold tabular-nums text-slate-700 dark:text-slate-300"

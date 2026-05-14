@@ -35,6 +35,11 @@ export const metadata: Metadata = {
     "kemasan ISO", "distributor kemasan indonesia",
   ],
   authors: [{ name: "Sumber Aneka Plastik dan Kemasan" }],
+  icons: {
+    icon: "/logo/Persegi-No Background cropped.png",
+    shortcut: "/logo/Persegi-No Background cropped.png",
+    apple: "/logo/Persegi-No Background cropped.png",
+  },
   openGraph: {
     type: "website",
     locale: "id_ID",
